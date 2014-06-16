@@ -1,0 +1,12 @@
+# Linux
+*~
+
+# Python
+*.pyc
+venv
+.env
+
+# Application
+
+# Sublime
+*sublime*
