@@ -1,1 +1,107 @@
-OK
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Sat Jun 14 2014 23:27:51 GMT+0000 (UTC) -->
+<html data-wf-site="538284fd8a5f2a68714e29b5">
+<head>
+  <meta charset="utf-8">
+  <title>Gamecoach v03</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/webflow.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/gamecoach-v03.webflow.css" %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["Press Start 2P:regular:latin,latin-ext"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
+</head>
+<body>
+  <div class="section-header">
+    <div class="w-nav topnav" data-collapse="all" data-animation="default" data-duration="400" data-contain="1">
+      <div class="w-container nav-container">
+        <a class="w-nav-brand logo" href="#">
+          <img src="{% static "images/g%20logo%20blue.png" %}" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
+        </a>
+        <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Log In</a>
+        </div><a class="w-nav-link nav-link become-a-mentor" href="#">Become a mentor</a>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="hero-image">
+      <div class="w-container">
+        <h1>Get coached by experienced gamers</h1>
+        <div class="search-box-background">
+          <div class="w-form">
+            <form class="w-clearfix search-form" id="email-form" name="email-form" data-name="Email Form">
+              <select class="w-select search-filter game-drop-down" id="game" name="game" data-name="Game">
+                <option value="">Dota 2</option>
+              </select>
+              <select class="w-select search-filter" id="region-2" name="region-2" data-name="Region 2">
+                <option value="">What's your region?</option>
+                <option value="1">US West</option>
+                <option value="2">US East</option>
+                <option value="3">Europe West</option>
+                <option value="4">Europe East</option>
+                <option value="5">Russia</option>
+                <option value="6">South America</option>
+                <option value="7">SE Asia</option>
+                <option value="8">Australia</option>
+              </select>
+              <select class="w-select search-filter" id="role" name="role" data-name="Role">
+                <option value="">What's your role?</option>
+                <option value="1">Carry</option>
+                <option value="2">Disabler</option>
+                <option value="3">Ganker</option>
+                <option value="4">Initiator</option>
+                <option value="5">Jungler</option>
+                <option value="6">Offlaner</option>
+                <option value="7">Pusher</option>
+                <option value="8">Support</option>
+              </select>
+              <input class="w-button seach-button" type="submit" value="Find a mentor" data-wait="Go!" wait="Go!">
+            </form>
+            <div class="w-form-done">
+              <p>Thank you! Your submission has been received!</p>
+            </div>
+            <div class="w-form-fail">
+              <p>Oops! Something went wrong while submitting the form :(</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="w-container footer-column landing-page">
+      <div class="w-row">
+        <div class="w-col w-col-2 w-clearfix"><a class="footer-nav-link" href="#">About</a><a class="footer-nav-link" href="#">Our team</a><a class="footer-nav-link" href="#">Contact us</a>
+        </div>
+        <div class="w-col w-col-3"><a class="footer-nav-link" href="#">Terms &amp; Conditions</a><a class="footer-nav-link" href="#">Privacy Policy</a><a class="footer-nav-link" href="#">Cookies</a>
+        </div>
+        <div class="w-col w-col-7 w-clearfix">
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/twitter.png" %}" width="16" alt="5383b7495aa5711a5495122a_twitter.png">
+          </a>
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/facebook.png" %}" width="10" alt="5383b6f078e1ff6971388bd5_facebook.png">
+          </a>
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/email.png" %}" width="20" alt="5383b72c8a5f2a68714e466e_email.png">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="{% static "js/webflow.js" %}"></script>
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+</body>
+</html>
