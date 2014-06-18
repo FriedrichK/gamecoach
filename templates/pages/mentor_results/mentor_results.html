@@ -1,0 +1,208 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Sat Jun 14 2014 23:27:51 GMT+0000 (UTC) -->
+<html data-wf-site="538284fd8a5f2a68714e29b5">
+<head>
+  <meta charset="utf-8">
+  <title>Gamecoach v03</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/webflow.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/gamecoach-v03.webflow.css" %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["Press Start 2P:regular:latin,latin-ext"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
+</head>
+<body>
+
+  {% include "pages/shared/topbar.html" %}
+
+  <div class="search-filter-section">
+    <div class="w-container filter-column">
+      <div class="w-form">
+        <form id="email-form" name="email-form" data-name="Email Form">
+          <div class="filter-block">
+            <div class="w-row">
+              <div class="w-col w-col-2">
+                <label class="filter-text">Roles</label>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="role" type="checkbox" name="role-1" data-name="Role 1">
+                  <label class="w-form-label" for="role">Carry</label>
+                </div>
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="role-2" type="checkbox" name="role-2" data-name="Role 2">
+                  <label class="w-form-label" for="role-2">Disabler</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="role-3" type="checkbox" name="role-3" data-name="Role 3">
+                  <label class="w-form-label check-box" for="role-3">Ganker</label>
+                </div>
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="role-4" type="checkbox" name="role-4" data-name="Role 4">
+                  <label class="w-form-label check-box" for="role-4">Initiator</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="role-5" type="checkbox" name="role-5" data-name="Role 5">
+                  <label class="w-form-label check-box" for="role-5">Jungler</label>
+                </div>
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="role-6" type="checkbox" name="role-6" data-name="Role 6">
+                  <label class="w-form-label check-box" for="role-6">Offlaner</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="role-7" type="checkbox" name="role-7" data-name="Role 7">
+                  <label class="w-form-label check-box" for="role-7">Pusher</label>
+                </div>
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="role-8" type="checkbox" name="role-8" data-name="Role 8">
+                  <label class="w-form-label" for="role-8">Support</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2"></div>
+            </div>
+          </div>
+          <div class="filter-block">
+            <div class="w-row">
+              <div class="w-col w-col-2">
+                <label class="filter-text">Regions</label>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="region" type="checkbox" name="region-1" data-name="Region 1">
+                  <label class="w-form-label" for="region">US West</label>
+                </div>
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="region-2" type="checkbox" name="region-2" data-name="Region 2">
+                  <label class="w-form-label" for="region-2">US&nbsp;East</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="region-3" type="checkbox" name="region-3" data-name="Region 3">
+                  <label class="w-form-label" for="region-3">EU West</label>
+                </div>
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="region-4" type="checkbox" name="region-4" data-name="Region 4">
+                  <label class="w-form-label" for="region-4">EU&nbsp;East</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="region-5" type="checkbox" name="region-5" data-name="Region 5">
+                  <label class="w-form-label check-box" for="region-5">Russia</label>
+                </div>
+                <div class="w-checkbox w-clearfix">
+                  <input class="w-checkbox-input" id="region-6" type="checkbox" name="region-6" data-name="Region 6">
+                  <label class="w-form-label check-box" for="region-6">South America</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="region-7" type="checkbox" name="region-7" data-name="Region 7">
+                  <label class="w-form-label" for="region-7">SE Asia</label>
+                </div>
+                <div class="w-checkbox check-box">
+                  <input class="w-checkbox-input" id="region-8" type="checkbox" name="region-8" data-name="Region 8">
+                  <label class="w-form-label" for="region-8">Australia</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2"></div>
+            </div>
+          </div>
+          <div class="filter-block">
+            <div class="w-row">
+              <div class="w-col w-col-2">
+                <label class="filter-text">Availability</label>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-radio w-clearfix radio-box">
+                  <input class="w-radio-input" id="node" type="radio" name="day" value="1" data-name="Day">
+                  <label class="w-form-label" for="node">Weekends only</label>
+                </div>
+                <div class="w-radio w-clearfix radio-box">
+                  <input class="w-radio-input" id="node-2" type="radio" name="day" value="2" data-name="Day">
+                  <label class="w-form-label" for="node-2">Any day</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2">
+                <div class="w-radio radio-box">
+                  <input class="w-radio-input" id="node-3" type="radio" name="time" value="1" data-name="Time">
+                  <label class="w-form-label" for="node-3">Evenings only</label>
+                </div>
+                <div class="w-radio radio-box">
+                  <input class="w-radio-input" id="node-3" type="radio" name="time" value="1" data-name="Time">
+                  <label class="w-form-label" for="node-3">Any time</label>
+                </div>
+              </div>
+              <div class="w-col w-col-2"></div>
+              <div class="w-col w-col-2"></div>
+              <div class="w-col w-col-2"></div>
+            </div>
+          </div>
+          <div>
+            <div class="w-row">
+              <div class="w-col w-col-6">
+                <div class="filter-text mentor-count">5 mentors found</div>
+              </div>
+              <div class="w-col w-col-6 w-clearfix">
+                <input class="w-button nav-link refine" type="submit" value="Refine" data-wait="Please wait...">
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="w-form-done">
+          <p>Thank you! Your submission has been received!</p>
+        </div>
+        <div class="w-form-fail">
+          <p>Oops! Something went wrong while submitting the form :(</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="w-container results-column">
+    </div>
+  </div>
+  <div>
+    <div class="w-container footer-column">
+      <div class="w-row">
+        <div class="w-col w-col-2 w-clearfix"><a class="footer-nav-link" href="#">About</a><a class="footer-nav-link" href="#">Our team</a><a class="footer-nav-link" href="#">Contact us</a>
+        </div>
+        <div class="w-col w-col-3"><a class="footer-nav-link" href="#">Terms &amp; Conditions</a><a class="footer-nav-link" href="#">Privacy Policy</a><a class="footer-nav-link" href="#">Cookies</a>
+        </div>
+        <div class="w-col w-col-7 w-clearfix">
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/twitter.png" %}" width="16" alt="5383b7495aa5711a5495122a_twitter.png">
+          </a>
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/facebook.png" %}" width="10" alt="5383b6f078e1ff6971388bd5_facebook.png">
+          </a>
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/email.png" %}" width="20" alt="5383b72c8a5f2a68714e466e_email.png">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <!--script type="text/javascript" src="{% static "js/webflow.js" %}"></script-->
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+</body>
+</html>

@@ -5,5 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    url(r'results', 'frontend.views.results', name='results'),
     url(r'', 'frontend.views.index', name='index'),
 )
