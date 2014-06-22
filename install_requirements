@@ -2,6 +2,8 @@
 
 if [ ! -d venv ]; then
 	virtualenv venv --no-site-packages
+	venv/bin/pip install -U pip
+	venv/bin/pip install --upgrade setuptools
 fi
 
 venv/bin/pip install -r $1_requirements.txt
