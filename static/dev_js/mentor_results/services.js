@@ -80,18 +80,22 @@ app.factory('generateUrlService', function() {
   return {
     buildFromSettings: function(formContent) {
       var url = "/results";
-      var parameters = "";
-      parameters += this._buildUrlPart("?", "roles", this._buildCategory("roles", formContent));
-      parameters += this._buildUrlPart("&", "regions", this._buildCategory("regions", formContent));
-      parameters += this._buildUrlPart("&", "day", this._buildChoiceCategory("day", formContent));
-      parameters += this._buildUrlPart("&", "time", this._buildChoiceCategory("time", formContent));
-      return url + parameters;
+      var urlParts = [];
+      urlParts = urlParts.concat(this._buildUrlPart("roles", this._buildCategory("roles", formContent)));
+      urlParts = urlParts.concat(this._buildUrlPart("regions", this._buildCategory("regions", formContent)));
+      urlParts = urlParts.concat(this._buildUrlPart("day", this._buildChoiceCategory("day", formContent)));
+      urlParts = urlParts.concat(this._buildUrlPart("time", this._buildChoiceCategory("time", formContent)));
+      console.log(urlParts);
+      if(urlParts.length === 0) {
+        return url;
+      } 
+      return url + "?" + urlParts.join('&');
     },
-    _buildUrlPart: function(prefix, category, value) {
+    _buildUrlPart: function(category, value) {
       if(!value || value === "") {
-        return "";
+        return [];
       }
-      return prefix + category + "=" + value;
+      return [category + "=" + value];
     },
     _buildCategory: function(category, formContent) {
       var parts = [];
