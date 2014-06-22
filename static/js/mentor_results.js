@@ -80,7 +80,7 @@ app.factory('refineSettingsService', function($rootScope, $location, mentorSetti
 app.factory('mentorSettingsService', function() {
   return {
     initialSettings: {
-      role: {
+      roles: {
           carry: false,
           disabler: false,
           ganker: false,
@@ -90,7 +90,7 @@ app.factory('mentorSettingsService', function() {
           pusher: false,
           support: false
       },
-      region: {
+      regions: {
           uswest: false,
           useast: false,
           euwest: false,
