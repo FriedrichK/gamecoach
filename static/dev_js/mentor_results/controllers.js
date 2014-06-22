@@ -13,10 +13,12 @@ app.controller('RefineSearchController', function($scope, $element, mentorSearch
 });
 
 app.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
+    $scope.number = 0;
     $scope.$on('refineSettingsUpdated', function(event, data) {
         var refineSettings = refineSettingsService.get();
         mentorSearchService.getMatchingMentors(refineSettings, function(data) {
             $scope.mentors = data;
+            $scope.number = data.length;
         });
     });
 });
