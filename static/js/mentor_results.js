@@ -6,44 +6,42 @@ var app = angular.module('app', [])
 /* global angular, document */
 
 var app = angular.module('app'); 
-app.controller('RefineSearchController', function($scope, mentorSearchService, mentorSettingsService, refineSettingsService) {
-    $scope.refine = mentorSettingsService.initialSettings;
+app.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService) {
+    angular.element($element).ready(function() {
+        $scope.refine = refineSettingsService.get();
+        refineSettingsService.set($scope.refine);
+    });
     $scope.change = function(evt) {
-        mentorSearchService.getMatchingMentors($scope.refine);
+        mentorSearchService.getMatchingMentors($scope.refine, function() {});
         refineSettingsService.set($scope.refine);
     };
-    $scope.test = function(evt) {
-    };
 });
 
-app.controller('DocumentReadyController', function(refineSettingsService) {
-    angular.element(document).ready(function() {
-        var state = refineSettingsService.get();
-    });
-});
-
-app.controller('MentorListController', function($scope, mentorSearchService) {
-    mentorSearchService.getMatchingMentors({}, function(data) {
-        $scope.mentors = data;
+app.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
+    $scope.$on('refineSettingsUpdated', function(event, data) {
+        var refineSettings = refineSettingsService.get();
+        mentorSearchService.getMatchingMentors(refineSettings, function(data) {
+            $scope.mentors = data;
+        });
     });
 });
 /* global angular */
 var app = angular.module('app');
 
 app.factory('mentorSearchService', function($http) {
-   return {
-      getMatchingMentors: function(data, callable) {
-        return $http({
-          url: '/api/mentor', 
-          method: "GET",
-          params: data
-        })
-          .then(function(result) {
-            callable(result.data);
-          }
-        );
-      }
-   };
+  return {
+    getMatchingMentors: function(data, callable) {
+      return $http({
+        url: '/api/mentor', 
+        method: "GET",
+        params: data
+      })
+        .then(function(result) {
+          callable(result.data);
+        }
+      );
+    }
+  };
 });
 
 function tokenizeValues(values) {
@@ -65,12 +63,13 @@ function getInitialRefineSettings($location, initialSettings) {
   return initialSettings;
 }
 
-app.factory('refineSettingsService', function($location, mentorSettingsService) {
+app.factory('refineSettingsService', function($rootScope, $location, mentorSettingsService) {
   var initialSettings = mentorSettingsService.initialSettings;
   var refineSettings = getInitialRefineSettings($location, initialSettings);
   return {
     set: function(settings) {
       refineSettings = settings;
+      $rootScope.$broadcast('refineSettingsUpdated', settings);
     },
     get: function() {
       return refineSettings;
