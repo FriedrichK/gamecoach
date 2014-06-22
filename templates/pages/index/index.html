@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <!-- This site was created in Webflow. http://www.webflow.com-->
 <!-- Last Published: Sat Jun 14 2014 23:27:51 GMT+0000 (UTC) -->
-<html data-wf-site="538284fd8a5f2a68714e29b5">
+<html>
 <head>
   <meta charset="utf-8">
   <title>Gamecoach v03</title>
@@ -22,7 +22,7 @@
   <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
   <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
 </head>
-<body>
+<body ng-app>
   <div class="section-header">
     <div class="w-nav topnav" data-collapse="all" data-animation="default" data-duration="400" data-contain="1">
       <div class="w-container nav-container">
@@ -40,33 +40,33 @@
         <h1>Get coached by experienced gamers</h1>
         <div class="search-box-background">
           <div class="w-form">
-            <form class="w-clearfix search-form" id="email-form" name="email-form" data-name="Email Form" action="/results">
-              <select class="w-select search-filter game-drop-down" id="game" name="game" data-name="Game">
+            <form class="w-clearfix search-form" id="email-form" name="email-form" ng-controller="IndexFormController" action="/" onsubmit="return false">
+              <select class="w-select search-filter game-drop-down" id="game" name="game" data-name="Game"  ng-model="game">
                 <option value="">Dota 2</option>
               </select>
-              <select class="w-select search-filter" id="region-2" name="region-2" data-name="Region 2">
+              <select class="w-select search-filter" id="region-2" name="region-2" data-name="Region 2" ng-model="region">
                 <option value="">What's your region?</option>
-                <option value="1">US West</option>
-                <option value="2">US East</option>
-                <option value="3">Europe West</option>
-                <option value="4">Europe East</option>
-                <option value="5">Russia</option>
-                <option value="6">South America</option>
-                <option value="7">SE Asia</option>
-                <option value="8">Australia</option>
+                <option value="uswest">US West</option>
+                <option value="useast">US East</option>
+                <option value="euwest">Europe West</option>
+                <option value="eueast">Europe East</option>
+                <option value="russia">Russia</option>
+                <option value="southamerica">South America</option>
+                <option value="seasia">SE Asia</option>
+                <option value="australia">Australia</option>
               </select>
-              <select class="w-select search-filter" id="role" name="role" data-name="Role">
+              <select class="w-select search-filter" id="role" name="role" data-name="Role" ng-model="role">
                 <option value="">What's your role?</option>
-                <option value="1">Carry</option>
-                <option value="2">Disabler</option>
-                <option value="3">Ganker</option>
-                <option value="4">Initiator</option>
-                <option value="5">Jungler</option>
-                <option value="6">Offlaner</option>
-                <option value="7">Pusher</option>
-                <option value="8">Support</option>
+                <option value="carry">Carry</option>
+                <option value="disabler">Disabler</option>
+                <option value="ganker">Ganker</option>
+                <option value="initiator">Initiator</option>
+                <option value="jungler">Jungler</option>
+                <option value="offlaner">Offlaner</option>
+                <option value="pusher">Pusher</option>
+                <option value="support">Support</option>
               </select>
-              <input class="w-button seach-button" type="submit" value="Find a mentor" data-wait="Go!" wait="Go!">
+              <button class="w-button seach-button" ng-click="submit()">Find a mentor</button>
             </form>
             <div class="w-form-done">
               <p>Thank you! Your submission has been received!</p>
@@ -100,8 +100,10 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <!--script type="text/javascript" src="{% static "js/webflow.js" %}"></script-->
+  <script type="text/javascript" src="{% static "js/webflow.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/index.js" %}"></script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>
 </html>
