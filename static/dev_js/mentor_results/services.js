@@ -2,19 +2,19 @@
 var app = angular.module('app');
 
 app.factory('mentorSearchService', function($http) {
-   return {
-      getMatchingMentors: function(data, callable) {
-        return $http({
-          url: '/api/mentor', 
-          method: "GET",
-          params: data
-        })
-          .then(function(result) {
-            callable(result.data);
-          }
-        );
-      }
-   };
+  return {
+    getMatchingMentors: function(data, callable) {
+      return $http({
+        url: '/api/mentor', 
+        method: "GET",
+        params: data
+      })
+        .then(function(result) {
+          callable(result.data);
+        }
+      );
+    }
+  };
 });
 
 function tokenizeValues(values) {
@@ -36,12 +36,13 @@ function getInitialRefineSettings($location, initialSettings) {
   return initialSettings;
 }
 
-app.factory('refineSettingsService', function($location, mentorSettingsService) {
+app.factory('refineSettingsService', function($rootScope, $location, mentorSettingsService) {
   var initialSettings = mentorSettingsService.initialSettings;
   var refineSettings = getInitialRefineSettings($location, initialSettings);
   return {
     set: function(settings) {
       refineSettings = settings;
+      $rootScope.$broadcast('refineSettingsUpdated', settings);
     },
     get: function() {
       return refineSettings;
