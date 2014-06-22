@@ -1,7 +1,7 @@
-/* global angular, document */
+/* global angular, document, window */
 
 var app = angular.module('app'); 
-app.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService) {
+app.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService, generateUrlService) {
     angular.element($element).ready(function() {
         $scope.refine = refineSettingsService.get();
         refineSettingsService.set($scope.refine);
@@ -9,6 +9,10 @@ app.controller('RefineSearchController', function($scope, $element, mentorSearch
     $scope.change = function(evt) {
         mentorSearchService.getMatchingMentors($scope.refine, function() {});
         refineSettingsService.set($scope.refine);
+    };
+    $scope.test = function() {
+        //console.log(generateUrlService.buildFromSettings($scope.refine));
+        window.location = generateUrlService.buildFromSettings($scope.refine);
     };
 });
 

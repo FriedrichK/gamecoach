@@ -18,20 +18,46 @@ app.factory('mentorSearchService', function($http) {
 });
 
 function tokenizeValues(values) {
-  return values.split(',');
+  if(!values) {
+    return [];
+  }
+  return String(values).split(',');
+}
+
+function processBinaryCategory(initialSettings, key, value) {
+  if(initialSettings[key] !== undefined) {
+    var values = tokenizeValues(value);
+    angular.forEach(values, function(v, index) {
+      if(initialSettings[key][v] !== undefined) {
+        initialSettings[key][v] = true;
+      }
+    });
+    return initialSettings[key];
+  }
+  return null;
+}
+
+function processChoiceCategory(initialSettings, key, value) {
+  if(initialSettings[key] !== undefined) {
+    console.log(key, value);
+  }
 }
 
 function getInitialRefineSettings($location, initialSettings) {
   var urlParameters = $location.search();
   angular.forEach(urlParameters, function(value, key) {
-    if(initialSettings[key] !== undefined) {
-      var values = tokenizeValues(value);
-      angular.forEach(values, function(v, index) {
-        if(initialSettings[key][v] !== undefined) {
-          initialSettings[key][v] = true;
-        }
-      });
-    } 
+    if(key === "roles") {
+      initialSettings["roles"] = processBinaryCategory(initialSettings, key, value);
+    }
+    if(key === "regions") {
+      initialSettings["regions"] = processBinaryCategory(initialSettings, key, value);
+    }
+    if(key === "day") {
+      initialSettings["day"] = value;
+    }
+    if(key === "time") {
+      initialSettings["time"] = value;
+    }
   });
   return initialSettings;
 }
@@ -46,6 +72,38 @@ app.factory('refineSettingsService', function($rootScope, $location, mentorSetti
     },
     get: function() {
       return refineSettings;
+    }
+  };
+});
+
+app.factory('generateUrlService', function() {
+  return {
+    buildFromSettings: function(formContent) {
+      var url = "/results";
+      var parameters = "";
+      parameters += this._buildUrlPart("?", "roles", this._buildCategory("roles", formContent));
+      parameters += this._buildUrlPart("&", "regions", this._buildCategory("regions", formContent));
+      parameters += this._buildUrlPart("&", "day", this._buildChoiceCategory("day", formContent));
+      parameters += this._buildUrlPart("&", "time", this._buildChoiceCategory("time", formContent));
+      return url + parameters;
+    },
+    _buildUrlPart: function(prefix, category, value) {
+      if(!value || value === "") {
+        return "";
+      }
+      return prefix + category + "=" + value;
+    },
+    _buildCategory: function(category, formContent) {
+      var parts = [];
+      angular.forEach(formContent[category], function(value, key) {
+        if(value === true) {
+          parts.push(key);
+        }
+      });
+      return parts.join(',');
+    },
+    _buildChoiceCategory: function(category, formContent) {
+      return formContent[category];
     }
   };
 });

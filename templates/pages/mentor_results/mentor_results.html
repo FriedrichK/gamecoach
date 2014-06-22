@@ -133,21 +133,21 @@
               </div>
               <div class="w-col w-col-2">
                 <div class="w-radio w-clearfix radio-box">
-                  <input class="w-radio-input" id="node" type="radio" name="day" value="weekends" data-name="Day" ng-model="refine.availability.day" ng-change="change()">
+                  <input class="w-radio-input" id="node" type="radio" name="day" value="weekends" data-name="Day" ng-model="refine.day" ng-change="change()">
                   <label class="w-form-label" for="node">Weekends only</label>
                 </div>
                 <div class="w-radio w-clearfix radio-box">
-                  <input class="w-radio-input" id="node-2" type="radio" name="day" value="any" data-name="Day" ng-model="refine.availability.day" ng-change="change()">
+                  <input class="w-radio-input" id="node-2" type="radio" name="day" value="anyday" data-name="Day" ng-model="refine.day" ng-change="change()">
                   <label class="w-form-label" for="node-2">Any day</label>
                 </div>
               </div>
               <div class="w-col w-col-2">
                 <div class="w-radio radio-box">
-                  <input class="w-radio-input" id="node-3" type="radio" name="time" value="evenings" data-name="Time" ng-model="refine.availability.time" ng-change="change()">
+                  <input class="w-radio-input" id="node-3" type="radio" name="time" value="evenings" data-name="Time" ng-model="refine.time" ng-change="change()">
                   <label class="w-form-label" for="node-3">Evenings only</label>
                 </div>
                 <div class="w-radio radio-box">
-                  <input class="w-radio-input" id="node-3" type="radio" name="time" value="any" data-name="Time" ng-model="refine.availability.time" ng-change="change()">
+                  <input class="w-radio-input" id="node-3" type="radio" name="time" value="anytime" data-name="Time" ng-model="refine.time" ng-change="change()">
                   <label class="w-form-label" for="node-3">Any time</label>
                 </div>
               </div>
@@ -168,7 +168,7 @@
                 </div>
               </div>
               <div class="w-col w-col-6 w-clearfix">
-                <input class="w-button nav-link refine" type="submit" value="Refine" data-wait="Please wait..." ng-click="test()">
+                <input class="w-button nav-link refine" type="submit" value="Refine" ng-controller="RefineSearchController" ng-click="test()">
               </div>
             </div>
           </div>
