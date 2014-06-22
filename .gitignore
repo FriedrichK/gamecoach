@@ -6,6 +6,9 @@
 venv
 .env
 
+# Grunt
+node_modules/
+
 # Application
 
 # Sublime
