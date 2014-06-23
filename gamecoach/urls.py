@@ -5,9 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'results', 'frontend.views.results', name='results'),
-
     url(r'^api/mentor', include('profiles.urls_api')),
-
-    url(r'', 'frontend.views.index', name='index'),
+    url(r'^', include('frontend.urls')),
 )

@@ -1,7 +1,9 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(
     '',
-    url(r'^', include('frontend.urls')),
+    url(r'results', 'frontend.views.results', name='results'),
+    url(r'mentor/(.*)', 'frontend.views.mentor', name='mentor'),
+    url(r'', 'frontend.views.index', name='index'),
 )

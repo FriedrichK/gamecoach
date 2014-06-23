@@ -15,6 +15,10 @@ module.exports = function(grunt) {
       mentor_results: {
         src: ['static/dev_js/mentor_results/**/*.js'],
         dest: 'static/js/mentor_results.js'
+      },
+      mentor_profile: {
+        src: ['static/dev_js/mentor_profile/**/*.js'],
+        dest: 'static/js/mentor_profile.js'
       }
     },
     uglify: {
@@ -29,6 +33,10 @@ module.exports = function(grunt) {
       mentor_results: {
         src: 'static/js/mentor_results.js',
         dest: 'static/js/mentor_results.min.js'
+      },
+      mentor_profile: {
+        src: 'static/js/mentor_profile.js',
+        dest: 'static/js/mentor_profile.min.js'
       }
     },
     jshint: {
@@ -57,7 +65,8 @@ module.exports = function(grunt) {
         files: {
           'static/dev_css/shared.css': 'static/dev_scss/shared/shared.scss',
           'static/dev_css/index.css': 'static/dev_scss/index/index.scss',
-          'static/dev_css/mentor_results.css': 'static/dev_scss/mentor_results/mentor_results.scss'
+          'static/dev_css/mentor_results.css': 'static/dev_scss/mentor_results/mentor_results.scss',
+          'static/dev_css/mentor_profile.css': 'static/dev_scss/mentor_profile/mentor_profile.scss'
         }
       }
     },
@@ -66,7 +75,8 @@ module.exports = function(grunt) {
         files: {
           'static/css/shared.css': 'static/dev_css/shared.css',
           'static/css/index.css': 'static/dev_css/index.css',
-          'static/css/mentor_results.css': 'static/dev_css/mentor_results.css'
+          'static/css/mentor_results.css': 'static/dev_css/mentor_results.css',
+          'static/css/mentor_profile.css': 'static/dev_css/mentor_profile.css'
         }
       }
     },
