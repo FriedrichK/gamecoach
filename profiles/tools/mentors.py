@@ -2,7 +2,7 @@ from django.db.models import Q
 
 from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
 from profiles.models import GamecoachProfile
-from profiles.tools.fake import create_fake_users
+from profiles.tools.fake import create_fake_mentors
 
 
 def get_all_mentors(filter_data):
@@ -10,7 +10,7 @@ def get_all_mentors(filter_data):
 
     test = GamecoachProfile.objects.all()
     if len(test) == 0:
-        create_fake_users(100)
+        create_fake_mentors(100)
 
     m = GamecoachProfile.objects.filter(*filters)
     mentors = []
@@ -48,7 +48,6 @@ def generate_filters(filter_data):
 def generate_filters_for_category(category, data, value_list):
     ticks = []
     for label in value_list:
-        print "X", label, data
         if not label in data or data[label] is False:
             tick = '.'
         else:

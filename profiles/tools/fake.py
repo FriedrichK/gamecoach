@@ -1,26 +1,44 @@
 import json
 import datetime
 import random
-from profiles.settings import ROLES, REGIONS, AVAILABILITY
+import copy
 
 import factory
 from faker import Factory
 fake = Factory.create()
 
+from django.contrib.auth.models import User
 
-def create_fake_users(amount):
+from profiles.settings import ROLES, REGIONS, AVAILABILITY, HEROES
+from shared.tools import generate_res_id
+
+
+def create_fake_mentors(amount):
     mentors = []
     for i in range(amount):
+        fake.seed(i)
+        fake_name = fake.name()
+        fake_user = generate_fake_user(fake_name)
         data = {
+            'user': fake_user,
             'roles': generate_random_roles(),
             'regions': generate_random_regions(),
             'availability': generate_random_availability(),
-            'data': json.dumps(generate_fake_data()),
+            'data': json.dumps(generate_fake_data(i, fake_name)),
             'created': datetime.datetime.now(),
             'updated': datetime.datetime.now()
         }
         mentors.append(MentorFactory(**data))
     return mentors
+
+
+def generate_fake_user(fake_name):
+    res_id = generate_res_id('user')
+    fake_username = generate_fake_steam_id_from_fake_name(fake_name)
+    email = fake_username + "@website.com"
+    user = User(username=res_id, first_name=fake_name, email=email)
+    user.save()
+    return user
 
 
 def generate_random_roles():
@@ -44,13 +62,33 @@ def generate_random_stringified_binary_list(options):
     return '|'.join(values)
 
 
-def generate_fake_data():
+def generate_fake_data(seed, fake_name):
+    fake.seed(seed)
+    random.seed(seed)
     return {
-        'name': fake.name(),
         'description': fake.text()[:128],
         'games': random.randint(0, 1000),
-        'reviews': random.randint(0, 100)
+        'reviews': random.randint(0, 100),
+        'steamId': generate_fake_steam_id_from_fake_name(fake_name),
+        'response_rate': random.random(),
+        'response_time': random.randint(0, 50),
+        'top_heroes': generate_top_heroes()
     }
+
+
+def generate_fake_steam_id_from_fake_name(fake_name):
+    return ''.join(e for e in fake_name if e.isalnum()).lower()
+
+
+def generate_top_heroes():
+    total = random.randint(0, 5)
+    heroes = []
+    hero_list = copy.copy(HEROES)
+    for i in range(total):
+        index = random.randint(0, len(hero_list) - 1)
+        heroes.append(hero_list[index])
+        del hero_list[index]
+    return heroes
 
 
 class MentorFactory(factory.django.DjangoModelFactory):
