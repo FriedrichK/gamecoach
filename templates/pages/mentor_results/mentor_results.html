@@ -186,7 +186,7 @@
   <div>
     <div class="w-container results-column" ng-controller="MentorListController">
 
-      <div class="w-clearfix search-result-block my-repeat-animation" ng-repeat="mentor in mentors">
+      <div class="w-clearfix search-result-block my-repeat-animation ng-hide" ng-repeat="mentor in mentors" ng-show="mentors">
         <img class="mentor-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
         <div class="w-clearfix mentor-profile-preview-block">
         <div class="mentor-name">{% templatetag openvariable %}mentor.data.name{% templatetag closevariable %}</div>

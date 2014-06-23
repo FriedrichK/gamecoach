@@ -23,3 +23,6 @@
 
 .my-repeat-animation.ng-move.ng-move-active {
   opacity: 1; }
+
+.ng-hide {
+  display: none !important; }
