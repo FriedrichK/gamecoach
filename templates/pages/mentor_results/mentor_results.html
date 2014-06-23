@@ -162,7 +162,7 @@
               <div class="w-col w-col-6">
                 <div class="filter-text mentor-count">
                   <ng-pluralize count="number"
-                    when="{'0': 'No mentors found.',
+                    when="{'0': 'No mentors found',
                       'one': '1 mentor found.',
                       'other': '{} mentors found'}">
                   </ng-pluralize>
@@ -191,8 +191,18 @@
         <div class="w-clearfix mentor-profile-preview-block">
         <div class="mentor-name">{% templatetag openvariable %}mentor.data.name{% templatetag closevariable %}</div>
           <div class="mentor-profile-preview">{% templatetag openvariable %}mentor.data.description{% templatetag closevariable %}</div>
-        <div class="mentor-profile-preview">{% templatetag openvariable %}mentor.data.games{% templatetag closevariable %} games played</div>
-        <div class="number-of-reviews">{% templatetag openvariable %}mentor.data.reviews{% templatetag closevariable %} reviews</div>
+        <div class="mentor-profile-preview">
+          <ng-pluralize count="mentor.data.games"
+            when="{'0': 'No games played',
+            'one': '1 game played.',
+            'other': '{} games played'}">
+          </ng-pluralize>
+        </div>
+        <div class="number-of-reviews"><ng-pluralize count="mentor.data.games"
+            when="{'0': 'No reviews',
+            'one': '1 review',
+            'other': '{} reviews'}">
+          </ng-pluralize></div>
         <img class="mini-profile-review-stars" src="images/stars.png" width="80" alt="538cf9be913afc4a0cb942c3_stars.png">
         </div>
       </div>
