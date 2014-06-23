@@ -8,6 +8,7 @@ venv
 
 # Grunt
 node_modules/
+.sass-cache/
 
 # Application
 
