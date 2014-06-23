@@ -6,6 +6,6 @@ function IndexFormController($scope, $http) {
 		var game = $scope.game;
 		var region = $scope.region;
 		var role = $scope.role;
-		window.location = '/results?region=' + region + '&role=' + role;
+		window.location = '/results?regions=' + region + '&roles=' + role;
 	};
 }
