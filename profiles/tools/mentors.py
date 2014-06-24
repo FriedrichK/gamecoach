@@ -5,6 +5,13 @@ from profiles.models import GamecoachProfile
 from profiles.tools.fake import create_fake_mentors
 
 
+def get_mentor_by_id(mentor_id):
+    try:
+        return GamecoachProfile.objects.get(user__username=mentor_id)
+    except GamecoachProfile.DoesNotExist:
+        return None
+
+
 def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 

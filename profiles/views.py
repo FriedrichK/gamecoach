@@ -1,14 +1,24 @@
 import json
 import urllib
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
-from tools.mentors import get_all_mentors
+from tools.mentors import get_all_mentors, get_mentor_by_id
 
 
 @csrf_exempt
 def mentor(request, mentor_id):
+    if mentor_id is None:
+        return get_filtered_mentors(request)
+    else:
+        mentor = get_mentor_by_id(mentor_id)
+        if mentor is None:
+            return HttpResponseNotFound()
+        return HttpResponse(json.dumps(mentor.deserialize()))
+
+
+def get_filtered_mentors(request):
     filters = {}
     filter_categories = ['roles', 'regions', 'day', 'time']
     for filter_category in filter_categories:

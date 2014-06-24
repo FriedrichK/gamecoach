@@ -5,5 +5,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    url(r'/(.*)', 'profiles.views.mentor', name='mentor'),
     url(r'', 'profiles.views.mentor', {'mentor_id': None}, name='mentor'),
 )
