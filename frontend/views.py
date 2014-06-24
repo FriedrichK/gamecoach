@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponseNotFound
+
+from profiles.tools.mentors import get_mentor_by_id
 
 
 def index(request):
@@ -10,6 +13,10 @@ def results(request):
 
 
 def mentor(request, mentor_id):
+    mentor = get_mentor_by_id(mentor_id)
+    if mentor is None:
+        return HttpResponseNotFound()
+
     data = {
         'mentor_id': mentor_id
     }
