@@ -12,6 +12,9 @@
   <link rel="stylesheet" type="text/css" href="{% static "css/webflow.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "css/gamecoach-v03.webflow.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "css/mentor_profile.css" %}">
+  <style>
+    .ng-cloak { display:none; }
+  </style>
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
   <script>
     WebFont.load({
@@ -23,12 +26,15 @@
   <script type="text/javascript" src="js/modernizr.js"></script>
   <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
 </head>
-<body>
+<body ng-app="app" ng-controller="ProfileController" ngCloak>
+
+  <input type="hidden" name="mentorId" value="{{mentor_id}}" ng-init="profile.mentorId='{{mentor_id}}'" ng-value="{{mentor_id}}" ng-model="profile.mentorId" />
+
   <div class="section-header">
     <div class="w-nav topnav" data-collapse="all" data-animation="default" data-duration="400" data-contain="1">
       <div class="w-container nav-container">
         <a class="w-nav-brand logo" href="#">
-          <img src="images/g%20logo%20blue.png" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
+          <img src="{% static "images/g%20logo%20blue.png" %}" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
         </a>
         <nav class="w-nav-menu nav-menu-drop-down" role="navigation">
           <div class="nav-menu-block"><a class="w-nav-link drop-down-nav-link" href="#">Inbox (5)</a><a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a><a class="w-nav-link drop-down-nav-link" href="#">Settings</a>
@@ -44,7 +50,7 @@
       <div class="full-profile-image-background">
         <img class="full-profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
       </div>
-      <h2>Skullkrush</h2>
+      <h2 class="ng-cloak">{% templatetag openvariable %}profile.first_name{% templatetag closevariable %}</h2>
     </div>
   </div>
   <div>
@@ -53,8 +59,7 @@
         <div class="w-col w-col-8">
           <div class="about-player">
             <h5>About me</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo
-              cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+            <p class="ng-cloak">{% templatetag openvariable %}profile.data.description{% templatetag closevariable %}</p>
           </div>
           <div class="about-player">
             <h5>How I mentor students</h5>
@@ -156,7 +161,7 @@
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Steam ID</div>
               </div>
-              <div class="w-col w-col-6"><a class="contact-stats-text" href="#">Skull_krusssh</a>
+              <div class="w-col w-col-6"><a class="contact-stats-text ng-cloak" href="#">{% templatetag openvariable %}profile.data.steamId{% templatetag closevariable %}</a>
               </div>
             </div>
             <div class="w-row contact-stats-block">
@@ -183,7 +188,7 @@
                 <div class="contact-stats-titles">Response rate</div>
               </div>
               <div class="w-col w-col-6">
-                <div class="contact-stats-text">98%</div>
+                <div class="contact-stats-text" value-as-percent="profile.data.response_rate"></div>
               </div>
             </div>
             <div class="w-row contact-stats-block">
@@ -212,64 +217,6 @@
     </div>
   </div>
   <div>
-    <div class="w-container mentor-review-section">
-      <div class="w-clearfix reviews-overview-box">
-        <h5 class="number-of-reviews">5 reviews</h5>
-        <img class="profile---overall-stars" src="images/stars.png" width="80" alt="538cf9be913afc4a0cb942c3_stars.png">
-      </div>
-      <div class="w-clearfix student-review-block">
-        <img class="profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
-        <div class="student-name">Supern00b</div>
-        <img class="profile---individual-stars" src="images/stars.png" width="70" alt="538cf9be913afc4a0cb942c3_stars.png">
-        <div class="review-text-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus
-            id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-            nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-        </div>
-      </div>
-      <div class="w-clearfix student-review-block">
-        <img class="profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
-        <div class="student-name">Supern00b</div>
-        <img class="profile---individual-stars" src="images/stars.png" width="70" alt="538cf9be913afc4a0cb942c3_stars.png">
-        <div class="review-text-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus
-            id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-            nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-        </div>
-      </div>
-      <div class="w-clearfix student-review-block">
-        <img class="profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
-        <div class="student-name">Supern00b</div>
-        <img class="profile---individual-stars" src="images/stars.png" width="70" alt="538cf9be913afc4a0cb942c3_stars.png">
-        <div class="review-text-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus
-            id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-            nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-        </div>
-      </div>
-      <div class="w-clearfix student-review-block">
-        <img class="profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
-        <div class="student-name">Supern00b</div>
-        <img class="profile---individual-stars" src="images/stars.png" width="70" alt="538cf9be913afc4a0cb942c3_stars.png">
-        <div class="review-text-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus
-            id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-            nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-        </div>
-      </div>
-      <div class="w-clearfix student-review-block">
-        <img class="profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
-        <div class="student-name">Supern00b</div>
-        <img class="profile---individual-stars" src="images/stars.png" width="70" alt="538cf9be913afc4a0cb942c3_stars.png">
-        <div class="review-text-box">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus
-            id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum
-            nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
     <div class="w-container footer-column">
       <div class="w-row">
         <div class="w-col w-col-2 w-clearfix"><a class="footer-nav-link" href="#">About</a><a class="footer-nav-link" href="#">Our team</a><a class="footer-nav-link" href="#">Contact us</a>
@@ -278,13 +225,13 @@
         </div>
         <div class="w-col w-col-7 w-clearfix">
           <a class="w-inline-block social-icon" href="#">
-            <img src="images/twitter.png" width="16" alt="5383b7495aa5711a5495122a_twitter.png">
+            <img src="{% static "images/twitter.png" %}" width="16" alt="5383b7495aa5711a5495122a_twitter.png">
           </a>
           <a class="w-inline-block social-icon" href="#">
-            <img src="images/facebook.png" width="10" alt="5383b6f078e1ff6971388bd5_facebook.png">
+            <img src="{% static "images/facebook.png" %}" width="10" alt="5383b6f078e1ff6971388bd5_facebook.png">
           </a>
           <a class="w-inline-block social-icon" href="#">
-            <img src="images/email.png" width="20" alt="5383b72c8a5f2a68714e466e_email.png">
+            <img src="{% static "images/email.png" %}" width="20" alt="5383b72c8a5f2a68714e466e_email.png">
           </a>
         </div>
       </div>
