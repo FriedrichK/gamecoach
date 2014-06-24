@@ -21,10 +21,10 @@ app.directive('valueAsPercent', function() {
         replace: 'true',
         template: '<a>{{valueAsPercent}}</a>',
         link: function(scope, element, attrs, ngModel) {
-            scope.$watch(function() {
+            scope.$watch(attrs.valueAsPercent, function(newValue) {
                 if(scope.profile && scope.profile.data && scope.profile.data.response_rate) {
-                    console.log("tick");
-                    scope.valueAsPercent = "bla";
+                    var ofHundred = scope.profile.data.response_rate * 100;
+                    scope.valueAsPercent = ofHundred.toFixed(1) + "%";
                 }
             });
         }
