@@ -6,11 +6,12 @@ var app = angular.module('app', ['ngAnimate'])
 /* global document, angular */
 
 var app = angular.module('app'); 
-app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService) {
+app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService) {
     angular.element(document).ready(function () {
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
             $scope.profile = data;
             $scope.regions = profileRegionService.buildRegionList(data);
+            $scope.availabilityProcessed = profileAvailabilityService.buildAvailabilityList(data);
         });
     });
 });
@@ -71,6 +72,7 @@ app.factory('profileDataService', function($http) {
                 params: {}
             })
             .then(function(result) {
+                console.log(result.data);
                 callable(result.data);
             });
         }
@@ -109,6 +111,43 @@ app.factory('profileRegionService', function(profileLabelService) {
                 });
             });
             return orderedRegionList;
+        }
+    };
+});
+
+app.factory('profileAvailabilityService', function(profileLabelService) {
+    return {
+        buildAvailabilityList: function(data) {
+            var availabilityList = [];
+            availabilityList = availabilityList.concat(this._buildDayList(data));
+            availabilityList = availabilityList.concat(this._buildTimeList(data));
+            return availabilityList;
+        },
+        _buildDayList: function(data) {
+            if(!data.availability) {
+                return [];
+            }
+            var day = [];
+            if(data.availability["Any day"] === true) {
+                day = [{label: 'Any day', identifier: 'anyday'}];
+            }
+             if(data.availability["Weekends only"] === true) {
+                day = [{label: 'Weekends only', identifier: 'weekends'}];
+            }
+            return day;
+        },
+        _buildTimeList: function(data) {
+            if(!data.availability) {
+                return [];
+            }
+            var time = [];
+            if(data.availability["Any time"] === true) {
+                time = [{label: 'Any time', identifier: 'anytime'}];
+            }
+             if(data.availability["Evenings only"] === true) {
+                time = [{label: 'Evenings only', identifier: 'evenings'}];
+            }
+            return time;
         }
     };
 });

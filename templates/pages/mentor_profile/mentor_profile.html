@@ -177,8 +177,7 @@
                 <div class="contact-stats-titles">Availability</div>
               </div>
               <div class="w-col w-col-6">
-                <div class="contact-stats-text">Any day
-                  <br>Evenings only</div>
+                <div class="contact-stats-text ng-cloak" ng-repeat="item in availability" ng-show="availabilityProcessed" identifier="{% templatetag openvariable %}item.identifier{% templatetag closevariable %}">{% templatetag openvariable %}item.label{% templatetag closevariable %}</div>
               </div>
             </div>
             <div class="w-row contact-stats-block">
