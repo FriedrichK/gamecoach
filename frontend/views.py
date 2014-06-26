@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import Http404
 
 from profiles.tools.mentors import get_mentor_by_id
 
@@ -15,7 +15,7 @@ def results(request):
 def mentor(request, mentor_id):
     mentor = get_mentor_by_id(mentor_id)
     if mentor is None:
-        return HttpResponseNotFound()
+        raise Http404()
 
     data = {
         'mentor_id': mentor_id
