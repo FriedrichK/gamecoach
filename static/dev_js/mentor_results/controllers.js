@@ -25,4 +25,7 @@ app.controller('MentorListController', function($scope, mentorSearchService, ref
             $scope.number = data.length;
         });
     });
+    $scope.goToProfile = function(profileId) {
+        window.location = '/mentor/' + profileId;
+    };
 });
