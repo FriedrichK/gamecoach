@@ -114,16 +114,8 @@
             <h5>My top heroes</h5>
             <div class="w-row">
               <div class="w-col w-col-6">
-                <ol class="profile-text">
-                  <li>
-                    <div>Chen</div>
-                  </li>
-                  <li>
-                    <div>Meepo</div>
-                  </li>
-                  <li>
-                    <div>Luna</div>
-                  </li>
+                <ol class="profile-text ng-cloak" ng-show="heroesProcessed">
+                  <li ng-repeat="hero in heroesProcessed">{% templatetag openvariable %}hero.label|capitalize{% templatetag closevariable %}</li>
                 </ol>
               </div>
               <div class="w-col w-col-6"></div>

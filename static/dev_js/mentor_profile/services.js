@@ -99,7 +99,6 @@ app.factory('profileRoleService', function(profileLabelService) {
             }
             var rawList = this._buildRawList(data);
             var roles = this._divideRawListIntoColumns(rawList, numberOfColumns);
-            console.log(roles);
             return roles;
         },
         _buildRawList: function(data) {
@@ -128,6 +127,29 @@ app.factory('profileRoleService', function(profileLabelService) {
         _getLabel: function(key) {
             var label = profileLabelService.getNameForLabel('roles', key);
             return label.charAt(0).toUpperCase() + label.slice(1);
+        }
+    };
+});
+
+app.factory('profileHeroService', function() {
+    return {
+        buildHeroList: function(data) {
+            if(!data || !data.data || !data.data.top_heroes) {
+                return [];
+            }
+            var me = this;
+            var heroList = [];
+            angular.forEach(data.data.top_heroes, function(hero) {
+                heroList.push({
+                    identifier: hero,
+                    label: me._buildLabel(hero)
+                });
+            });
+            console.log(heroList);
+            return heroList;
+        },
+        _buildLabel: function(hero) {
+            return hero;
         }
     };
 });
