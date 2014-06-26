@@ -6,11 +6,11 @@ var app = angular.module('app', ['ngAnimate'])
 /* global document, angular */
 
 var app = angular.module('app'); 
-app.controller('ProfileController', function($scope, $element, profileDataService) {
+app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService) {
     angular.element(document).ready(function () {
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
-            console.log(data);
             $scope.profile = data;
+            $scope.regions = profileRegionService.buildRegionList(data);
         });
     });
 });
@@ -63,16 +63,89 @@ app.directive('responseTimeAsText', function() {
 
 var app = angular.module('app'); 
 app.factory('profileDataService', function($http) {
-	return {
-		getMentorProfile: function(mentorId, callable) {
-			return $http({
-				url: '/api/mentor/' + mentorId,
-				method: 'GET',
-				params: {}
-			})
-			.then(function(result) {
-				callable(result.data);
-			});
-		}
-	};
+    return {
+        getMentorProfile: function(mentorId, callable) {
+            return $http({
+                url: '/api/mentor/' + mentorId,
+                method: 'GET',
+                params: {}
+            })
+            .then(function(result) {
+                callable(result.data);
+            });
+        }
+    };
+});
+
+app.factory('profileRegionService', function(profileLabelService) {
+    return {
+        buildRegionList: function(data) {
+            var rawRegionList = this._buildRawRegionList(data);
+            return this._orderRegionList(rawRegionList);
+        },
+        _buildRawRegionList: function(data) {
+            if(!data.regions) {
+                return [];
+            }
+            var regions = [];
+            angular.forEach(data.regions, function(value, key) {
+                if(value === true) {
+                    regions.push({
+                        label: key,
+                        identifier: profileLabelService.getLabelForName('regions', key)
+                    });
+                }
+            });
+            return regions;
+        },
+        _orderRegionList: function(rawRegionList) {
+            var labelOrder = profileLabelService.getLabelOrder('regions');
+            var orderedRegionList = [];
+            angular.forEach(labelOrder, function(label) {
+                angular.forEach(rawRegionList, function(entry) {
+                    if(entry.identifier === label) {
+                        orderedRegionList.push(entry);
+                    }
+                });
+            });
+            return orderedRegionList;
+        }
+    };
+});
+/* global angular */
+
+var app = angular.module('app'); 
+app.factory('profileLabelService', function() {
+  return {
+    labels: {
+      regions: {
+        'useast': 'US East',
+        'uswest': 'US West',
+        'eueast': 'EU East',
+        'euwest': 'EU West',
+        'seasia': 'SE Asia',
+        'russia': 'Russia',
+        'southamerica': 'South America',
+        'australia': 'Australia'
+      }
+    },
+    labelOrder: {
+      regions: ['useast', 'uswest', 'eueast', 'euwest', 'seasia', 'russia', 'southamerica', 'australia']
+    },
+    getLabelForName: function(category, name) {
+      var label;
+      angular.forEach(this.labels[category], function(value, key) {
+        if(value === name) {
+          label = key;
+        }
+      });
+      return label;
+    },
+    getNameForLabel: function(category, label) {
+      return this.labels[category][label];
+    },
+    getLabelOrder: function(category) {
+      return this.labelOrder[category];
+    }
+  };
 });

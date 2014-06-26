@@ -1,11 +1,11 @@
 /* global document, angular */
 
 var app = angular.module('app'); 
-app.controller('ProfileController', function($scope, $element, profileDataService) {
+app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService) {
     angular.element(document).ready(function () {
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
-            console.log(data);
             $scope.profile = data;
+            $scope.regions = profileRegionService.buildRegionList(data);
         });
     });
 });

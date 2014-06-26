@@ -169,9 +169,7 @@
                 <div class="contact-stats-titles">Regions</div>
               </div>
               <div class="w-col w-col-6">
-                <div class="contact-stats-text">EU West
-                  <br>EU East
-                  <br>Russia</div>
+                <div class="contact-stats-text ng-cloak" ng-repeat="region in regions" ng-show="regions" identifier="{% templatetag openvariable %}region.identifier{% templatetag closevariable %}">{% templatetag openvariable %}region.label{% templatetag closevariable %}</div>
               </div>
             </div>
             <div class="w-row contact-stats-block">
