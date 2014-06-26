@@ -13,6 +13,16 @@ app.factory('profileLabelService', function() {
         'russia': 'Russia',
         'southamerica': 'South America',
         'australia': 'Australia'
+      },
+      roles: {
+        'carry': 'carry',
+        'disabler': 'disabler',
+        'ganker': 'ganker',
+        'initiator': 'initiator',
+        'jungler': 'jungler',
+        'offlaner': 'offlaner',
+        'pusher': 'pusher',
+        'support': 'support'
       }
     },
     labelOrder: {

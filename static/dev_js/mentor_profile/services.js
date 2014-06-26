@@ -89,3 +89,45 @@ app.factory('profileAvailabilityService', function(profileLabelService) {
         }
     };
 });
+
+app.factory('profileRoleService', function(profileLabelService) {
+    var numberOfColumns = 2;
+    return {
+        buildRoleList: function(data) {
+            if(!data.roles) {
+                return [];
+            }
+            var rawList = this._buildRawList(data);
+            var roles = this._divideRawListIntoColumns(rawList, numberOfColumns);
+            console.log(roles);
+            return roles;
+        },
+        _buildRawList: function(data) {
+            var me = this;
+            var roles = [];
+            angular.forEach(data.roles, function(value, key) {
+                if(value === true) {
+                    roles.push({
+                        label: me._getLabel(key),
+                        identifier: key
+                    });
+                }
+            });
+            return roles;
+        },
+        _divideRawListIntoColumns: function(rawList, numberOfColumns) {
+            var itemsByColumn = Math.ceil(rawList.length/numberOfColumns);
+            var columns = [];
+            for(var i = 0, total = numberOfColumns; i < total; i++) {
+                var start = i * itemsByColumn;
+                var end = (i + 1) * itemsByColumn;
+                columns.push(rawList.slice(start, end));
+            }
+            return columns;
+        },
+        _getLabel: function(key) {
+            var label = profileLabelService.getNameForLabel('roles', key);
+            return label.charAt(0).toUpperCase() + label.slice(1);
+        }
+    };
+});

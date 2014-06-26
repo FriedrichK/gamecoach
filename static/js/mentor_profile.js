@@ -6,12 +6,13 @@ var app = angular.module('app', ['ngAnimate'])
 /* global document, angular */
 
 var app = angular.module('app'); 
-app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService) {
+app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService) {
     angular.element(document).ready(function () {
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
             $scope.profile = data;
             $scope.regions = profileRegionService.buildRegionList(data);
             $scope.availabilityProcessed = profileAvailabilityService.buildAvailabilityList(data);
+            $scope.rolesProcessed = profileRoleService.buildRoleList(data);
         });
     });
 });
@@ -151,6 +152,48 @@ app.factory('profileAvailabilityService', function(profileLabelService) {
         }
     };
 });
+
+app.factory('profileRoleService', function(profileLabelService) {
+    var numberOfColumns = 2;
+    return {
+        buildRoleList: function(data) {
+            if(!data.roles) {
+                return [];
+            }
+            var rawList = this._buildRawList(data);
+            var roles = this._divideRawListIntoColumns(rawList, numberOfColumns);
+            console.log(roles);
+            return roles;
+        },
+        _buildRawList: function(data) {
+            var me = this;
+            var roles = [];
+            angular.forEach(data.roles, function(value, key) {
+                if(value === true) {
+                    roles.push({
+                        label: me._getLabel(key),
+                        identifier: key
+                    });
+                }
+            });
+            return roles;
+        },
+        _divideRawListIntoColumns: function(rawList, numberOfColumns) {
+            var itemsByColumn = Math.ceil(rawList.length/numberOfColumns);
+            var columns = [];
+            for(var i = 0, total = numberOfColumns; i < total; i++) {
+                var start = i * itemsByColumn;
+                var end = (i + 1) * itemsByColumn;
+                columns.push(rawList.slice(start, end));
+            }
+            return columns;
+        },
+        _getLabel: function(key) {
+            var label = profileLabelService.getNameForLabel('roles', key);
+            return label.charAt(0).toUpperCase() + label.slice(1);
+        }
+    };
+});
 /* global angular */
 
 var app = angular.module('app'); 
@@ -166,6 +209,16 @@ app.factory('profileLabelService', function() {
         'russia': 'Russia',
         'southamerica': 'South America',
         'australia': 'Australia'
+      },
+      roles: {
+        'carry': 'carry',
+        'disabler': 'disabler',
+        'ganker': 'ganker',
+        'initiator': 'initiator',
+        'jungler': 'jungler',
+        'offlaner': 'offlaner',
+        'pusher': 'pusher',
+        'support': 'support'
       }
     },
     labelOrder: {
