@@ -164,18 +164,17 @@
               </div>
             </div>
           </div>
-          <!--div class="stats-block">
+          <div class="stats-block">
             <div class="stats-block-title">Mentor statistics</div>
-            <div class="w-row contact-stats-block">
+            <div class="w-row contact-stats-block ng-cloak" ng-show="statistics" identifier="{% templatetag openvariable %}statistic.identifier{% templatetag closevariable %}" ng-repeat="statistic in statistics">
               <div class="w-col w-col-6">
-                <div class="contact-stats-titles">Games played
-                  <br>Win rate
-                  <br>Solo MMR</div>
+                <div class="contact-stats-titles">{% templatetag openvariable %}statistic.label{% templatetag closevariable %}</div>
               </div>
-              <div class="w-col w-col-6"><a class="contact-stats-text" href="#">10,000<br>73%<br>5,120</a>
+              <div class="w-col w-col-6">
+                <a class="contact-stats-text" href="#">{% templatetag openvariable %}statistic.value{% templatetag closevariable %}</a>
               </div>
-            </div><a class="review-mentor" href="#">Review Skullkrush</a>
-          </div-->
+            </div><!--a class="review-mentor" href="#">Review Skullkrush</a-->
+          </div>
         </div>
       </div>
     </div>
