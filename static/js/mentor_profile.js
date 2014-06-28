@@ -6,7 +6,7 @@ var app = angular.module('app', ['ngAnimate'])
 /* global document, angular */
 
 var app = angular.module('app'); 
-app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService) {
+app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
     angular.element(document).ready(function () {
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
             $scope.profile = data;
@@ -14,6 +14,7 @@ app.controller('ProfileController', function($scope, $element, profileDataServic
             $scope.availabilityProcessed = profileAvailabilityService.buildAvailabilityList(data);
             $scope.rolesProcessed = profileRoleService.buildRoleList(data);
             $scope.heroesProcessed = profileHeroService.buildHeroList(data);
+            $scope.statistics = profileStatisticsService.buildStatisticsList(data);
         });
     });
 });
@@ -62,6 +63,15 @@ app.directive('responseTimeAsText', function() {
         }
     };
 });
+/* global document, angular */
+
+var app = angular.module('app'); 
+app.filter('percentAsString', function() {
+	return function(input) {
+		return Math.round(input * 100, 0) + "%";
+	};
+});
+
 /* global angular */
 
 var app = angular.module('app'); 
@@ -209,11 +219,37 @@ app.factory('profileHeroService', function() {
                     label: me._buildLabel(hero)
                 });
             });
-            console.log(heroList);
             return heroList;
         },
         _buildLabel: function(hero) {
             return hero;
+        }
+    };
+});
+
+app.factory('profileStatisticsService', function($filter, profileLabelService) {
+    return {
+        buildStatisticsList: function(data) {
+            if(!data || !data.data || !data.data.statistics) {
+                return [];
+            }
+            var me = this;
+            var statistics = [];
+            angular.forEach(data.data.statistics, function(value, key) {
+                statistics.push({
+                    identifier: key,
+                    label: profileLabelService.getNameForLabel('statistics', key),
+                    value: me._processValue(key, value)
+                });
+            });
+            return statistics;
+        },
+        _processValue: function(key, value) {
+            console.log(key);
+            if(key === "win_rate") {
+                return $filter('percentAsString')(value);
+            }
+            return $filter('number')(value, 0);
         }
     };
 });
@@ -242,10 +278,16 @@ app.factory('profileLabelService', function() {
         'offlaner': 'offlaner',
         'pusher': 'pusher',
         'support': 'support'
+      },
+      statistics: {
+        'games_played': 'games played',
+        'win_rate': 'win rate',
+        'solo_mmr': 'solo MMR'
       }
     },
     labelOrder: {
-      regions: ['useast', 'uswest', 'eueast', 'euwest', 'seasia', 'russia', 'southamerica', 'australia']
+      regions: ['useast', 'uswest', 'eueast', 'euwest', 'seasia', 'russia', 'southamerica', 'australia'],
+      statistics: ['games_played', 'win_rate', 'solo_mmr']
     },
     getLabelForName: function(category, name) {
       var label;
