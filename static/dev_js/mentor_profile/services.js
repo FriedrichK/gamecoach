@@ -145,11 +145,37 @@ app.factory('profileHeroService', function() {
                     label: me._buildLabel(hero)
                 });
             });
-            console.log(heroList);
             return heroList;
         },
         _buildLabel: function(hero) {
             return hero;
+        }
+    };
+});
+
+app.factory('profileStatisticsService', function($filter, profileLabelService) {
+    return {
+        buildStatisticsList: function(data) {
+            if(!data || !data.data || !data.data.statistics) {
+                return [];
+            }
+            var me = this;
+            var statistics = [];
+            angular.forEach(data.data.statistics, function(value, key) {
+                statistics.push({
+                    identifier: key,
+                    label: profileLabelService.getNameForLabel('statistics', key),
+                    value: me._processValue(key, value)
+                });
+            });
+            return statistics;
+        },
+        _processValue: function(key, value) {
+            console.log(key);
+            if(key === "win_rate") {
+                return $filter('percentAsString')(value);
+            }
+            return $filter('number')(value, 0);
         }
     };
 });

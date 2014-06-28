@@ -62,7 +62,6 @@ def generate_filters_for_category(category, data, value_list):
         ticks.append(tick)
 
     pattern = '^' + '\|'.join(ticks) + '$'
-    print category, pattern
 
     f = {}
     f[category + "__regex"] = pattern

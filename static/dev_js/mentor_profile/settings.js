@@ -23,10 +23,16 @@ app.factory('profileLabelService', function() {
         'offlaner': 'offlaner',
         'pusher': 'pusher',
         'support': 'support'
+      },
+      statistics: {
+        'games_played': 'games played',
+        'win_rate': 'win rate',
+        'solo_mmr': 'solo MMR'
       }
     },
     labelOrder: {
-      regions: ['useast', 'uswest', 'eueast', 'euwest', 'seasia', 'russia', 'southamerica', 'australia']
+      regions: ['useast', 'uswest', 'eueast', 'euwest', 'seasia', 'russia', 'southamerica', 'australia'],
+      statistics: ['games_played', 'win_rate', 'solo_mmr']
     },
     getLabelForName: function(category, name) {
       var label;

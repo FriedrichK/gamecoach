@@ -72,7 +72,8 @@ def generate_fake_data(seed, fake_name):
         'steamId': generate_fake_steam_id_from_fake_name(fake_name),
         'response_rate': random.random(),
         'response_time': random.randint(0, 50),
-        'top_heroes': generate_top_heroes()
+        'top_heroes': generate_top_heroes(),
+        'statistics': generate_statistics()
     }
 
 
@@ -89,6 +90,14 @@ def generate_top_heroes():
         heroes.append(hero_list[index])
         del hero_list[index]
     return heroes
+
+
+def generate_statistics():
+    return {
+        'games_played': random.randint(0, 20000),
+        'win_rate': random.random(),
+        'solo_mmr': random.randint(0, 10000)
+    }
 
 
 class MentorFactory(factory.django.DjangoModelFactory):
