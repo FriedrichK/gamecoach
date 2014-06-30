@@ -28,3 +28,11 @@ def serialize_datetime(dt):
         'minute': dt.timetuple().tm_min,
         'second': dt.timetuple().tm_sec,
     }
+
+
+def check_request_requirements(request, request_type, list_of_required_variables):
+    for variable in list_of_required_variables:
+        req = getattr(request, request_type)
+        if not variable in req:
+            return False
+    return True

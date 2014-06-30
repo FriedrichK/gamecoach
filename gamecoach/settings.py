@@ -31,6 +31,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'postman',
+
     'frontend',
     'profiles',
 )
@@ -89,3 +91,5 @@ TEMPLATE_DIRS = (
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+POSTMAN_AUTO_MODERATE_AS = True

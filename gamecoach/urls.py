@@ -6,5 +6,6 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^api/mentor', include('profiles.urls_api')),
+    url(r'^api/message', include('privatemessages.urls_api')),
     url(r'^', include('frontend.urls')),
 )
