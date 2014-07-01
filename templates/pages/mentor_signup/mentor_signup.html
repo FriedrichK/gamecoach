@@ -1,0 +1,372 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- This site was created in Webflow. http://www.webflow.com-->
+<!-- Last Published: Sun Jun 29 2014 14:25:20 GMT+0000 (UTC) -->
+<html data-wf-site="538284fd8a5f2a68714e29b5">
+<head>
+  <meta charset="utf-8">
+  <title>Gamecoach v03</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Webflow">
+  <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/webflow.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/gamecoach-v03.webflow.css" %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ["Press Start 2P:regular:latin,latin-ext"]
+      }
+    });
+  </script>
+  <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
+</head>
+<body>
+  <div class="section-header">
+    <div class="w-nav topnav" data-collapse="all" data-animation="default" data-duration="400" data-contain="1">
+      <div class="w-container nav-container">
+        <a class="w-nav-brand logo" href="#">
+          <img src="{% static "images/g_logo_blue.png" %}" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
+        </a>
+        <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Login</a>
+        </div><a class="w-nav-link nav-link become-a-mentor" href="#">Become a mentor</a>
+      </div>
+    </div>
+  </div>
+  <div class="w-container main-column title">
+    <div class="text title large with-comment">Sign up as a dota 2 mentor</div>
+    <div class="text subtitle">Information you fill in will help us put you in touch with the right students</div>
+  </div>
+  <div class="search-filter-section">
+    <div class="w-container main-column settings">
+      <div class="w-form">
+        <form id="email-form" name="email-form" data-name="Email Form">
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="name">Display name*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name" required="required">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text ttile regular" for="name">Upload profile picture*</label>
+            </div>
+            <div class="w-col w-col-8 w-clearfix"><a class="nav-link upload" href="#">SELECT picture</a>
+              <div class="text paragraph upload">Maximum picture size: 140x140 pixels&nbsp;</div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="name">Steam ID&nbsp;name*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="name-2" type="text" placeholder="Steam ID" name="name-2" data-name="Name 2" required="required">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="name">Your&nbsp;Steam ID&nbsp;link*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="name-3" type="text" placeholder="http://" name="name-3" data-name="Name 3" required="required">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">Email Address*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="email" type="email" placeholder="Enter your email address" name="email" data-name="Email" required="required">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">Confirm email Address*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form input" id="email-2" type="email" placeholder="Enter your email address again" name="email-2" data-name="Email 2" required="required">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">About me*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <textarea class="w-input text form input-area" id="about-me" placeholder="Tell a bit about yourself" name="about-me" data-name="About me" required="required"></textarea>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">What roles do you Play?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role" type="checkbox" name="role-1" data-name="Role 1">
+                    <label class="w-form-label" for="role">Carry</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-9" type="checkbox" name="role-9" data-name="Role 9">
+                    <label class="w-form-label" for="role-9">Disabler</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-10" type="checkbox" name="role-10" data-name="Role 10">
+                    <label class="w-form-label" for="role-10">Ganker</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-11" type="checkbox" name="role-11" data-name="Role 11">
+                    <label class="w-form-label" for="role-11">Initiator</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-12" type="checkbox" name="role-12" data-name="Role 12">
+                    <label class="w-form-label" for="role-12">Jungler</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-13" type="checkbox" name="role-13" data-name="Role 13">
+                    <label class="w-form-label" for="role-13">Offlaner</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-14" type="checkbox" name="role-14" data-name="Role 14">
+                    <label class="w-form-label" for="role-14">Pusher</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-15" type="checkbox" name="role-15" data-name="Role 15">
+                    <label class="w-form-label" for="role-15">Support</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">What are your top heroes?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <select class="w-select text form" id="field-4" name="field-4" required="required">
+                <option value="">1st place</option>
+                <option value="First">First Choice</option>
+                <option value="Second">Second Choice</option>
+                <option value="Third">Third Choice</option>
+              </select>
+              <select class="w-select text form" id="field-5" name="field-5">
+                <option value="">2nd place</option>
+                <option value="First">First Choice</option>
+                <option value="Second">Second Choice</option>
+                <option value="Third">Third Choice</option>
+              </select>
+              <select class="w-select text form" id="field-6" name="field-6">
+                <option value="">3rd place</option>
+                <option value="First">First Choice</option>
+                <option value="Second">Second Choice</option>
+                <option value="Third">Third Choice</option>
+              </select>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">Your statistics</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="field" type="text" placeholder="Number of games played" name="field">
+              <input class="w-input text form" id="field-2" type="text" placeholder="Win rate (%)" name="field-2" required="required">
+              <input class="w-input text form" id="field-3" type="text" placeholder="Solo MMR" name="field-3" required="required">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text ttile regular" for="email">Which regions do you play?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region" type="checkbox" name="region-1" data-name="Region 1">
+                    <label class="w-form-label" for="region">US West</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-9" type="checkbox" name="region-9" data-name="Region 9">
+                    <label class="w-form-label" for="region-9">US&nbsp;East</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-10" type="checkbox" name="region-10" data-name="Region 10">
+                    <label class="w-form-label" for="region-10">EU West</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-11" type="checkbox" name="region-11" data-name="Region 11">
+                    <label class="w-form-label" for="region-11">EU&nbsp;East</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="region-12" type="checkbox" name="region-12" data-name="Region 12">
+                    <label class="w-form-label" for="region-12">Russia</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="region-13" type="checkbox" name="region-13" data-name="Region 13">
+                    <label class="w-form-label" for="region-13">South America</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-14" type="checkbox" name="region-14" data-name="Region 14">
+                    <label class="w-form-label" for="region-14">SE Asia</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-15" type="checkbox" name="region-15" data-name="Region 15">
+                    <label class="w-form-label" for="region-15">Australia</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">When are you available to mentor students?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-3">
+                  <div class="w-radio w-clearfix">
+                    <input class="w-radio-input" id="node" type="radio" name="day" value="1" data-name="Day">
+                    <label class="w-form-label" for="node">Weekends only</label>
+                  </div>
+                  <div class="w-radio w-clearfix">
+                    <input class="w-radio-input" id="node-2" type="radio" name="day" value="2" data-name="Day">
+                    <label class="w-form-label" for="node-2">Any day</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-radio">
+                    <input class="w-radio-input" id="node-3" type="radio" name="time" value="1" data-name="Time">
+                    <label class="w-form-label" for="node-3">Evenings only</label>
+                  </div>
+                  <div class="w-radio">
+                    <input class="w-radio-input" id="node-3" type="radio" name="time" value="1" data-name="Time">
+                    <label class="w-form-label" for="node-3">Any time</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3"></div>
+                <div class="w-col w-col-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">How would you like to mentor student?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-6">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role" type="checkbox" name="role-1" data-name="Role 1">
+                    <label class="w-form-label" for="role">Individual mentoring</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-16" type="checkbox" name="role-16" data-name="Role 16">
+                    <label class="w-form-label" for="role-16">Team mentoring</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-20" type="checkbox" name="role-20" data-name="Role 20">
+                    <label class="w-form-label" for="role-20">Mentoring while spectating</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-19" type="checkbox" name="role-19" data-name="Role 19">
+                    <label class="w-form-label" for="role-19">Mentoring while playing together</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-6">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-17" type="checkbox" name="role-17" data-name="Role 17">
+                    <label class="w-form-label" for="role-17">Analysing replys</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-18" type="checkbox" name="role-18" data-name="Role 18">
+                    <label class="w-form-label" for="role-18">General questions &amp;&nbsp;answers</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-21" type="checkbox" name="role-21" data-name="Role 21">
+                    <label class="w-form-label" for="role-21">Voice chat</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-22" type="checkbox" name="role-22" data-name="Role 22">
+                    <label class="w-form-label" for="role-22">Text chat</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row">
+            <div class="w-col w-col-4">
+              <label class="text title regular">Terms &amp; conditions*</label>
+            </div>
+            <div class="w-col w-col-8 text">
+              <div class="w-checkbox w-clearfix text form">
+                <input class="w-checkbox-input" id="i-agree-with-term-conditions" type="checkbox" name="i-agree-with-term-conditions" data-name="I agree with Term &amp; Conditions" required="required">
+                <label class="w-form-label" for="i-agree-with-term-conditions">I agree with Gamecoach Terms &amp;&nbsp;Conditions</label>
+              </div>
+            </div>
+          </div>
+          <div class="w-row">
+            <div class="w-col w-col-4"></div>
+            <div class="w-col w-col-8">
+              <ul class="agreements">
+                <li>
+                  <div class="text paragraph">I have read Gamecoach <a href="#">Privacy Policy</a>
+                  </div>
+                </li>
+                <li>
+                  <div class="text paragraph">This website places cookies on your computer to help make this website better. You can&nbsp;<a href="#">change your cookie settings</a>&nbsp;at any time. Otherwise, we'll assume you're OK to continue</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <input class="w-button sign-up-button" type="submit" value="Sign up with Facebook" data-wait="Sign up with Facebook" wait="Sign up with Facebook">
+        </form>
+        <div class="w-form-done">
+          <p>Thank you! Your submission has been received!</p>
+        </div>
+        <div class="w-form-fail">
+          <p>Oops! Something went wrong while submitting the form :(</p>
+        </div>
+      </div>
+      <div class="text paragraph">*Mandatory questions</div>
+    </div>
+  </div>
+  <div>
+    <div class="w-container footer-column">
+      <div class="w-row">
+        <div class="w-col w-col-2 w-clearfix"><a class="footer-nav-link" href="#">About</a><a class="footer-nav-link" href="#">Our team</a><a class="footer-nav-link" href="#">Contact us</a>
+        </div>
+        <div class="w-col w-col-3"><a class="footer-nav-link" href="#">Terms &amp; Conditions</a><a class="footer-nav-link" href="#">Privacy Policy</a><a class="footer-nav-link" href="#">Cookies</a>
+        </div>
+        <div class="w-col w-col-7 w-clearfix">
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/twitter.png" %}" width="16" alt="5383b7495aa5711a5495122a_twitter.png">
+          </a>
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/facebook.png" %}" width="10" alt="5383b6f078e1ff6971388bd5_facebook.png">
+          </a>
+          <a class="w-inline-block social-icon" href="#">
+            <img src="{% static "images/email.png" %}" width="20" alt="5383b72c8a5f2a68714e466e_email.png">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="js/webflow.js"></script>
+  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+</body>
+</html>

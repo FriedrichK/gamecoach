@@ -78,9 +78,9 @@ p {
 }
 .button {
   display: inline-block;
-  padding: 4px 15px;
-  background-color: black;
-  color: white;
+  padding: 10px;
+  font-family: Montserrat, sans-serif;
+  color: #5c5c5c;
   text-align: center;
   text-decoration: none;
 }
@@ -151,6 +151,7 @@ p {
   font-family: Montserrat, sans-serif;
   color: #5c5c5c;
   font-size: 14px;
+  text-decoration: none;
   text-transform: uppercase;
 }
 .nav-link:hover {
@@ -183,6 +184,10 @@ p {
   float: right;
   font-family: Montserrat, sans-serif;
 }
+.nav-link.upload {
+  margin-right: 15px;
+  float: left;
+}
 .menu-botton.w--open {
   background-color: white;
 }
@@ -190,17 +195,6 @@ p {
   margin-top: 5px;
   margin-bottom: 5px;
   padding-top: 15px;
-}
-.logo-text {
-  display: block;
-  margin-top: 25px;
-  margin-right: auto;
-  margin-left: auto;
-  font-family:'Press Start 2P', sans-serif;
-  color: #5c5c5c;
-  font-size: 36px;
-  font-weight: 400;
-  letter-spacing: 1px;
 }
 .filter-text {
   font-family: Montserrat, sans-serif;
@@ -211,6 +205,11 @@ p {
   margin-top: 30px;
   font-size: 20px;
 }
+.search-filter-section {
+  -webkit-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+}
 .filter-column {
   padding-top: 15px;
   padding-right: 15px;
@@ -219,17 +218,6 @@ p {
   border-left: 1px solid #ccc;
   background-color: white;
 }
-.filter-column.mini-profiles {
-  padding-top: 0px;
-  padding-right: 0px;
-  padding-left: 0px;
-}
-.check-box {
-  margin-right: 10px;
-  font-family: Montserrat, sans-serif;
-  color: #5c5c5c;
-  font-size: 12px;
-}
 .filter-block {
   margin-bottom: 10px;
   padding-top: 5px;
@@ -237,28 +225,11 @@ p {
   padding-left: 10px;
   background-color: #eee;
 }
-.mini-profile-block {
-  display: block;
-  width: 940px;
-  padding: 15px;
-  border-top: 1px solid #ccc;
-}
-.mini-profile-block:hover {
-  background-color: #eee;
-}
 .profile-image {
   height: 100px;
   margin-right: 15px;
   float: left;
   border: 1px solid #ccc;
-}
-.mini-profile-text {
-  display: inline-block;
-  float: left;
-  clear: left;
-  font-family: Montserrat, sans-serif;
-  color: #5c5c5c;
-  font-size: 12px;
 }
 .footer-nav-link {
   display: inline-block;
@@ -342,19 +313,6 @@ p {
   margin-bottom: -19px;
   margin-left: -3px;
 }
-.search-title {
-  margin-right: 5px;
-  margin-left: 5px;
-  padding-top: 10px;
-  float: left;
-  font-family: Montserrat, sans-serif;
-  color: white;
-  font-size: 18px;
-  font-weight: 400;
-  text-decoration: none;
-  text-transform: uppercase;
-  text-shadow: black 0px 2px 1px;
-}
 .seach-button {
   margin-right: 5px;
   margin-left: 5px;
@@ -434,11 +392,6 @@ p {
   border-left: 1px solid #ccc;
   background-color: white;
 }
-.radio-box {
-  font-family: Montserrat, sans-serif;
-  color: #5c5c5c;
-  font-size: 12px;
-}
 .contact-mentor-button {
   display: block;
   margin-bottom: 15px;
@@ -490,19 +443,6 @@ p {
   font-size: 12px;
   font-weight: 400;
 }
-.game-id {
-  margin-top: -31px;
-  margin-left: 180px;
-  float: left;
-  clear: left;
-  font-family: Montserrat, sans-serif;
-  color: white;
-  font-size: 14px;
-  font-weight: 400;
-  text-decoration: none;
-  text-transform: uppercase;
-  text-shadow: black 0px 1px 1px, black 0px -1px 1px;
-}
 .stats-block {
   margin-right: 15px;
   margin-bottom: 50px;
@@ -545,12 +485,6 @@ p {
   font-family: Montserrat, sans-serif;
   color: #5c5c5c;
   font-size: 12px;
-}
-.conversation-block {
-  height: 400px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-left: 1px solid #ccc;
 }
 .inbox-block {
   padding: 15px;
@@ -619,9 +553,6 @@ p {
   margin-top: 22px;
   margin-left: 95px;
 }
-.mentor-details {
-  margin-left: 120px;
-}
 .search-result-block {
   padding: 15px;
   border-top: 1px solid #ccc;
@@ -664,6 +595,17 @@ p {
 .main-column.other-settings {
   padding: 15px;
   border-top: 1px solid #ccc;
+}
+.main-column.title {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+}
+.main-column.message {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+}
+.main-column.login-screen {
+  padding: 150px 15px;
 }
 .another-user-block {
   margin-top: 15px;
@@ -805,10 +747,6 @@ p {
   font-size: 12px;
   text-align: left;
 }
-.settings-text.deactivate {
-  padding-right: 0px;
-  text-align: center;
-}
 .settings-text-field {
   padding: 10px;
   font-family: Montserrat, sans-serif;
@@ -818,9 +756,6 @@ p {
   font-family: Montserrat, sans-serif;
   color: #5c5c5c;
   font-size: 12px;
-}
-.become-a-mentor-left-column {
-  margin-top: 10px;
 }
 .switch-to-mentor {
   position: relative;
@@ -839,6 +774,104 @@ p {
 }
 .switch-to-mentor:hover {
   color: #d9531e;
+}
+.sign-up-button {
+  display: block;
+  margin-top: 25px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 30px;
+  border-radius: 3px;
+  background-color: #323c46;
+  font-family: Montserrat, sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.sign-up-button:hover {
+  background-color: #36495c;
+}
+.sign-up-button.login {
+  width: 330px;
+  -webkit-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+  text-align: center;
+}
+.sign-up-button.signup {
+  width: 330px;
+  border: 1px solid #ccc;
+  background-color: white;
+  -webkit-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+  color: #5c5c5c;
+  text-align: center;
+}
+.sign-up-button.signup:hover {
+  color: #d9531e;
+}
+.agreements {
+  padding-left: 20px;
+}
+.text {
+  font-family: Montserrat, sans-serif;
+}
+.text.paragraph {
+  color: #5c5c5c;
+  font-size: 12px;
+}
+.text.paragraph.upload {
+  margin-top: 12px;
+  float: left;
+}
+.text.title {
+  text-transform: uppercase;
+}
+.text.title.large {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.text.title.large.with-comment {
+  margin-bottom: 0px;
+}
+.text.title.large.login {
+  text-align: center;
+}
+.text.title.regular {
+  font-size: 14px;
+}
+.text.ttile {
+  text-transform: uppercase;
+}
+.text.form {
+  color: #5c5c5c;
+  font-size: 12px;
+}
+.text.form.input-area {
+  height: 100px;
+}
+.text.subtitle {
+  margin-bottom: 15px;
+  color: #5c5c5c;
+  font-size: 12px;
+}
+.form-question {
+  margin-bottom: 25px;
+}
+.login-button {
+  display: block;
+  border-radius: 3px;
+  background-color: #323c46;
+  font-family: Montserrat, sans-serif;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 @media (max-width: 991px) {
 }

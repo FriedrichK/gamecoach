@@ -21,3 +21,7 @@ def mentor(request, mentor_id):
         'mentor_id': mentor_id
     }
     return render(request, 'pages/mentor_profile/mentor_profile.html', data)
+
+
+def register_mentor(request):
+    return render(request, 'pages/mentor_signup/mentor_signup.html')
