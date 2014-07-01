@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'postman',
+    'django_facebook',
 
     'frontend',
     'profiles',
@@ -93,3 +94,24 @@ STATICFILES_DIRS = (
 )
 
 POSTMAN_AUTO_MODERATE_AS = True
+
+AUTHENTICATION_BACKENDS = (
+    'django_facebook.auth_backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django_facebook.context_processors.facebook",
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages"
+)
+
+FACEBOOK_APP_ID = env('FACEBOOK_APP_ID')
+FACEBOOK_APP_SECRET = env('FACEBOOK_APP_SECRET')
+AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
+AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'

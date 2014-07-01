@@ -1,8 +1,9 @@
 from datetime import datetime
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+
+from django_facebook.models import FacebookCustomUser as User
 
 from profiles.tools.serialization import deserialize_roles, deserialize_regions, deserialize_availability, deserialize_data, deserialize_date
 
