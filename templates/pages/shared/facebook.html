@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<div id="fb-root"></div>
+
+<script src="{% static "/static/django_facebook/js/facebook.js" %}" type="text/javascript"></script>
+<script>
+    facebookAppId = '{{facebook_app_id}}';
+    facebookDefaultScope = ["email", "user_about_me", "user_birthday", "user_website"];
+    staticUrl = '/static/';
+    function facebookJSLoaded(){
+        FB.init({
+        	appId: facebookAppId,
+        	status: false,
+        	cookie: true,
+        	xfbml: true,
+        	oauth: true
+        });
+    }
+    window.fbAsyncInit = facebookJSLoaded;
+    F = new facebookClass(facebookAppId);
+    F.load();
+</script>

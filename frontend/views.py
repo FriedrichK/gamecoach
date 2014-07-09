@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.conf import settings
 
 from profiles.tools.mentors import get_mentor_by_id
 
@@ -24,4 +25,10 @@ def mentor(request, mentor_id):
 
 
 def register_mentor(request):
-    return render(request, 'pages/mentor_signup/mentor_signup.html')
+    if not request.user.is_authenticated():
+        data = {
+            'facebook_app_id': settings.FACEBOOK_APP_ID
+        }
+        return render(request, 'pages/mentor_signup/mentor_signup_step1.html', data)
+    else:
+        return render(request, 'pages/mentor_signup/mentor_signup_step2.html')

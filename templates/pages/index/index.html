@@ -22,18 +22,10 @@
   <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
   <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
 </head>
-<body ng-app>
-  <div class="section-header">
-    <div class="w-nav topnav" data-collapse="all" data-animation="default" data-duration="400" data-contain="1">
-      <div class="w-container nav-container">
-        <a class="w-nav-brand logo" href="#">
-          <img src="{% static "images/g_logo_blue.png" %}" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
-        </a>
-        <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Log In</a>
-        </div><a class="w-nav-link nav-link become-a-mentor" href="#">Become a mentor</a>
-      </div>
-    </div>
-  </div>
+<body ng-app="app">
+
+  {% include "pages/shared/topbar.html" %}
+
   <div>
     <div class="hero-image">
       <div class="w-container">
@@ -104,6 +96,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script type="text/javascript" src="{% static "js/webflow.js" %}"></script>
   <script type="text/javascript" src="{% static "js/index.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>
 </html>
