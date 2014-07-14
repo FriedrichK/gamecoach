@@ -9,7 +9,7 @@
   <div class="search-filter-section" ng-controller="MentorProfileController">
     <div class="w-container main-column settings">
       <div class="w-form">
-        <form id="email-form" name="email-form" action="/" onsubmit="return false">
+        <form id="emailForm" name="emailForm" action="/" onsubmit="return false">
           <div class="w-row form-question">
             <div class="w-col w-col-4">
               <label class="text title regular" for="name">Display name*</label>
@@ -31,7 +31,7 @@
               <label class="text title regular" for="name">Steam ID&nbsp;name*</label>
             </div>
             <div class="w-col w-col-8">
-              <input class="w-input text form" id="name-2" type="text" placeholder="Steam ID" name="name-2" data-name="Name 2" required="required" ng-model="mentor.steamId">
+              <input class="w-input text form" id="name-2" type="text" placeholder="Steam ID" name="name-2"required="required" ng-model="mentor.steamId">
             </div>
           </div>
           <div class="w-row form-question">
@@ -39,7 +39,7 @@
               <label class="text title regular" for="name">Your&nbsp;Steam ID&nbsp;link*</label>
             </div>
             <div class="w-col w-col-8">
-              <input class="w-input text form" id="name-3" type="text" placeholder="http://" name="name-3" data-name="Name 3" required="required" ng-model="mentor.steamIdLink">
+              <input class="w-input text form" id="name-3" type="text" placeholder="http://" name="name-3" required="required" ng-model="mentor.steamIdLink">
             </div>
           </div>
           <div class="w-row form-question">
@@ -47,7 +47,7 @@
               <label class="text title regular" for="email">Email Address*</label>
             </div>
             <div class="w-col w-col-8">
-              <input class="w-input text form" id="email" type="email" placeholder="Enter your email address" name="email" data-name="Email" required="required" ng-model="mentor.email">
+              <input class="w-input text form" id="email" type="email" placeholder="Enter your email address" name="email" required="required" ng-model="mentor.email">
             </div>
           </div>
           <div class="w-row form-question">
@@ -55,7 +55,7 @@
               <label class="text title regular" for="email">Confirm email Address*</label>
             </div>
             <div class="w-col w-col-8">
-              <input class="w-input text form input" id="email-2" type="email" placeholder="Enter your email address again" name="email-2" data-name="Email 2" required="required" ng-model="mentor.email2">
+              <input class="w-input text form input" id="email-2" type="email" placeholder="Enter your email address again" name="email-2" required="required" ng-model="mentor.email2">
             </div>
           </div>
           <div class="w-row form-question">
@@ -63,7 +63,7 @@
               <label class="text title regular" for="email">About me*</label>
             </div>
             <div class="w-col w-col-8">
-              <textarea class="w-input text form input-area" id="about-me" placeholder="Tell a bit about yourself" name="about-me" data-name="About me" required="required" ng-model="mentor.about"></textarea>
+              <textarea class="w-input text form input-area" id="about-me" placeholder="Tell a bit about yourself" name="about-me" required="required" ng-model="mentor.about"></textarea>
             </div>
           </div>
           <div class="w-row form-question">
@@ -84,11 +84,11 @@
                 </div>
                 <div class="w-col w-col-3">
                   <div class="w-checkbox w-clearfix">
-                    <input class="w-checkbox-input" id="role-10" type="checkbox" name="role-10" data-name="Role 10" ng-model="mentor.role.ganker">
+                    <input class="w-checkbox-input" id="role-10" type="checkbox" name="role-10" ng-model="mentor.role.ganker">
                     <label class="w-form-label" for="role-10">Ganker</label>
                   </div>
                   <div class="w-checkbox w-clearfix">
-                    <input class="w-checkbox-input" id="role-11" type="checkbox" name="role-11" data-name="Role 11" ng-model="mentor.role.initiator">
+                    <input class="w-checkbox-input" id="role-11" type="checkbox" name="role-11" ng-model="mentor.role.initiator">
                     <label class="w-form-label" for="role-11">Initiator</label>
                   </div>
                 </div>
@@ -294,7 +294,7 @@
               </ul>
             </div>
           </div>
-          <button class="w-button sign-up-button" ng-click="save()">Save</button>
+          <button class="w-button sign-up-button" ng-click="save(emailForm)">Save</button>
         </form>
         <div class="w-form-done">
           <p>Thank you! Your submission has been received!</p>

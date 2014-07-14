@@ -117,3 +117,19 @@ HEROES = [
     "Wraith King",
     "Zeus"
 ]
+
+SIGNUP_FORM = {
+    'about': {},
+    'day': {},
+    'displayName': {},
+    'email': {},
+    'email2': {},
+    'mentoring': {},
+    'region': {},
+    'role': {},
+    'statistics': {},
+    'steamId': {},
+    'steamIdLink': {},
+    'time': {},
+    'topheroes': {}
+}

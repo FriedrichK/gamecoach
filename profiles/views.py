@@ -5,10 +5,18 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
 from tools.mentors import get_all_mentors, get_mentor_by_id
+from tools.signup_form import add_profile_for_user, get_mentor_signup_form_from_request
 
 
 @csrf_exempt
 def mentor(request, mentor_id):
+    if request.method == "POST":
+        return mentor_create_or_update(request, mentor_id)
+    if request.method == "GET":
+        return mentor_read(request, mentor_id)
+
+
+def mentor_read(request, mentor_id):
     if mentor_id is None:
         return get_filtered_mentors(request)
     else:
@@ -16,6 +24,25 @@ def mentor(request, mentor_id):
         if mentor is None:
             return HttpResponseNotFound()
         return HttpResponse(json.dumps(mentor.deserialize()))
+
+
+def mentor_create_or_update(request, mentor_id):
+    if mentor_id is None or mentor_id == '':
+        return mentor_create(request)
+    return mentor_update(request, mentor_id)
+
+
+def mentor_create(request):
+    if request.user is None or not request.user.is_authenticated():
+        return HttpResponseNotFound(json.dumps({'success': False, 'error': 'no_valid_user_found'}))
+    mentor_signup_form = get_mentor_signup_form_from_request(json.loads(request.body))
+    print mentor_signup_form
+    result = add_profile_for_user(request.user, mentor_signup_form)
+    return HttpResponse(json.dumps({'bla': 'bla'}))
+
+
+def mentor_update(request, mentor_id):
+    return  HttpResponseNotFound(json.dumps({'success': False, 'error': 'wrong_branch'}))
 
 
 def get_filtered_mentors(request):
