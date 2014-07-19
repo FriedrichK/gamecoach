@@ -107,7 +107,7 @@ def get_statistic(signup_form_data, label, default=None):
         return default
     if not label in signup_form_data['statistics']:
         return default
-    return signup_form_data
+    return signup_form_data['statistics'][label]
 
 
 def get_hash(src, label):

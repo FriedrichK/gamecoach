@@ -235,7 +235,9 @@ app.factory('profileStatisticsService', function($filter, profileLabelService) {
             }
             var me = this;
             var statistics = [];
-            angular.forEach(data.data.statistics, function(value, key) {
+            var parsedStatistics = this._parseStatistics(data.data.statistics);
+            console.log(parsedStatistics);
+            angular.forEach(parsedStatistics, function(value, key) {
                 statistics.push({
                     identifier: key,
                     label: profileLabelService.getNameForLabel('statistics', key),
@@ -249,6 +251,9 @@ app.factory('profileStatisticsService', function($filter, profileLabelService) {
                 return $filter('percentAsString')(value);
             }
             return $filter('number')(value, 0);
+        },
+        _parseStatistics: function(statisticsString) {
+            return angular.fromJson(statisticsString);
         }
     };
 });
