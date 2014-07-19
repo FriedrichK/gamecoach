@@ -1,6 +1,6 @@
 import json
 
-from profiles.settings import ROLES, REGIONS, AVAILABILITY
+from profiles.settings import ROLES, REGIONS, REGIONS_LABELS, AVAILABILITY
 
 
 def serialize_data(data_hash):
@@ -22,11 +22,11 @@ def deserialize_roles(input_string):
 
 
 def serialize_regions(data_hash):
-    return serialize_string_storage(data_hash, REGIONS)
+    return serialize_string_storage(data_hash, REGIONS_LABELS)
 
 
 def deserialize_regions(input_string):
-    return deserialize_string_storage(input_string, REGIONS)
+    return deserialize_string_storage(input_string, REGIONS_LABELS)
 
 
 def serialize_availability(day, time):

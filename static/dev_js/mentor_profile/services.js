@@ -31,8 +31,8 @@ app.factory('profileRegionService', function(profileLabelService) {
             angular.forEach(data.regions, function(value, key) {
                 if(value === true) {
                     regions.push({
-                        label: key,
-                        identifier: profileLabelService.getLabelForName('regions', key)
+                        label: profileLabelService.getNameForLabel('regions', key),
+                        identifier: key
                     });
                 }
             });
@@ -171,7 +171,6 @@ app.factory('profileStatisticsService', function($filter, profileLabelService) {
             return statistics;
         },
         _processValue: function(key, value) {
-            console.log(key);
             if(key === "win_rate") {
                 return $filter('percentAsString')(value);
             }
