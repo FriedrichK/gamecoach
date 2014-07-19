@@ -2,7 +2,7 @@ from django.db.models import Q
 
 from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
 from profiles.models import GamecoachProfile
-from profiles.tools.fake import create_fake_mentors
+#from profiles.tools.fake import create_fake_mentors
 
 
 def get_mentor_by_id(mentor_id):
@@ -15,11 +15,13 @@ def get_mentor_by_id(mentor_id):
 def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 
-    test = GamecoachProfile.objects.all()
-    if len(test) == 0:
-        create_fake_mentors(100)
+    #test = GamecoachProfile.objects.all()
+    #if len(test) == 0:
+    #    create_fake_mentors(100)
 
     m = GamecoachProfile.objects.filter(*filters)
+    print m.query
+    print "mentors found: ", len(m)
     mentors = []
     for i in m:
         mentors.append(i.deserialize())
@@ -37,6 +39,7 @@ def merge_filter_data(filter_data):
 
 
 def generate_filters(filter_data):
+    print filter_data
     if filter_data is None:
         return {}
 
