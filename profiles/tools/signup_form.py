@@ -1,10 +1,13 @@
 import datetime
 import json
+import re
 
 from profiles.settings import SIGNUP_FORM
 from profiles.models import GamecoachProfile
 from profiles.tools.serialization import serialize_roles, serialize_regions, serialize_availability
 from profiles.settings import HEROES_HASH
+
+WIN_RATE_REGEX_PATTERN = re.compile('([0-9\\.]+)')
 
 
 def add_profile_for_user(user, form):
@@ -64,9 +67,20 @@ def generate_form_data_data(signup_form_data):
 def generate_statistics(signup_form_data):
     return {
         'games_played': get_statistic(signup_form_data, 'gamesPlayed'),
-        'win_rate': get_statistic(signup_form_data, 'winRate'),
+        'win_rate': clean_win_rate(get_statistic(signup_form_data, 'winRate')),
         'solo_mmr': get_statistic(signup_form_data, 'soloMmr')
     }
+
+
+def clean_win_rate(input):
+    if input is None:
+        return None
+    r = WIN_RATE_REGEX_PATTERN.search(input)
+    groups = r.groups()
+    if len(groups) < 1:
+        return None
+    rate_as_percent = float(groups[0])
+    return rate_as_percent / 100.0
 
 
 def generate_top_heroes(data):
