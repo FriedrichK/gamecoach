@@ -35,7 +35,7 @@ app.controller('MentorProfileController', function($scope, mentorProfileService)
 		}
 	};
 });
-/* global angular */
+/* global angular, window */
 var app = angular.module('app');
 
 app.factory('mentorProfileService', function($http) {
@@ -47,7 +47,9 @@ app.factory('mentorProfileService', function($http) {
                 data: data
             })
             .then(function(result) {
-                console.log(result);
+                if(result.status === 200) {
+                    window.location = "/";
+                }
             });
         }
     };
