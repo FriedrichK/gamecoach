@@ -30,7 +30,7 @@ def mentor_create_or_update(request, mentor_id):
     mentor_signup_form = get_mentor_signup_form_from_request(json.loads(request.body))
     if request.user is None or not request.user.is_authenticated():
         return HttpResponseNotFound(json.dumps({'success': False, 'error': 'no_valid_user_found'}))
-    if request.user.gamecoachprofile is None:
+    if not hasattr(request.user, 'gamecoachprofile'):
         return mentor_create(request, mentor_signup_form)
     return mentor_update(request, mentor_id, mentor_signup_form)
 
