@@ -10,7 +10,6 @@ app.controller('MentorSignupController', function($scope, $element) {
 	$scope.facebookLogin = function() {
 		var element = angular.element("#facebook-login-form");
 		var el = document.getElementById('facebook-login-form');
-		console.log(document, el);
 		F.connect(element);
 		return false;
 	};
@@ -31,7 +30,6 @@ app.controller('MentorProfileController', function($scope, mentorProfileService)
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
-		formIsValid = true;
 		if(formIsValid) {
 			mentorProfileService.submit($scope.mentor);
 		}
