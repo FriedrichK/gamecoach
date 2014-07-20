@@ -5,6 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
+    #url(r'files/(.*)', 'profiles.views.profile_picture', 'p'),
+
     url(r'^facebook/', include('django_facebook.urls')),
     url(r'^accounts/', include('django_facebook.auth_urls')),
 

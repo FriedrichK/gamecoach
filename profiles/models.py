@@ -1,5 +1,7 @@
+import os
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -34,3 +36,9 @@ class GamecoachProfile(models.Model):
         except ObjectDoesNotExist:
             pass
         return data
+
+
+class ProfilePicture(models.Model):
+    user = models.OneToOneField(User)
+    image = models.ImageField(upload_to=os.path.join(settings.STATICFILES_DIRS[0], 'images/uploads/'))
+    created = models.DateField(default=datetime.now(), blank=True)

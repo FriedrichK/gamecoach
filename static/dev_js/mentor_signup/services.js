@@ -18,6 +18,23 @@ app.factory('mentorProfileService', function($http) {
     };
 });
 
+app.factory('profilePictureUploadService', function($http, $upload) {
+    return {
+        upload: function(file) {
+            $upload.upload({
+                url: '/api/mentor/profilePicture/',
+                file: file,
+            })
+            .progress(function(evt) {
+                console.log(evt);
+            })
+            .success(function(data, status, headers, config) {
+                console.log(data, status, headers, config);
+            });
+        }
+    };
+});
+
 app.factory('heroesService', function() {
   return {
     getHeroHash: function() {

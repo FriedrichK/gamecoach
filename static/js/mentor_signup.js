@@ -1,5 +1,5 @@
 /* global angular */
-var app = angular.module('app', [])
+var app = angular.module('app', ['angularFileUpload'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
@@ -35,6 +35,14 @@ app.controller('MentorProfileController', function($scope, mentorProfileService)
 		}
 	};
 });
+
+app.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {
+	$scope.onFileSelect = function($files) {
+		angular.forEach($files, function(file, index) {
+			profilePictureUploadService.upload(file);
+		});
+	};
+});
 /* global angular, window */
 var app = angular.module('app');
 
@@ -50,6 +58,23 @@ app.factory('mentorProfileService', function($http) {
                 if(result.status === 200) {
                     window.location = "/";
                 }
+            });
+        }
+    };
+});
+
+app.factory('profilePictureUploadService', function($http, $upload) {
+    return {
+        upload: function(file) {
+            $upload.upload({
+                url: '/api/mentor/profilePicture/',
+                file: file,
+            })
+            .progress(function(evt) {
+                console.log(evt);
+            })
+            .success(function(data, status, headers, config) {
+                console.log(data, status, headers, config);
             });
         }
     };

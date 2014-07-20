@@ -30,3 +30,11 @@ app.controller('MentorProfileController', function($scope, mentorProfileService)
 		}
 	};
 });
+
+app.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {
+	$scope.onFileSelect = function($files) {
+		angular.forEach($files, function(file, index) {
+			profilePictureUploadService.upload(file);
+		});
+	};
+});
