@@ -2,6 +2,7 @@ from django.db.models import Q
 
 from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
 from profiles.models import GamecoachProfile
+from django_facebook.models import FacebookCustomUser as User
 #from profiles.tools.fake import create_fake_mentors
 
 
@@ -9,6 +10,13 @@ def get_mentor_by_id(mentor_id):
     try:
         return GamecoachProfile.objects.get(user__username=mentor_id)
     except GamecoachProfile.DoesNotExist:
+        return None
+
+
+def get_mentor_by_username(username):
+    try:
+        return User.objects.get(username=username)
+    except User.DoesNotExist:
         return None
 
 

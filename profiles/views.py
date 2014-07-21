@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
-from tools.mentors import get_all_mentors, get_mentor_by_id
+from tools.mentors import get_all_mentors, get_mentor_by_id, get_mentor_by_username
 from tools.signup_form import add_profile_for_user, update_profile_for_user, get_mentor_signup_form_from_request
 
 from profiles.models import ProfilePicture
@@ -72,15 +72,17 @@ def profile_picture(request, user_id):
         return profile_picture_upload(request)
 
 
-def profile_picture_display(request, user_id):
+def profile_picture_display(request, username):
     try:
-        picture = ProfilePicture.objects.get(user_id=user_id)
+        user = get_mentor_by_username(username)
+        picture = ProfilePicture.objects.get(user=user)
         image_path = unicode(picture.image)
-        image_path = image_path.replace('/home/fkauder/Dropbox/Misc/code/python/gamecoach/static/images/uploads/', '')
-        print image_path
+        image_path = image_path.replace(settings.MEDIA_ROOT, '')
+        final_path = '/upload' + image_path
+        print final_path
         response = HttpResponse()
         del response['content-type']
-        response['X-Accel-Redirect'] = '/uploads/' + image_path
+        response['X-Accel-Redirect'] = final_path
         return response
     except ProfilePicture.DoesNotExist:
         return HttpResponseNotFound()

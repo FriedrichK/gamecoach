@@ -48,7 +48,7 @@
   <div class="search-filter-section">
     <div class="w-container profile-background-image">
       <div class="full-profile-image-background">
-        <img class="full-profile-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
+        <img class="full-profile-image ng-cloak" ng-show="profilePictureUri" src="{% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}" alt="image-placeholder.svg">
       </div>
       <h2 class="ng-cloak">{% templatetag openvariable %}profile.data.steamId{% templatetag closevariable %}</h2>
     </div>

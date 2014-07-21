@@ -11,6 +11,7 @@ app.controller('ProfileController', function($scope, $element, profileDataServic
             $scope.heroesProcessed = profileHeroService.buildHeroList(data);
             $scope.statistics = profileStatisticsService.buildStatisticsList(data);
         });
+        $scope.profilePictureUri = '/data/mentor/' + $scope.profile.mentorId + "/profilePicture";
     });
 });
 
