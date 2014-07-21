@@ -12,7 +12,12 @@
 	</form>
 {% endblock %}
 
+{% block scripts_pre %}
+  <script src="{% static "js/angular-file-upload-shim.min.js" %}"></script> 
+{% endblock %}
+
 {% block scripts %}
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script> 
 	<script type="text/javascript" src="{% static "js/mentor_signup.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
 {% endblock %}
