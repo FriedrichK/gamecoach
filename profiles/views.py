@@ -2,7 +2,7 @@
 import json
 import urllib
 
-#from django.conf import settings
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
@@ -92,7 +92,4 @@ def profile_picture_upload(request):
         profile_picture, created = ProfilePicture.objects.get_or_create(user=request.user)
         profile_picture.image = f
         profile_picture.save()
-        #with open(os.path.join(settings.STATICFILES_DIRS[0], 'images/uploads/' + f.name), 'wb+') as destination:
-        #    for chunk in f.chunks():
-        #        destination.write(chunk)
     return HttpResponse(json.dumps({}))

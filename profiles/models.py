@@ -1,3 +1,4 @@
+
 import os
 from datetime import datetime
 
@@ -38,7 +39,11 @@ class GamecoachProfile(models.Model):
         return data
 
 
+def get_image_path(self, filename):
+    return os.path.join(settings.MEDIA_ROOT, unicode(self.id), filename)
+
+
 class ProfilePicture(models.Model):
     user = models.OneToOneField(User)
-    image = models.ImageField(upload_to=os.path.join(settings.STATICFILES_DIRS[0], 'images/uploads/'))
+    image = models.ImageField(upload_to=get_image_path)
     created = models.DateField(default=datetime.now(), blank=True)

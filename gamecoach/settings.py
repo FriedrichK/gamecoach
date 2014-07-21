@@ -118,3 +118,5 @@ AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
 AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+MEDIA_ROOT = env('MEDIA_ROOT')
