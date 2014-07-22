@@ -1,8 +1,9 @@
-/* global document, angular */
+/* global document, angular, window */
 
 var app = angular.module('app'); 
 app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
     angular.element(document).ready(function () {
+        var mentorId = $scope.profile.mentorId;
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
             $scope.profile = data;
             $scope.regions = profileRegionService.buildRegionList(data);
@@ -12,5 +13,8 @@ app.controller('ProfileController', function($scope, $element, profileDataServic
             $scope.statistics = profileStatisticsService.buildStatisticsList(data);
         });
         $scope.profilePictureUri = '/data/mentor/' + $scope.profile.mentorId + "/profilePicture";
+        $scope.contact = function() {
+            window.location = '/mentor/' + mentorId + "/contact";
+        };
     });
 });

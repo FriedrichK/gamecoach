@@ -3,11 +3,12 @@ var app = angular.module('app', ['ngAnimate'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
-/* global document, angular */
+/* global document, angular, window */
 
 var app = angular.module('app'); 
 app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
     angular.element(document).ready(function () {
+        var mentorId = $scope.profile.mentorId;
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
             $scope.profile = data;
             $scope.regions = profileRegionService.buildRegionList(data);
@@ -17,6 +18,9 @@ app.controller('ProfileController', function($scope, $element, profileDataServic
             $scope.statistics = profileStatisticsService.buildStatisticsList(data);
         });
         $scope.profilePictureUri = '/data/mentor/' + $scope.profile.mentorId + "/profilePicture";
+        $scope.contact = function() {
+            window.location = '/mentor/' + mentorId + "/contact";
+        };
     });
 });
 
@@ -88,7 +92,6 @@ app.factory('profileDataService', function($http) {
                 params: {}
             })
             .then(function(result) {
-                console.log(result.data);
                 callable(result.data);
             });
         }
@@ -240,7 +243,6 @@ app.factory('profileStatisticsService', function($filter, profileLabelService) {
             var me = this;
             var statistics = [];
             var parsedStatistics = this._parseStatistics(data.data.statistics);
-            console.log(parsedStatistics);
             angular.forEach(parsedStatistics, function(value, key) {
                 statistics.push({
                     identifier: key,
