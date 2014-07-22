@@ -10,7 +10,6 @@ app.factory('profileDataService', function($http) {
                 params: {}
             })
             .then(function(result) {
-                console.log(result.data);
                 callable(result.data);
             });
         }
@@ -162,7 +161,6 @@ app.factory('profileStatisticsService', function($filter, profileLabelService) {
             var me = this;
             var statistics = [];
             var parsedStatistics = this._parseStatistics(data.data.statistics);
-            console.log(parsedStatistics);
             angular.forEach(parsedStatistics, function(value, key) {
                 statistics.push({
                     identifier: key,
