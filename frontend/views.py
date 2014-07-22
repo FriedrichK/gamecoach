@@ -6,11 +6,13 @@ from profiles.tools.mentors import get_mentor_by_id
 
 
 def index(request):
-    return render(request, 'pages/index/index.html')
+    context = get_basic_context(request)
+    return render(request, 'pages/index/index.html', context)
 
 
 def results(request):
-    return render(request, 'pages/mentor_results/mentor_results.html')
+    context = get_basic_context(request)
+    return render(request, 'pages/mentor_results/mentor_results.html', context)
 
 
 def mentor(request, mentor_id):
@@ -18,17 +20,31 @@ def mentor(request, mentor_id):
     if mentor is None:
         raise Http404()
 
-    data = {
+    context = {
         'mentor_id': mentor_id
     }
-    return render(request, 'pages/mentor_profile/mentor_profile.html', data)
+    context = dict(context.items() + get_basic_context(request).items())
+    return render(request, 'pages/mentor_profile/mentor_profile.html', context)
 
 
 def register_mentor(request):
+    context = get_basic_context(request)
     if not request.user.is_authenticated():
         data = {
             'facebook_app_id': settings.FACEBOOK_APP_ID
         }
-        return render(request, 'pages/mentor_signup/mentor_signup_step1.html', data)
+        return render(request, 'pages/mentor_signup/mentor_signup_step1.html', dict(context.items() + data.items()))
     else:
-        return render(request, 'pages/mentor_signup/mentor_signup_step2.html')
+        return render(request, 'pages/mentor_signup/mentor_signup_step2.html', context)
+
+
+def get_basic_context(request):
+    return {
+        'is_mentor': is_mentor(request.user)
+    }
+
+
+def is_mentor(user):
+    if not hasattr(user, 'gamecoachprofile') or user.gamecoachprofile is None:
+        return False
+    return True

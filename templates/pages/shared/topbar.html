@@ -9,8 +9,10 @@
         <div class="nav-menu-block"><a class="w-nav-link drop-down-nav-link" href="#">Inbox (5)</a><a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a><a class="w-nav-link drop-down-nav-link" href="#">Settings</a>
         </div><a class="w-nav-link drop-down-nav-link" href="#">Log out</a>
       </nav>
-      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Minced Unicorn</a>
-      </div><a class="w-nav-link nav-link become-a-mentor" ng-click="registerMentorLink()">Become a mentor</a>
-    </div>
+      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Minced Unicorn</a></div>
+      {% if not is_mentor %}
+      <a class="w-nav-link nav-link become-a-mentor" ng-click="registerMentorLink()">Become a mentor</a>
+      {% endif %}
+      </div>
   </div>
 </div>

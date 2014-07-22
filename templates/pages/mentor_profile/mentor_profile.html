@@ -1,51 +1,12 @@
+{% extends "pages/shared/page.html" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<!-- This site was created in Webflow. http://www.webflow.com-->
-<!-- Last Published: Sat Jun 14 2014 23:27:51 GMT+0000 (UTC) -->
-<html data-wf-site="538284fd8a5f2a68714e29b5">
-<head>
-  <meta charset="utf-8">
-  <title>Gamecoach v03</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Webflow">
-  <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "css/webflow.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "css/gamecoach-v03.webflow.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "css/mentor_profile.css" %}">
-  <style>
-    .ng-cloak { display:none; }
-  </style>
-  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ["Press Start 2P:regular:latin,latin-ext"]
-      }
-    });
-  </script>
-  <script type="text/javascript" src="js/modernizr.js"></script>
-  <link rel="shortcut icon" type="image/x-icon" href="https://daks2k3a4ib2z.cloudfront.net/placeholder/favicon.ico">
-</head>
-<body ng-app="app" ng-controller="ProfileController" ngCloak>
 
-  <input type="hidden" name="mentorId" value="{{mentor_id}}" ng-init="profile.mentorId='{{mentor_id}}'" ng-value="{{mentor_id}}" ng-model="profile.mentorId" />
+{% block body_tag %}ng-app="app" ng-controller="ProfileController" ngCloak{% endblock %}
 
-  <div class="section-header">
-    <div class="w-nav topnav" data-collapse="all" data-animation="default" data-duration="400" data-contain="1">
-      <div class="w-container nav-container">
-        <a class="w-nav-brand logo" href="#">
-          <img src="{% static "images/g_logo_blue.png" %}" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
-        </a>
-        <nav class="w-nav-menu nav-menu-drop-down" role="navigation">
-          <div class="nav-menu-block"><a class="w-nav-link drop-down-nav-link" href="#">Inbox (5)</a><a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a><a class="w-nav-link drop-down-nav-link" href="#">Settings</a>
-          </div><a class="w-nav-link drop-down-nav-link" href="#">Log out</a>
-        </nav>
-        <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Minced Unicorn</a>
-        </div><a class="w-nav-link nav-link become-a-mentor" href="#">Become a mentor</a>
-      </div>
-    </div>
-  </div>
-  <div class="search-filter-section">
+{% block content %}
+	<input type="hidden" name="mentorId" value="{{mentor_id}}" ng-init="profile.mentorId='{{mentor_id}}'" ng-value="{{mentor_id}}" ng-model="profile.mentorId" />
+
+ <div class="search-filter-section">
     <div class="w-container profile-background-image">
       <div class="full-profile-image-background">
         <img class="full-profile-image ng-cloak" ng-show="profilePictureUri" src="{% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}" alt="image-placeholder.svg">
@@ -179,34 +140,11 @@
       </div>
     </div>
   </div>
-  <div>
-    <div class="w-container footer-column">
-      <div class="w-row">
-        <div class="w-col w-col-2 w-clearfix"><a class="footer-nav-link" href="#">About</a><a class="footer-nav-link" href="#">Our team</a><a class="footer-nav-link" href="#">Contact us</a>
-        </div>
-        <div class="w-col w-col-3"><a class="footer-nav-link" href="#">Terms &amp; Conditions</a><a class="footer-nav-link" href="#">Privacy Policy</a><a class="footer-nav-link" href="#">Cookies</a>
-        </div>
-        <div class="w-col w-col-7 w-clearfix">
-          <a class="w-inline-block social-icon" href="#">
-            <img src="{% static "images/twitter.png" %}" width="16" alt="5383b7495aa5711a5495122a_twitter.png">
-          </a>
-          <a class="w-inline-block social-icon" href="#">
-            <img src="{% static "images/facebook.png" %}" width="10" alt="5383b6f078e1ff6971388bd5_facebook.png">
-          </a>
-          <a class="w-inline-block social-icon" href="#">
-            <img src="{% static "images/email.png" %}" width="20" alt="5383b72c8a5f2a68714e466e_email.png">
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script type="text/javascript" src="{% static "js/webflow.js" %}"></script>
-  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-  <script src="https://code.angularjs.org/1.2.13/angular.js"></script>
-  <script src="https://code.angularjs.org/1.2.13/angular-animate.js"></script>
+{% endblock %}
 
-  <script type="text/javascript" src="{% static "js/mentor_profile.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/shared.js" %}"></script>
-</body>
-</html>
+{% block scripts %}
+	<script src="https://code.angularjs.org/1.2.13/angular-animate.js"></script>
+	<script type="text/javascript" src="{% static "js/mentor_profile.js" %}"></script>
+  	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
+  	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}
