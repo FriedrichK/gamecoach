@@ -20,6 +20,9 @@ app.controller('ProfileController', function($scope, $element, profileDataServic
     });
 });
 
+/* global document, angular */
+
+var app = angular.module('app');
 app.directive('valueAsPercent', function() {
     return {
         restrict: 'AE',
