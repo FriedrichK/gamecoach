@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^facebook/', include('django_facebook.urls')),
     url(r'^accounts/', include('django_facebook.auth_urls')),
 
+    url(r'^api/user', include('profiles.urls_api_user')),
     url(r'^api/mentor', include('profiles.urls_api')),
     url(r'^data/mentor', include('profiles.urls_data')),
     url(r'^api/message', include('privatemessages.urls_api')),

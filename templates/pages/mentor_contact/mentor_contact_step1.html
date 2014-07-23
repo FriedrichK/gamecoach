@@ -1,0 +1,23 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block content %}
+	{% include "pages/shared/facebook.html" %}
+	<div id="fb-root"></div>
+	<form id="facebook-login-form" action="/facebook/connect/?facebook_login=1" method="post">
+		{% csrf_token %}
+		<input type="hidden" value="/mentor/{{mentor_id}}/contact" name="next" />
+		<div class="w-container main-column login-screen" ng-controller="MentorSignupController" ng-click="facebookLogin()"><a class="sign-up-button login" href="#">Sign up with facebook</a>
+		</div>
+	</form>
+{% endblock %}
+
+{% block scripts_pre %}
+  <script src="{% static "js/angular-file-upload-shim.min.js" %}"></script> 
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script> 
+	<script type="text/javascript" src="{% static "js/mentor_contact.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

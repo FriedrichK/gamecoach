@@ -38,6 +38,17 @@ def register_mentor(request):
         return render(request, 'pages/mentor_signup/mentor_signup_step2.html', context)
 
 
+def mentor_contact(request, mentor_id):
+    context = get_basic_context(request)
+    if not request.user.is_authenticated():
+        data = {
+            'facebook_app_id': settings.FACEBOOK_APP_ID
+        }
+        return render(request, 'pages/mentor_contact/mentor_contact_step1.html', dict(context.items() + data.items()))
+    else:
+        return render(request, 'pages/mentor_contact/mentor_contact_step2.html', context)
+
+
 def get_basic_context(request):
     return {
         'is_mentor': is_mentor(request.user)
