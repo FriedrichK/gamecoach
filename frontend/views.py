@@ -45,8 +45,9 @@ def mentor_contact(request, mentor_id):
             'facebook_app_id': settings.FACEBOOK_APP_ID
         }
         return render(request, 'pages/mentor_contact/mentor_contact_step1.html', dict(context.items() + data.items()))
-    else:
+    if not is_user(request.user):
         return render(request, 'pages/mentor_contact/mentor_contact_step2.html', context)
+    return render(request, 'pages/conversation/inbox.html', context)
 
 
 def get_basic_context(request):
@@ -56,6 +57,14 @@ def get_basic_context(request):
 
 
 def is_mentor(user):
+    return has_profile(user, 'gamecoachprofile')
+
+
+def is_user(user):
+    return has_profile(user, 'gamecoachprofilestudent')
+
+
+def has_profile(user, profile_name):
     if not hasattr(user, 'gamecoachprofile') or user.gamecoachprofile is None:
         return False
     return True
