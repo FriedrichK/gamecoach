@@ -31,6 +31,10 @@ module.exports = function(grunt) {
       mentor_contact: {
         src: ['static/dev_js/mentor_contact/**/*.js'],
         dest: 'static/js/mentor_contact.js'
+      },
+      conversation: {
+        src: ['static/dev_js/conversation/**/*.js'],
+        dest: 'static/js/conversation.js'
       }
     },
     uglify: {
@@ -61,6 +65,10 @@ module.exports = function(grunt) {
       mentor_contact: {
         src: 'static/js/mentor_contact.js',
         dest: 'static/js/mentor_contact.min.js'
+      },
+      conversation: {
+        src: 'static/js/conversation.js',
+        dest: 'static/js/conversation.min.js'
       }
     },
     jshint: {
@@ -93,7 +101,8 @@ module.exports = function(grunt) {
           'static/dev_css/mentor_results.css': 'static/dev_scss/mentor_results/mentor_results.scss',
           'static/dev_css/mentor_profile.css': 'static/dev_scss/mentor_profile/mentor_profile.scss',
           'static/dev_css/mentor_signup.css': 'static/dev_scss/mentor_signup/mentor_signup.scss',
-          'static/dev_css/mentor_contact.css': 'static/dev_scss/mentor_signup/mentor_contact.scss'
+          'static/dev_css/mentor_contact.css': 'static/dev_scss/mentor_signup/mentor_contact.scss',
+          'static/dev_css/conversation.css': 'static/dev_scss/mentor_signup/conversation.scss'
         }
       }
     },
@@ -106,7 +115,8 @@ module.exports = function(grunt) {
           'static/css/mentor_results.css': 'static/dev_css/mentor_results.css',
           'static/css/mentor_profile.css': 'static/dev_css/mentor_profile.css',
           'static/css/mentor_signup.css': 'static/dev_css/mentor_signup.css',
-          'static/css/mentor_contact.css': 'static/dev_css/mentor_contact.css'
+          'static/css/mentor_contact.css': 'static/dev_css/mentor_contact.css',
+          'static/css/conversation.css': 'static/dev_css/conversation.css'
         }
       }
     },

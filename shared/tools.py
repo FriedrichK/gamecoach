@@ -20,6 +20,8 @@ def generate_random_string(length):
 
 
 def serialize_datetime(dt):
+    if dt is None:
+        return None
     return {
         'year': dt.year,
         'month': dt.month,

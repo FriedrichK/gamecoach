@@ -5,13 +5,13 @@
 <div class="search-filter-section">
     <div class="w-container main-column">
       <div class="w-row">
-        <div class="w-col w-col-8">
+        <div class="w-col w-col-8" ng-controller="MessageController">
           <div class="tyoe-message-column">
             <div class="type-message-block">
               <div class="w-form">
-                <form class="w-clearfix" id="email-form" name="email-form" data-name="Email Form">
+                <form class="w-clearfix" id="email-form" name="email-form" data-name="Email Form" ng-controller="SubmissionController" action="/" onsubmit="return false">
                   <textarea class="w-input type-message" id="field" placeholder="Write a reply" name="field" required="required"></textarea>
-                  <input class="w-button send-button" type="submit" value="Send" data-wait="Send" wait="Send">
+                  <input class="w-button send-button" type="button" value="Send" data-wait="Send" wait="Send" ng-click="submit()"/>
                 </form>
                 <div class="w-form-done">
                   <p>Thank you! Your submission has been received!</p>
@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-          <div class="w-clearfix message-block">
+          <div class="w-clearfix message-block  my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in messages" ng-show="message" ng-click="goToMessage(message.id)">
             <img class="user-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
             <div class="user-name">Minced Unicorn</div>
             <div class="message-time full-message">11:35am</div>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="w-col w-col-4">
-          <div class="another-user-block">
+          <div class="another-user-block" ng-controller="OtherUserProfileController">
             <div class="w-row contact-stats-block">
               <div class="w-col w-col-6 w-clearfix">
                 <img class="correspondent-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
@@ -92,6 +92,7 @@
 {% endblock %}
 
 {% block scripts %}
+  <script src="https://code.angularjs.org/1.2.13/angular-animate.js"></script>
 	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/conversation.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>

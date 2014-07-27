@@ -36,6 +36,7 @@ INSTALLED_APPS = (
 
     'frontend',
     'profiles',
+    'conversation',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,3 +121,5 @@ AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 MEDIA_ROOT = env('MEDIA_ROOT')
+
+os.environ['REUSE_DB'] = "1"

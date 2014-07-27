@@ -6,8 +6,8 @@
 	<div id="fb-root"></div>
 	<form id="facebook-login-form" action="/facebook/connect/?facebook_login=1" method="post">
 		{% csrf_token %}
-		<input type="hidden" value="/mentor/{{mentor_id}}/contact" name="next" />
-		<div class="w-container main-column login-screen" ng-controller="MentorSignupController" ng-click="facebookLogin()"><a class="sign-up-button login" href="#">Sign up with facebook</a>
+		<input type="hidden" value="/mentor/{{user_id}}/contact" name="next" />
+		<div class="w-container main-column login-screen" ng-controller="UserSignupController" ng-click="facebookLogin()"><a class="sign-up-button login" href="#">Sign up with facebook</a>
 		</div>
 	</form>
 {% endblock %}
@@ -17,7 +17,8 @@
 {% endblock %}
 
 {% block scripts %}
-	<script src="{% static "js/angular-file-upload.min.js" %}"></script> 
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/mentor_contact.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
 {% endblock %}

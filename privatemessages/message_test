@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-curl --data 'subject=test&body="testbody"&recipients=["user20140623204919ngOGBy"]' http://dev.gamecoach.co/api/message > posttest.html

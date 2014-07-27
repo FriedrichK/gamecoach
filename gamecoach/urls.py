@@ -13,6 +13,7 @@ urlpatterns = patterns(
     url(r'^api/user', include('profiles.urls_api_user')),
     url(r'^api/mentor', include('profiles.urls_api')),
     url(r'^data/mentor', include('profiles.urls_data')),
-    url(r'^api/message', include('privatemessages.urls_api')),
+    url(r'^api/conversation', include('conversation.urls_api')),
+
     url(r'^', include('frontend.urls')),
 )
