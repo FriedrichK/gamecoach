@@ -46,8 +46,10 @@ def retrieve_message(user, message_id):
         message = Message.objects.get(id=message_id)
     except Message.DoesNotExist:
         raise MessageDoesNotExistException('message cannot be found')
-    if not user_is_valid(user) or (not user == message.sender and not user == message.recipient and not user.is_superuser):
+    if not user_is_valid(user) or (not user == message.sender and not user == message.recipient and not user_can_moderate(user)):
         raise MessageAccessDeniedException('access to this message is denied')
+    if message_is_deleted(user, message):
+        raise MessageDoesNotExistException('message cannot be found')
     return {
         'thread_id': message.thread_id,
         'sender': message.sender.id,
@@ -61,11 +63,16 @@ def retrieve_message(user, message_id):
 
 
 def update_message(user, message_id, body=None, skip_notification=None, auto_archive=None, auto_delete=None, auto_moderators=None):
-    message = Message.objects.get(id=message_id)
-    if not user == message.sender and not user.is_superuser:
+    try:
+        message = Message.objects.get(id=message_id)
+    except Message.DoesNotExist:
+        raise MessageDoesNotExistException('message cannot be found')
+    if not user == message.sender and not user_can_moderate(user):
         raise MessageAccessDeniedException('you are not the original author of this message. You cannot edit it')
     if not user_is_valid(message.sender):
-        raise InvalidSenderException()
+        raise InvalidSenderException('invalid user. You cannot edit this message')
+    if message_is_deleted(user, message):
+        raise MessageAccessDeniedException('you have deleted this message. You cannot edit it any longer')
     if not body is None:
         message.body = body
     if not skip_notification is None:
@@ -80,10 +87,55 @@ def update_message(user, message_id, body=None, skip_notification=None, auto_arc
     return message
 
 
+def delete_message(user, message_id):
+    try:
+        message = Message.objects.get(id=message_id)
+    except Message.DoesNotExist:
+        raise MessageDoesNotExistException('message cannot be found')
+    if not user == message.sender and not user == message.recipient:
+        raise MessageAccessDeniedException('this message is not part of your inbox. You cannot delete it')
+    if not user_is_valid(user):
+        raise InvalidSenderException('invalid user. You cannot delete this message')
+    if message_is_deleted(user, message):
+        raise MessageAccessDeniedException('you have already deleted this message')
+    if user_is_sender(user, message):
+        message.sender_deleted_at = now()
+    if user_is_recipient(user, message):
+        message.recipient_deleted_at = now()
+    message.save()
+    return message
+
+
 def user_is_valid(user):
     if user is None or not user.is_active:
         return False
     return True
+
+
+def user_can_moderate(user):
+    if user.is_superuser:
+        return True
+    return False
+
+
+def message_is_deleted(user, message):
+    if user_is_sender(user, message) and not message.sender_deleted_at is None:
+        return True
+    if user_is_recipient(user, message) and not message.recipient_deleted_at is None:
+        return True
+    return False
+
+
+def user_is_sender(user, message):
+    if user == message.sender:
+        return True
+    return False
+
+
+def user_is_recipient(user, message):
+    if user == message.recipient:
+        return True
+    return False
 
 
 class MessageDoesNotExistException(Exception):
