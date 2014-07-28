@@ -391,11 +391,6 @@ class ToolsFolderTestCase(TestCase):
         self._set_message_archived(user1, fake_conversation_flat, 4)
         self._set_message_archived(user1, fake_conversation_flat, 7)
 
-        #messages = Message.objects.all().order_by('sent_at')
-        #for i in range(len(messages)):
-        #    message = messages[i]
-        #    print '%s\t%s\t%s\t%s\t%s\t%s' % (i, message.sent_at, message.sender.id, message.sender_archived, message.recipient_archived, message.body)
-
         time_anchor = datetime.datetime(2014, 7, 28, 14, 0, 0, 0, get_current_timezone())
 
         inbox = get_inbox_slice(user1, time_anchor, older=True, items=5, archived=True)
