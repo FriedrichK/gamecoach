@@ -1,18 +1,18 @@
+import datetime
+
 from mock import patch
 
-from postman.models import Message
+from postman.models import Message, STATUS_REJECTED
 
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-try:
-    from django.utils.timezone import now
-except ImportError:
-    from datetime import datetime
-    now = datetime.now
+from django.utils.timezone import now, get_current_timezone
+from django.db import transaction
 
 from shared.testing.factories.account import create_accounts, create_account
-from conversation.tools import create_message, retrieve_message, update_message, delete_message, InvalidSenderException, InvalidRecipientException, NoMessageSubjectException, NoMessageBodyException, MessageDoesNotExistException, MessageAccessDeniedException
+from conversation.tools_message import create_message, retrieve_message, update_message, delete_message, InvalidSenderException, InvalidRecipientException, NoMessageSubjectException, NoMessageBodyException, MessageDoesNotExistException, MessageAccessDeniedException
+from conversation.tools_folder import get_conversation, get_conversation_slice
 
 OK_VALUE = 'this is what we expect'
 MOCK_MESSAGE_ID = '123'
@@ -246,3 +246,105 @@ class ToolsTestCase(TestCase):
 
     def _get_user(self, index):
         return self._accounts[index]['user']
+
+
+class ToolsFolderTestCase(TestCase):
+
+    def setUp(self):
+        self._accounts = create_accounts(NUMBER_OF_FAKE_USERS_GENERATED, is_user=True, is_mentor=True)
+
+    def test_returns_expected_conversation(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+        user3 = self._get_user(2)
+
+        self._write_test_message(user1, user2, 'test_conversation', '1')
+        self._write_test_message(user2, user1, 'test_conversation', 'A')
+        self._write_test_message(user1, user3, 'test_conversation', 'ignore')
+        self._write_test_message(user1, user2, 'test_conversation', '2')
+        self._write_test_message(user2, user1, 'test_conversation', 'B')
+        self._write_test_message(user3, user1, 'test_conversation', 'ignore')
+        self._write_test_message(user1, user2, 'test_conversation', '3')
+        self._write_test_message(user2, user1, 'test_conversation', 'C')
+
+        actual = [message.body for message in get_conversation(user1, [user2])]
+        self.assertEqual(actual, ['C', '3', 'B', '2', 'A', '1'])
+
+    def test_returns_expected_slice_of_conversation_excluding_deleted_archived_and_moderated_messages(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+        self._set_message_deleted(user1, fake_conversation_flat, 9)  # removes body_a_3
+        self._set_message_archived(user1, fake_conversation_flat, 6)  # removes body_a_2
+        self._set_message_rejected_by_moderator(user1, fake_conversation_flat, 2)  # removes body_b_0
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2], time_anchor, older=True, items=5)
+        actual = [message.body for message in messages]
+
+        self.assertEqual(actual, ['body_b_3', 'body_b_2', 'body_b_1', 'body_a_1', 'body_a_0'])
+
+    def _get_user(self, index):
+        return self._accounts[index]['user']
+
+    def _write_test_message(self, sender, recipient, subject, body):
+        return create_message(sender, recipient, subject, body=body)
+
+    @transaction.commit_manually
+    def _create_fake_conversation(self, items=20):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+        user3 = self._get_user(2)
+        base_time = datetime.datetime(2014, 7, 28, 12, 0, 0, 0, get_current_timezone())
+        batches = []
+        flat = []
+
+        for i in range(items):
+            step_time = base_time + datetime.timedelta(hours=i)
+            batch = []
+
+            m1 = Message(sender=user1, recipient=user2, subject='subject_%s' % i, body='body_a_%s' % i, sent_at=step_time + datetime.timedelta(minutes=0))
+            m1.save()
+            batch.append(m1)
+            flat.append(m1)
+
+            m2 = Message(sender=user3, recipient=user1, subject='ingore', body='ignore', sent_at=step_time + datetime.timedelta(minutes=10))
+            m2.save()
+            batch.append(m2)
+            flat.append(m2)
+
+            m3 = Message(sender=user2, recipient=user1, subject='subject_%s' % i, body='body_b_%s' % i, sent_at=step_time + datetime.timedelta(minutes=20))
+            m3.save()
+            batch.append(m3)
+            flat.append(m3)
+
+            batches.append(batch)
+
+        transaction.commit()
+        return batches, flat
+
+    def _set_message_deleted(self, user, messages, index):
+        message = messages[index]  # self._reverse_index(messages, index)
+        if message.sender == user:
+            message.sender_deleted_at = now()
+        if message.recipient == user:
+            message.recipient_deleted_at = now()
+        message.save()
+
+    def _set_message_archived(self, user, messages, index):
+        message = messages[index]  # self._reverse_index(messages, index)
+        if message.sender == user:
+            message.sender_archived = True
+        if message.recipient == user:
+            message.recipient_archived = True
+        message.save()
+
+    def _set_message_rejected_by_moderator(self, user, messages, index):
+        message = messages[index]  # self._reverse_index(messages, index)
+        message.moderation_status = STATUS_REJECTED
+        message.save()
+
+    def _reverse_index(self, items, index):
+        return len(items) - 1 - index
