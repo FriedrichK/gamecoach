@@ -13,7 +13,7 @@ from django.db import transaction
 from shared.testing.factories.account import create_accounts, create_account
 from conversation.tools import is_allowed_to_read_all_messages
 from conversation.tools_message import create_message, retrieve_message, update_message, delete_message, InvalidSenderException, InvalidRecipientException, NoMessageSubjectException, NoMessageBodyException, MessageDoesNotExistException, MessageAccessDeniedException
-from conversation.tools_folder import get_conversation, get_conversation_slice
+from conversation.tools_folder import get_conversation, get_conversation_slice, get_inbox_slice
 
 OK_VALUE = 'this is what we expect'
 MOCK_MESSAGE_ID = '123'
@@ -54,7 +54,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.content, OK_VALUE)
 
 
-class ToolsTestCase(TestCase):
+class ToolsMessageTestCase(TestCase):
 
     def setUp(self):
         self._accounts = create_accounts(NUMBER_OF_FAKE_USERS_GENERATED, is_user=True, is_mentor=True)
@@ -354,8 +354,6 @@ class ToolsFolderTestCase(TestCase):
         user2 = self._get_user(1)
 
         fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
-        for message in fake_conversation_flat:
-            print message.sent_at, message.body
 
         time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
 
@@ -374,6 +372,36 @@ class ToolsFolderTestCase(TestCase):
         actual = [message.body for message in messages]
 
         self.assertEqual(actual, [])
+
+    def test_returns_expected_inbox_slice(self):
+        user1 = self._get_user(0)
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        inbox = get_inbox_slice(user1, time_anchor, older=True, items=5)
+        actual = [message.sender.id for message in inbox]
+
+        self.assertEqual(actual, [self._get_user(1).id, self._get_user(2).id])
+
+    def test_returns_expected_inbox_slice_for_archived_items(self):
+        user1 = self._get_user(0)
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation(items=9)
+        self._set_message_archived(user1, fake_conversation_flat, 1)
+        self._set_message_archived(user1, fake_conversation_flat, 4)
+        self._set_message_archived(user1, fake_conversation_flat, 7)
+
+        messages = Message.objects.all().order_by('sent_at')
+        for i in range(len(messages)):
+            message = messages[i]
+            print '%s\t%s\t%s\t%s\t%s\t%s' % (i, message.sent_at, message.sender.id, message.sender_archived, message.recipient_archived, message.body)
+
+        time_anchor = datetime.datetime(2014, 7, 28, 14, 0, 0, 0, get_current_timezone())
+
+        inbox = get_inbox_slice(user1, time_anchor, older=True, items=5, archived=True)
+        actual = [message.sender.id for message in inbox]
+
+        self.assertEqual(actual, [fake_conversation_flat[1].sender.id])
 
     def _get_user(self, index):
         return self._accounts[index]['user']
@@ -399,7 +427,7 @@ class ToolsFolderTestCase(TestCase):
             batch.append(m1)
             flat.append(m1)
 
-            m2 = Message(sender=user3, recipient=user1, subject='ingore', body='ignore', sent_at=step_time + datetime.timedelta(minutes=10))
+            m2 = Message(sender=user3, recipient=user1, subject='ignore', body='ignore', sent_at=step_time + datetime.timedelta(minutes=10))
             m2.save()
             batch.append(m2)
             flat.append(m2)
