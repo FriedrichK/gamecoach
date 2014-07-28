@@ -349,6 +349,32 @@ class ToolsFolderTestCase(TestCase):
         self.assertTrue(is_allowed_to_read_all_messages(user1))
         self.assertEqual(actual, ['body_a_3', 'body_a_2'])
 
+    def test_returns_expected_slice_of_conversation_when_requesting_items_newer_than_the_timestamp(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+        for message in fake_conversation_flat:
+            print message.sent_at, message.body
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2], time_anchor, older=False, items=5)
+        actual = [message.body for message in messages]
+
+        self.assertEqual(actual, ['body_b_6', 'body_a_6', 'body_b_5', 'body_a_5', 'body_b_4'])
+
+    def test_returns_empty_list_when_no_message_can_be_found(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2], time_anchor, older=True, items=5)
+        actual = [message.body for message in messages]
+
+        self.assertEqual(actual, [])
+
     def _get_user(self, index):
         return self._accounts[index]['user']
 

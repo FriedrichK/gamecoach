@@ -14,11 +14,23 @@ def get_conversation_slice(request_user, discussion_partners, time_anchor, older
         raise ConversationCriteriaException('you are trying to retrieve messages that are both archived and deleted. That is logically impossible. Adjust your parameters')
     if deleted and not is_allowed_to_read_all_messages(request_user):
         return []
+
     validity_filters = get_filter_for_validity(request_user, discussion_partners, archived, deleted)
     time_filters = get_filters_for_time(time_anchor, older)
+
     order = '-sent_at'
+    if not older:
+        order = 'sent_at'
+
     result = Message.objects.filter(validity_filters, time_filters).order_by(order)[:items]
-    return result
+    if result is None:
+        return []
+    if older:
+        return list(result)
+    else:
+        result = list(result)
+        result.reverse()
+        return result
 
 
 def get_filter_for_validity(request_user, discussion_partners, archived=False, deleted=False):
