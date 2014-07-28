@@ -12,7 +12,9 @@ def get_conversation(request_user, discussion_partners):
 def get_conversation_slice(request_user, discussion_partners, time_anchor, older=True, items=100, archived=False, deleted=False):
     if archived and deleted:
         raise ConversationCriteriaException('you are trying to retrieve messages that are both archived and deleted. That is logically impossible. Adjust your parameters')
-    validity_filters = get_filter_for_validity(request_user, discussion_partners)
+    if deleted and not is_allowed_to_read_all_messages(request_user):
+        return []
+    validity_filters = get_filter_for_validity(request_user, discussion_partners, archived, deleted)
     time_filters = get_filters_for_time(time_anchor, older)
     order = '-sent_at'
     result = Message.objects.filter(validity_filters, time_filters).order_by(order)[:items]
@@ -29,15 +31,23 @@ def get_filter_for_validity(request_user, discussion_partners, archived=False, d
         outgoing_message_is_not_deleted = ~(Q(sender=request_user) & Q(sender_deleted_at__isnull=False))
         incoming_message_is_not_deleted = ~(Q(recipient=request_user) & Q(recipient_deleted_at__isnull=False))
         additional_constraints.extend((outgoing_message_is_not_deleted, incoming_message_is_not_deleted,))
+    else:
+        outgoing_message_is_deleted = ~(Q(sender=request_user) & Q(sender_deleted_at__isnull=True))
+        incoming_message_is_deleted = ~(Q(recipient=request_user) & Q(recipient_deleted_at__isnull=True))
+        additional_constraints.extend((outgoing_message_is_deleted, incoming_message_is_deleted,))
 
     if not archived:
         outgoing_message_is_not_archived = ~(Q(sender=request_user) & Q(sender_archived=True))
         incoming_message_is_not_archived = ~(Q(recipient=request_user) & Q(recipient_archived=True))
         additional_constraints.extend((outgoing_message_is_not_archived, incoming_message_is_not_archived,))
+    else:
+        outgoing_message_is_archived = ~(Q(sender=request_user) & ~Q(sender_archived=True))
+        incoming_message_is_archived = ~(Q(recipient=request_user) & ~Q(recipient_archived=True))
+        additional_constraints.extend((outgoing_message_is_archived, incoming_message_is_archived,))
 
     if not is_allowed_to_read_all_messages(request_user):
-        message_is_unmoderated_or_accepted = ~Q(moderation_status=STATUS_REJECTED)
-        additional_constraints.append(message_is_unmoderated_or_accepted)
+        message_is_not_rejected = ~Q(moderation_status=STATUS_REJECTED)
+        additional_constraints.append(message_is_not_rejected)
 
     constraints = user_is_either_sender_or_recipient
     for additional_constraint in additional_constraints:

@@ -11,6 +11,7 @@ from django.utils.timezone import now, get_current_timezone
 from django.db import transaction
 
 from shared.testing.factories.account import create_accounts, create_account
+from conversation.tools import is_allowed_to_read_all_messages
 from conversation.tools_message import create_message, retrieve_message, update_message, delete_message, InvalidSenderException, InvalidRecipientException, NoMessageSubjectException, NoMessageBodyException, MessageDoesNotExistException, MessageAccessDeniedException
 from conversation.tools_folder import get_conversation, get_conversation_slice
 
@@ -285,6 +286,68 @@ class ToolsFolderTestCase(TestCase):
         actual = [message.body for message in messages]
 
         self.assertEqual(actual, ['body_b_3', 'body_b_2', 'body_b_1', 'body_a_1', 'body_a_0'])
+
+    def test_returns_expected_slice_of_conversation_for_multiple_conversation_partners(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+        user3 = self._get_user(2)
+
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2, user3], time_anchor, older=True, items=5)
+        actual = [message.body for message in messages]
+
+        self.assertEqual(actual, ['body_b_3', 'ignore', 'body_a_3', 'body_b_2', 'ignore'])
+
+    def test_returns_expected_slice_of_conversation_for_archived_items(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+        self._set_message_archived(user1, fake_conversation_flat, 9)  # clears body_a_3
+        self._set_message_archived(user1, fake_conversation_flat, 6)  # clears body_a_2
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2], time_anchor, older=True, items=5, archived=True)
+        actual = [message.body for message in messages]
+
+        self.assertEqual(actual, ['body_a_3', 'body_a_2'])
+
+
+    def test_returns_no_messages_when_mode_is_deleted(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+        self._set_message_deleted(user1, fake_conversation_flat, 9)  # clears body_a_3
+        self._set_message_deleted(user1, fake_conversation_flat, 6)  # clears body_a_2
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2], time_anchor, older=True, items=5, deleted=True)
+        actual = [message.body for message in messages]
+
+        self.assertEqual(actual, [])
+
+    def test_returns_expected_slice_of_conversation_when_mode_is_deleted_and_user_can_moderate(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+        user1.is_superuser = True
+
+        fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation()
+        self._set_message_deleted(user1, fake_conversation_flat, 9)  # clears body_a_3
+        self._set_message_deleted(user1, fake_conversation_flat, 6)  # clears body_a_2
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        messages = get_conversation_slice(user1, [user2], time_anchor, older=True, items=5, deleted=True)
+        actual = [message.body for message in messages]
+
+        self.assertTrue(is_allowed_to_read_all_messages(user1))
+        self.assertEqual(actual, ['body_a_3', 'body_a_2'])
 
     def _get_user(self, index):
         return self._accounts[index]['user']
