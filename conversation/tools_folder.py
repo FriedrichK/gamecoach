@@ -39,9 +39,9 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
 
     filters = ~Q(sender=request_user)
     if older:
-        filters &= Q(sent_at__gt=time_anchor)
-    else:
         filters &= Q(sent_at__lt=time_anchor)
+    else:
+        filters &= Q(sent_at__gt=time_anchor)
 
     if not archived:
         filters &= ~Q(recipient_archived=True)
@@ -50,6 +50,8 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
 
     if not deleted:
         filters &= Q(recipient_deleted_at__isnull=True)
+    else:
+        filters &= Q(recipient_deleted_at__isnull=False)
 
     incoming_users = Message.objects.filter(filters).distinct('sender').order_by('sender', '-sent_at')[:items]
     return incoming_users
