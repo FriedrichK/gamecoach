@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# npm install karma --save-dev
+# npm install karma-jasmine karma-chrome-launcher --save-dev
+
 if [ ! -d venv ]; then
 	virtualenv venv --no-site-packages
 	venv/bin/pip install -U pip
