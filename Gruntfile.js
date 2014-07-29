@@ -9,31 +9,31 @@ module.exports = function(grunt) {
         dest: 'static/js/shared.js'
       },
       navigation: {
-        src: ['static/dev_js/navigation/**/*.js'],
+        src: ['static/dev_js/navigation/**/*.js', '!static/dev_js/navigation/**/*.test.js'],
         dest: 'static/js/navigation.js'
       },
       index: {
-        src: ['static/dev_js/index/**/*.js'],
+        src: ['static/dev_js/index/**/*.js', '!static/dev_js/index/**/*.test.js'],
         dest: 'static/js/index.js'
       },
       mentor_results: {
-        src: ['static/dev_js/mentor_results/**/*.js'],
+        src: ['static/dev_js/mentor_results/**/*.js', '!static/dev_js/mentor_results/**/*.test.js'],
         dest: 'static/js/mentor_results.js'
       },
       mentor_profile: {
-        src: ['static/dev_js/mentor_profile/**/*.js'],
+        src: ['static/dev_js/mentor_profile/**/*.js', '!static/dev_js/mentor_profile/**/*.test.js'],
         dest: 'static/js/mentor_profile.js'
       },
       mentor_signup: {
-        src: ['static/dev_js/mentor_signup/**/*.js'],
+        src: ['static/dev_js/mentor_signup/**/*.js', '!static/dev_js/mentor_signup/**/*.test.js'],
         dest: 'static/js/mentor_signup.js'
       },
       mentor_contact: {
-        src: ['static/dev_js/mentor_contact/**/*.js'],
+        src: ['static/dev_js/mentor_contact/**/*.js', '!static/dev_js/mentor_contact/**/*.test.js'],
         dest: 'static/js/mentor_contact.js'
       },
       conversation: {
-        src: ['static/dev_js/conversation/**/*.js'],
+        src: ['static/dev_js/conversation/**/*.js', '!static/dev_js/conversation/**/*.test.js'],
         dest: 'static/js/conversation.js'
       }
     },
