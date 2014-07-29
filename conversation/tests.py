@@ -414,7 +414,7 @@ class ToolsFolderTestCase(TestCase):
         user1 = self._get_user(0)
         user1.is_superuser = True
         fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation(items=1)
-        self._set_message_deleted(user1, fake_conversation_flat, 1)
+        deleted_message = self._set_message_deleted(user1, fake_conversation_flat, 1)
 
         time_anchor = datetime.datetime(2014, 7, 28, 13, 0, 0, 0, get_current_timezone())
 
@@ -422,7 +422,14 @@ class ToolsFolderTestCase(TestCase):
         actual = [message.sender.id for message in inbox]
 
         self.assertTrue(is_allowed_to_read_all_messages(user1))
-        self.assertEqual(actual, [3])
+        self.assertEqual(actual, [deleted_message.sender.id])
+
+    def test_returns_empty_inbox_slice_if_no_messages_can_be_found(self):
+        user1 = self._get_user(0)
+        time_anchor = datetime.datetime(2014, 7, 28, 13, 0, 0, 0, get_current_timezone())
+        inbox = get_inbox_slice(user1, time_anchor, older=True, items=5)
+        actual = [message.sender.id for message in inbox]
+        self.assertEqual(actual, [])
 
     def _get_user(self, index):
         return self._accounts[index]['user']
@@ -470,6 +477,7 @@ class ToolsFolderTestCase(TestCase):
         if message.recipient == user:
             message.recipient_deleted_at = now()
         message.save()
+        return message
 
     def _set_message_archived(self, user, messages, index):
         message = messages[index]  # self._reverse_index(messages, index)
@@ -478,11 +486,13 @@ class ToolsFolderTestCase(TestCase):
         if message.recipient == user:
             message.recipient_archived = True
         message.save()
+        return message
 
     def _set_message_rejected_by_moderator(self, user, messages, index):
         message = messages[index]  # self._reverse_index(messages, index)
         message.moderation_status = STATUS_REJECTED
         message.save()
+        return message
 
     def _reverse_index(self, items, index):
         return len(items) - 1 - index
