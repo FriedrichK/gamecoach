@@ -1,7 +1,6 @@
 /* global document, angular, window */
-
-var app = angular.module('app');
-app.controller('NavigationController', function($scope) {
+var gamecoachNavigation = angular.module('gamecoachNavigation', []);
+gamecoachNavigation.controller('NavigationController', function($scope) {
 	$scope.homeLink = function() {
 		window.location = '/';
 	};
