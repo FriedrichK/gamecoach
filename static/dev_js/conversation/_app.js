@@ -1,2 +1,2 @@
 /* global angular */
-var app = angular.module('app', ['gamecoachShared']);
+var conversationApp = angular.module('conversationApp', ['gamecoachShared']);

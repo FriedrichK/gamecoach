@@ -1,21 +1,22 @@
 /* global angular, document, window, F */
 
-var app = angular.module('app'); 
-app.controller('SubmissionController', function($scope) {
+var conversationApp = angular.module('conversationApp'); 
+conversationApp.controller('SubmissionController', function($scope) {
 	$scope.submit = function() {
 		console.log("click");
 	};
 });
 
-app.controller('OtherUserProfileController', function($scope) {
+conversationApp.controller('OtherUserProfileController', function($scope) {
 });
 
-app.controller('MessageController', function($scope, $element, conversationService) {
+conversationApp.controller('MessageController', function($scope, $element, conversationService, messsageStreamService) {
 	var userId = '123';
 	var partnerId = "abcd";
 	angular.element($element).ready(function() {
 		conversationService.getConversation(userId, partnerId, function(data) {
-			console.log(data);
+			var stream = "main";
+			$scope.messageStream = messsageStreamService.updateStream(stream, data);
 		});
 	});
 });

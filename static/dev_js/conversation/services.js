@@ -1,7 +1,7 @@
 /* global angular */
-var app = angular.module('app');
+var conversationApp = angular.module('conversationApp');
 
-app.factory('conversationService', function($http) {
+conversationApp.factory('conversationService', function($http) {
   return {
     getConversation: function(userId, partnerId, callable) {
       return $http({
@@ -13,6 +13,14 @@ app.factory('conversationService', function($http) {
           callable(result.data);
         }
       );
+    }
+  };
+});
+
+conversationApp.factory('messsageStreamService', function() {
+  return {
+    updateStream: function(stream, data) {
+      return 1;
     }
   };
 });
