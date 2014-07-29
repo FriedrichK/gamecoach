@@ -1,6 +1,8 @@
 {% extends "pages/shared/page.html" %}
 {% load staticfiles %}
 
+{% block body_tag %}ng-app="mentorContactApp"{% endblock %}
+
 {% block content %}
 	<div class="w-container main-column title">
     <div class="text title large with-comment">Your details</div>
@@ -295,7 +297,7 @@
               </ul>
             </div>
           </div>
-          <button class="w-button sign-up-button" ng-click="save(emailForm)">Save</button>
+          <button class="w-button sign-up-button" name="submit" ng-click="save(emailForm)">Save</button>
         </form>
         <div class="w-form-done">
           <p>Thank you! Your submission has been received!</p>

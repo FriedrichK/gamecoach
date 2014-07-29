@@ -1,7 +1,7 @@
 /* global angular, window */
-var app = angular.module('app');
+var mentorContactApp = angular.module('mentorContactApp');
 
-app.factory('userProfileService', function($http) {
+mentorContactApp.factory('userProfileService', function($http) {
     return {
         submit: function(data) {
             return $http({
@@ -18,7 +18,7 @@ app.factory('userProfileService', function($http) {
     };
 });
 
-app.factory('profilePictureUploadService', function($http, $upload) {
+mentorContactApp.factory('profilePictureUploadService', function($http, $upload) {
     return {
         upload: function(file) {
             $upload.upload({

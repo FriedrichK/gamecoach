@@ -1,7 +1,7 @@
 /* global angular, document, window, F */
 
-var app = angular.module('app'); 
-app.controller('UserSignupController', function($scope, $element) {
+var mentorContactApp = angular.module('mentorContactApp'); 
+mentorContactApp.controller('UserSignupController', function($scope, $element) {
 	$scope.facebookLogin = function() {
 		var element = angular.element("#facebook-login-form");
 		var el = document.getElementById('facebook-login-form');
@@ -10,7 +10,7 @@ app.controller('UserSignupController', function($scope, $element) {
 	};
 });
 
-app.controller('TopHeroController', function($scope, $element, heroesService) {
+mentorContactApp.controller('TopHeroController', function($scope, $element, heroesService) {
 	var heroArray = [];
 	angular.forEach(heroesService.getHeroHash(), function(value, key) {
 		heroArray.push({
@@ -21,7 +21,7 @@ app.controller('TopHeroController', function($scope, $element, heroesService) {
 	$scope.topheroes = heroArray;
 });
 
-app.controller('UserProfileController', function($scope, userProfileService) {
+mentorContactApp.controller('UserProfileController', function($scope, userProfileService) {
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
@@ -31,7 +31,7 @@ app.controller('UserProfileController', function($scope, userProfileService) {
 	};
 });
 
-app.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {
+mentorContactApp.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {
 	$scope.onFileSelect = function($files) {
 		angular.forEach($files, function(file, index) {
 			profilePictureUploadService.upload(file);

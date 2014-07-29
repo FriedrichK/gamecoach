@@ -1,5 +1,5 @@
 /* global angular */
-var app = angular.module('app', ['angularFileUpload', 'gamecoachShared'])
+var mentorContactApp = angular.module('mentorContactApp', ['angularFileUpload', 'gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
