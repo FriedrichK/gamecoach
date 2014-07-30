@@ -1,6 +1,8 @@
 {% extends "pages/shared/page.html" %}
 {% load staticfiles %}
 
+{% block body_tag %}ng-app="mentorSignupApp"{% endblock %}
+
 {% block content %}
 	{% include "pages/shared/facebook.html" %}
 	<div id="fb-root"></div>

@@ -1,12 +1,12 @@
 /* global angular */
-var app = angular.module('app', ['angularFileUpload', 'gamecoachShared'])
+var mentorSignupApp = angular.module('mentorSignupApp', ['angularFileUpload', 'gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
 /* global angular, document, window, F */
 
-var app = angular.module('app'); 
-app.controller('MentorSignupController', function($scope, $element) {
+var mentorSignupApp = angular.module('mentorSignupApp'); 
+mentorSignupApp.controller('MentorSignupController', function($scope, $element) {
 	$scope.facebookLogin = function() {
 		var element = angular.element("#facebook-login-form");
 		var el = document.getElementById('facebook-login-form');
@@ -15,7 +15,7 @@ app.controller('MentorSignupController', function($scope, $element) {
 	};
 });
 
-app.controller('TopHeroController', function($scope, $element, heroesService) {
+mentorSignupApp.controller('TopHeroController', function($scope, $element, heroesService) {
 	var heroArray = [];
 	angular.forEach(heroesService.getHeroHash(), function(value, key) {
 		heroArray.push({
@@ -26,7 +26,7 @@ app.controller('TopHeroController', function($scope, $element, heroesService) {
 	$scope.topheroes = heroArray;
 });
 
-app.controller('MentorProfileController', function($scope, mentorProfileService) {
+mentorSignupApp.controller('MentorProfileController', function($scope, mentorProfileService) {
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
@@ -36,7 +36,7 @@ app.controller('MentorProfileController', function($scope, mentorProfileService)
 	};
 });
 
-app.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {
+mentorSignupApp.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {
 	$scope.onFileSelect = function($files) {
 		angular.forEach($files, function(file, index) {
 			profilePictureUploadService.upload(file);
@@ -44,9 +44,9 @@ app.controller('ProfilePictureController', function($scope, $upload, profilePict
 	};
 });
 /* global angular, window */
-var app = angular.module('app');
+var mentorSignupApp = angular.module('mentorSignupApp');
 
-app.factory('mentorProfileService', function($http) {
+mentorSignupApp.factory('mentorProfileService', function($http) {
     return {
         submit: function(data) {
             return $http({
@@ -63,7 +63,7 @@ app.factory('mentorProfileService', function($http) {
     };
 });
 
-app.factory('profilePictureUploadService', function($http, $upload) {
+mentorSignupApp.factory('profilePictureUploadService', function($http, $upload) {
     return {
         upload: function(file) {
             $upload.upload({
