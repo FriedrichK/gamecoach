@@ -1,7 +1,7 @@
 /* global angular */
-var app = angular.module('app');
+var mentorResultsApp = angular.module('mentorResultsApp');
 
-app.factory('mentorSearchService', function($http) {
+mentorResultsApp.factory('mentorSearchService', function($http) {
   return {
     getMatchingMentors: function(data, callable) {
       return $http({
@@ -62,7 +62,7 @@ function getInitialRefineSettings($location, initialSettings) {
   return initialSettings;
 }
 
-app.factory('refineSettingsService', function($rootScope, $location, mentorSettingsService) {
+mentorResultsApp.factory('refineSettingsService', function($rootScope, $location, mentorSettingsService) {
   var initialSettings = mentorSettingsService.initialSettings;
   var refineSettings = getInitialRefineSettings($location, initialSettings);
   return {
@@ -76,7 +76,7 @@ app.factory('refineSettingsService', function($rootScope, $location, mentorSetti
   };
 });
 
-app.factory('generateUrlService', function() {
+mentorResultsApp.factory('generateUrlService', function() {
   return {
     buildFromSettings: function(formContent) {
       var url = "/results";
@@ -112,7 +112,7 @@ app.factory('generateUrlService', function() {
   };
 });
 
-app.factory('mentorSettingsService', function() {
+mentorResultsApp.factory('mentorSettingsService', function() {
   return {
     initialSettings: {
       roles: {

@@ -79,7 +79,6 @@ def profile_picture_display(request, username):
         image_path = unicode(picture.image)
         image_path = image_path.replace(settings.MEDIA_ROOT, '')
         final_path = '/upload' + image_path
-        print final_path
         response = HttpResponse()
         del response['content-type']
         response['X-Accel-Redirect'] = final_path

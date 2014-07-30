@@ -1,12 +1,12 @@
 /* global angular */
-var app = angular.module('app', ['ngAnimate', 'gamecoachShared'])
+var mentorResultsApp = angular.module('mentorResultsApp', ['ngAnimate', 'gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
 /* global angular, document, window */
 
-var app = angular.module('app'); 
-app.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService, generateUrlService) {
+var mentorResultsApp = angular.module('mentorResultsApp'); 
+mentorResultsApp.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService, generateUrlService) {
     angular.element($element).ready(function() {
         $scope.refine = refineSettingsService.get();
         refineSettingsService.set($scope.refine);
@@ -21,7 +21,7 @@ app.controller('RefineSearchController', function($scope, $element, mentorSearch
     };
 });
 
-app.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
+mentorResultsApp.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
     $scope.number = 0;
     $scope.$on('refineSettingsUpdated', function(event, data) {
         var refineSettings = refineSettingsService.get();
@@ -35,9 +35,9 @@ app.controller('MentorListController', function($scope, mentorSearchService, ref
     };
 });
 /* global angular */
-var app = angular.module('app');
+var mentorResultsApp = angular.module('mentorResultsApp');
 
-app.factory('mentorSearchService', function($http) {
+mentorResultsApp.factory('mentorSearchService', function($http) {
   return {
     getMatchingMentors: function(data, callable) {
       return $http({
@@ -98,7 +98,7 @@ function getInitialRefineSettings($location, initialSettings) {
   return initialSettings;
 }
 
-app.factory('refineSettingsService', function($rootScope, $location, mentorSettingsService) {
+mentorResultsApp.factory('refineSettingsService', function($rootScope, $location, mentorSettingsService) {
   var initialSettings = mentorSettingsService.initialSettings;
   var refineSettings = getInitialRefineSettings($location, initialSettings);
   return {
@@ -112,7 +112,7 @@ app.factory('refineSettingsService', function($rootScope, $location, mentorSetti
   };
 });
 
-app.factory('generateUrlService', function() {
+mentorResultsApp.factory('generateUrlService', function() {
   return {
     buildFromSettings: function(formContent) {
       var url = "/results";
@@ -148,7 +148,7 @@ app.factory('generateUrlService', function() {
   };
 });
 
-app.factory('mentorSettingsService', function() {
+mentorResultsApp.factory('mentorSettingsService', function() {
   return {
     initialSettings: {
       roles: {

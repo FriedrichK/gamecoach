@@ -1,9 +1,10 @@
 from django.db.models import Q
 
-from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
-from profiles.models import GamecoachProfile
 from django_facebook.models import FacebookCustomUser as User
-#from profiles.tools.fake import create_fake_mentors
+
+from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
+from profiles.models import GamecoachProfile, ProfilePicture
+from shared.tools import sanitize_file_field_url
 
 
 def get_mentor_by_id(mentor_id):
@@ -23,16 +24,17 @@ def get_mentor_by_username(username):
 def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 
-    #test = GamecoachProfile.objects.all()
-    #if len(test) == 0:
-    #    create_fake_mentors(100)
-
     m = GamecoachProfile.objects.filter(*filters)
-    print m.query
-    print "mentors found: ", len(m)
+
+    ids = [mentor.user.id for mentor in m]
+    profile_pictures_by_id = get_profile_pictures_by_ids(ids)
+
     mentors = []
     for i in m:
-        mentors.append(i.deserialize())
+        mentor_json = i.deserialize()
+        if i.user.id in profile_pictures_by_id:
+            mentor_json['profile_picture'] = sanitize_file_field_url(profile_pictures_by_id[i.user.id])
+        mentors.append(mentor_json)
     return mentors
 
 
@@ -47,7 +49,6 @@ def merge_filter_data(filter_data):
 
 
 def generate_filters(filter_data):
-    print filter_data
     if filter_data is None:
         return {}
 
@@ -77,3 +78,12 @@ def generate_filters_for_category(category, data, value_list):
     f = {}
     f[category + "__regex"] = pattern
     return Q(**f)
+
+
+def get_profile_pictures_by_ids(ids):
+    profile_picture_entries = ProfilePicture.objects.filter(id__in=ids)
+    profile_pictures_by_ids = {}
+    for entry in profile_picture_entries:
+        if not entry.image is None:
+            profile_pictures_by_ids[entry.user.id] = entry.image.url
+    return profile_pictures_by_ids

@@ -1,5 +1,5 @@
 /* global angular */
-var app = angular.module('app', ['ngAnimate', 'gamecoachShared'])
+var mentorResultsApp = angular.module('mentorResultsApp', ['ngAnimate', 'gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);

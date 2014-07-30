@@ -1,7 +1,7 @@
 /* global angular, document, window */
 
-var app = angular.module('app'); 
-app.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService, generateUrlService) {
+var mentorResultsApp = angular.module('mentorResultsApp'); 
+mentorResultsApp.controller('RefineSearchController', function($scope, $element, mentorSearchService, mentorSettingsService, refineSettingsService, generateUrlService) {
     angular.element($element).ready(function() {
         $scope.refine = refineSettingsService.get();
         refineSettingsService.set($scope.refine);
@@ -16,7 +16,7 @@ app.controller('RefineSearchController', function($scope, $element, mentorSearch
     };
 });
 
-app.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
+mentorResultsApp.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
     $scope.number = 0;
     $scope.$on('refineSettingsUpdated', function(event, data) {
         var refineSettings = refineSettingsService.get();

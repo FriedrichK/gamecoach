@@ -1,6 +1,8 @@
 import datetime
 import random
 
+from django.conf import settings
+
 
 def generate_res_id(prefix='none'):
     return prefix + generate_date_part() + generate_random_string(6)
@@ -38,3 +40,9 @@ def check_request_requirements(request, request_type, list_of_required_variables
         if not variable in req:
             return False
     return True
+
+
+def sanitize_file_field_url(raw_url):
+    if None:
+        return None
+    return raw_url.replace(settings.BASE_DIR, '')
