@@ -1,5 +1,5 @@
 /* global angular */
-var app = angular.module('app', ['gamecoachShared'])
+var indexApp = angular.module('indexApp', ['gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);

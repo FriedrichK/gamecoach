@@ -1,7 +1,7 @@
 /* global angular, document, window */
 
-var app = angular.module('app'); 
-app.controller('IndexFormController', function($scope, $http) {
+var indexApp = angular.module('indexApp'); 
+indexApp.controller('IndexFormController', function($scope, $http) {
 	$scope.submit = function($event) {
 		var game = $scope.game;
 		var region = $scope.region;
