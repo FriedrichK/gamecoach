@@ -4,6 +4,7 @@
 {% block body_tag %}ng-app="conversationApp"{% endblock %}
 
 {% block content %}
+<input type="hidden" name="conversationPartner" value="{{user_id}}" />
 <div class="search-filter-section">
     <div class="w-container main-column">
       <div class="w-row">
@@ -37,55 +38,50 @@
         <div class="w-col w-col-4">
           <div class="another-user-block" ng-controller="OtherUserProfileController">
             <div class="w-row contact-stats-block">
-              <div class="w-col w-col-6 w-clearfix">
-                <img class="correspondent-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
+              <div class="w-col w-col-6 w-clearfix ng-cloak" ng-show="profilePictureUri">
+                <img class="correspondent-image" src="{% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}" alt="image-placeholder.svg">
               </div>
-              <div class="w-col w-col-6">
-                <div class="user-name-mini-profile messages">Skullkrush</div>
+              <div class="w-col w-col-6 ng-cloak" ng-show="profile.username">
+                <div class="user-name-mini-profile messages">{% templatetag openvariable %}profile.username{% templatetag closevariable %}</div>
               </div>
             </div>
-            <div class="w-row contact-stats-block">
+            <div class="w-row contact-stats-block ng-cloak" ng-show="profile.data.steamId">
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Steam ID</div>
               </div>
-              <div class="w-col w-col-6"><a class="contact-stats-text" href="#">Skull_krusssh</a>
+              <div class="w-col w-col-6"><a class="contact-stats-text" href="#">{% templatetag openvariable %}profile.data.steamId{% templatetag closevariable %}</a>
               </div>
             </div>
-            <div class="w-row contact-stats-block">
+            <div class="w-row contact-stats-block ng-cloak" ng-show="regions">
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Regions</div>
               </div>
               <div class="w-col w-col-6">
-                <div class="contact-stats-text">EU West
-                  <br>EU East
-                  <br>Russia</div>
-              </div>
+                <div class="contact-stats-text" ng-repeat="region in regions" identifier="{% templatetag openvariable %}region.identifier{% templatetag closevariable %}">{% templatetag openvariable %}region.label{% templatetag closevariable %}</div>
+                </div>
             </div>
-            <div class="w-row contact-stats-block">
+            <div class="w-row contact-stats-block ng-cloak" ng-show="availabilityProcessed">
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Availability</div>
               </div>
               <div class="w-col w-col-6">
-                <div class="contact-stats-text">Any day
-                  <br>Evenings only</div>
+                <div class="contact-stats-text" ng-repeat="item in availabilityProcessed" identifier="{% templatetag openvariable %}item.identifier{% templatetag closevariable %}">{% templatetag openvariable %}item.label{% templatetag closevariable %}</div>
               </div>
             </div>
-            <div class="w-row contact-stats-block">
+            <div class="w-row contact-stats-block ng-cloak" ng-show="statistics" identifier="{% templatetag openvariable %}statistic.identifier{% templatetag closevariable %}" ng-repeat="statistic in statistics">
               <div class="w-col w-col-6">
-                <div class="contact-stats-titles">Games played
-                  <br>Win rate
-                  <br>Solo MMR</div>
+                <div class="contact-stats-titles">{% templatetag openvariable %}statistic.label|capitalize{% templatetag closevariable %}</div>
               </div>
-              <div class="w-col w-col-6"><a class="contact-stats-text" href="#">10,000<br>73%<br>5,120</a>
-              </div>
+              <div class="w-col w-col-6"><a class="contact-stats-text">{% templatetag openvariable %}statistic.value{% templatetag closevariable %}</a></div>
             </div>
-            <div class="w-row contact-stats-block">
+            <div class="w-row contact-stats-block ng-cloak" ng-show="heroesProcessed">
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Top heroes</div>
               </div>
-              <div class="w-col w-col-6"><a class="contact-stats-text" href="#">Blood Seeker<br>Terror Blade<br>Legion Commander</a>
+              <div class="w-col w-col-6">
+                <li class="contact-stats-text" ng-repeat="hero in heroesProcessed">{% templatetag openvariable %}hero.label|capitalize{% templatetag closevariable %}</li>
               </div>
-            </div><a class="see-full-profile" href="#">See full profile</a>
+            </div><a class="see-full-profile" href="/mentor/{{user_id}}">See full profile</a>
           </div>
         </div>
       </div>

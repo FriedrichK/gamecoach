@@ -51,15 +51,15 @@ def register_mentor(request):
 
 def mentor_contact(request, user_id):
     context = get_basic_context(request)
+    data = {
+        'user_id': user_id,
+        'facebook_app_id': settings.FACEBOOK_APP_ID
+    }
     if not request.user.is_authenticated():
-        data = {
-            'user_id': user_id,
-            'facebook_app_id': settings.FACEBOOK_APP_ID
-        }
         return render(request, 'pages/mentor_contact/mentor_contact_step1.html', dict(context.items() + data.items()))
     if not is_user(request.user):
-        return render(request, 'pages/mentor_contact/mentor_contact_step2.html', context)
-    return render(request, 'pages/conversation/inbox.html', context)
+        return render(request, 'pages/mentor_contact/mentor_contact_step2.html', dict(context.items() + data.items()))
+    return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
 
 
 def get_basic_context(request):
@@ -71,8 +71,7 @@ def get_basic_context(request):
 
 
 def is_mentor(user):
-    return False
-    #return has_profile(user, 'gamecoachprofile')
+    return has_profile(user, 'gamecoachprofile')
 
 
 def is_user(user):
