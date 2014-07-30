@@ -4,9 +4,13 @@ HEADLESS = False
 
 from django.conf import settings
 from django.test import LiveServerTestCase
+from django.shortcuts import render
+from django.test import RequestFactory
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium import webdriver
+
+from mock import patch
 
 from shared.testing.selenium import fill_textfield, change_checkbox, select_option
 
@@ -96,3 +100,34 @@ class MentorContactTestCase(LiveServerTestCase):
 
         submit_button = self.selenium.find_element_by_css_selector('button[name=submit]')
         submit_button.click()
+
+
+class ConversationTestCase(LiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        if HEADLESS:
+            cls.selenium = webdriver.PhantomJS('phantomjs')
+        else:
+            cls.selenium = WebDriver()
+        super(ConversationTestCase, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(ConversationTestCase, cls).tearDownClass()
+
+    @patch('frontend.views.mentor_contact')
+    def test_should_redirect_to_home_on_logo_click(self, mentor_contact_mock):
+        path = '/mentor/fkauder/contact'
+
+        request_factory = RequestFactory()
+        request = request_factory.get(path)
+        mentor_contact_mock.return_value = render(request, 'pages/conversation/inbox.html', {'is_mentor': False})
+
+        self.selenium.get('%s%s' % (self.live_server_url, path))
+
+        home_button = self.selenium.find_element_by_css_selector('.w-nav-brand.logo')
+        home_button.click()
+
+        self.assertTrue('Get coached by experienced gamers' in self.selenium.page_source)

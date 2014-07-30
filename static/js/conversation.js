@@ -1,5 +1,5 @@
 /* global angular */
-var conversationApp = angular.module('conversationApp', ['gamecoachShared']);
+var conversationApp = angular.module('conversationApp', ['gamecoachShared', 'gamecoachNavigation']);
 /* global angular, document, window, F */
 
 var conversationApp = angular.module('conversationApp'); 
