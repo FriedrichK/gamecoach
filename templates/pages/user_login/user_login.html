@@ -1,0 +1,27 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block body_tag %}ng-app="loginApp"{% endblock %}
+
+{% block content %}
+	{% include "pages/shared/facebook.html" %}
+	<div id="fb-root"></div>
+	<form id="facebook-login-form" action="/facebook/connect/?facebook_login=1" method="post">
+		{% csrf_token %}
+		<input type="hidden" value="{% templatetag openvariable %}redirectLink{% templatetag closevariable %}" name="next" ng-controller="RedirectLinkController" />
+		<div class="w-container main-column login-screen" ng-controller="LoginController" ng-click="facebookLogin()"><a class="sign-up-button login" href="#">Login with facebook</a>
+		</div>
+	</form>
+{% endblock %}
+
+{% block scripts_pre %}
+  <script src="{% static "js/angular-file-upload-shim.min.js" %}"></script> 
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/angular-route.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script> 
+	<script type="text/javascript" src="{% static "js/login.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}
