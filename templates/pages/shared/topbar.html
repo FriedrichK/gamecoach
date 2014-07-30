@@ -5,14 +5,25 @@
       <a class="w-nav-brand logo" ng-click="homeLink()">
         <img src="{% static "images/g_logo_blue.png" %}" width="40" alt="538366065aa5711a549509de_g%20logo%20blue.png">
       </a>
+
+      {% if is_authenticated %}
       <nav class="w-nav-menu nav-menu-drop-down" role="navigation">
-        <div class="nav-menu-block"><a class="w-nav-link drop-down-nav-link" href="#">Inbox (5)</a><a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a><a class="w-nav-link drop-down-nav-link" href="#">Settings</a>
-        </div><a class="w-nav-link drop-down-nav-link" href="#">Log out</a>
+        <div class="nav-menu-block">
+          <!--a class="w-nav-link drop-down-nav-link" href="#">Inbox (5)</a>
+          <a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a>
+          <a class="w-nav-link drop-down-nav-link" href="#">Settings</a-->
+        </div>
+        <a class="w-nav-link drop-down-nav-link" href="#">Log out</a>
       </nav>
-      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Minced Unicorn</a></div>
+      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">{{username}}</a></div>
+      {% else %}
+      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Login</a></div>
+      {% endif %}
+
       {% if not is_mentor %}
       <a class="w-nav-link nav-link become-a-mentor" ng-click="registerMentorLink()">Become a mentor</a>
       {% endif %}
+
       </div>
   </div>
 </div>

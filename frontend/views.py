@@ -53,7 +53,9 @@ def mentor_contact(request, user_id):
 
 def get_basic_context(request):
     return {
-        'is_mentor': is_mentor(request.user)
+        'is_mentor': is_mentor(request.user),
+        'is_authenticated': request.user.is_authenticated(),
+        'username': request.user.username
     }
 
 
