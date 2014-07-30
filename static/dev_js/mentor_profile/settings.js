@@ -1,7 +1,7 @@
 /* global angular */
 
-var app = angular.module('app'); 
-app.factory('profileLabelService', function() {
+var mentorProfileApp = angular.module('mentorProfileApp'); 
+mentorProfileApp.factory('profileLabelService', function() {
   return {
     labels: {
       regions: {

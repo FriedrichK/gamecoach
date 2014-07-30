@@ -1,7 +1,7 @@
 /* global document, angular */
 
-var app = angular.module('app');
-app.directive('valueAsPercent', function() {
+var mentorProfileApp = angular.module('mentorProfileApp');
+mentorProfileApp.directive('valueAsPercent', function() {
     return {
         restrict: 'AE',
         replace: 'true',
@@ -17,7 +17,7 @@ app.directive('valueAsPercent', function() {
     };
 });
 
-app.directive('responseTimeAsText', function() {
+mentorProfileApp.directive('responseTimeAsText', function() {
     return {
         restrict: 'AE',
         replace: 'true',

@@ -1,7 +1,7 @@
 /* global angular */
 
-var app = angular.module('app'); 
-app.factory('profileDataService', function($http) {
+var mentorProfileApp = angular.module('mentorProfileApp'); 
+mentorProfileApp.factory('profileDataService', function($http) {
     return {
         getMentorProfile: function(mentorId, callable) {
             return $http({
@@ -16,7 +16,7 @@ app.factory('profileDataService', function($http) {
     };
 });
 
-app.factory('profileRegionService', function(profileLabelService) {
+mentorProfileApp.factory('profileRegionService', function(profileLabelService) {
     return {
         buildRegionList: function(data) {
             var rawRegionList = this._buildRawRegionList(data);
@@ -52,7 +52,7 @@ app.factory('profileRegionService', function(profileLabelService) {
     };
 });
 
-app.factory('profileAvailabilityService', function(profileLabelService) {
+mentorProfileApp.factory('profileAvailabilityService', function(profileLabelService) {
     return {
         buildAvailabilityList: function(data) {
             var availabilityList = [];
@@ -89,7 +89,7 @@ app.factory('profileAvailabilityService', function(profileLabelService) {
     };
 });
 
-app.factory('profileRoleService', function(profileLabelService) {
+mentorProfileApp.factory('profileRoleService', function(profileLabelService) {
     var numberOfColumns = 2;
     return {
         buildRoleList: function(data) {
@@ -130,7 +130,7 @@ app.factory('profileRoleService', function(profileLabelService) {
     };
 });
 
-app.factory('profileHeroService', function() {
+mentorProfileApp.factory('profileHeroService', function() {
     return {
         buildHeroList: function(data) {
             if(!data || !data.data || !data.data.top_heroes) {
@@ -152,7 +152,7 @@ app.factory('profileHeroService', function() {
     };
 });
 
-app.factory('profileStatisticsService', function($filter, profileLabelService) {
+mentorProfileApp.factory('profileStatisticsService', function($filter, profileLabelService) {
     return {
         buildStatisticsList: function(data) {
             if(!data || !data.data || !data.data.statistics) {

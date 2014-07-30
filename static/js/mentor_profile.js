@@ -1,12 +1,12 @@
 /* global angular */
-var app = angular.module('app', ['ngAnimate', 'gamecoachShared'])
+var mentorProfileApp = angular.module('mentorProfileApp', ['ngAnimate', 'gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
 /* global document, angular, window */
 
-var app = angular.module('app'); 
-app.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
+var mentorProfileApp = angular.module('mentorProfileApp'); 
+mentorProfileApp.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
     angular.element(document).ready(function () {
         var mentorId = $scope.profile.mentorId;
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
@@ -26,8 +26,8 @@ app.controller('ProfileController', function($scope, $element, profileDataServic
 
 /* global document, angular */
 
-var app = angular.module('app');
-app.directive('valueAsPercent', function() {
+var mentorProfileApp = angular.module('mentorProfileApp');
+mentorProfileApp.directive('valueAsPercent', function() {
     return {
         restrict: 'AE',
         replace: 'true',
@@ -43,7 +43,7 @@ app.directive('valueAsPercent', function() {
     };
 });
 
-app.directive('responseTimeAsText', function() {
+mentorProfileApp.directive('responseTimeAsText', function() {
     return {
         restrict: 'AE',
         replace: 'true',
@@ -73,8 +73,8 @@ app.directive('responseTimeAsText', function() {
 });
 /* global document, angular */
 
-var app = angular.module('app'); 
-app.filter('percentAsString', function() {
+var mentorProfileApp = angular.module('mentorProfileApp'); 
+mentorProfileApp.filter('percentAsString', function() {
 	return function(input) {
 		return Math.round(input * 100, 0) + "%";
 	};
@@ -82,8 +82,8 @@ app.filter('percentAsString', function() {
 
 /* global angular */
 
-var app = angular.module('app'); 
-app.factory('profileDataService', function($http) {
+var mentorProfileApp = angular.module('mentorProfileApp'); 
+mentorProfileApp.factory('profileDataService', function($http) {
     return {
         getMentorProfile: function(mentorId, callable) {
             return $http({
@@ -98,7 +98,7 @@ app.factory('profileDataService', function($http) {
     };
 });
 
-app.factory('profileRegionService', function(profileLabelService) {
+mentorProfileApp.factory('profileRegionService', function(profileLabelService) {
     return {
         buildRegionList: function(data) {
             var rawRegionList = this._buildRawRegionList(data);
@@ -134,7 +134,7 @@ app.factory('profileRegionService', function(profileLabelService) {
     };
 });
 
-app.factory('profileAvailabilityService', function(profileLabelService) {
+mentorProfileApp.factory('profileAvailabilityService', function(profileLabelService) {
     return {
         buildAvailabilityList: function(data) {
             var availabilityList = [];
@@ -171,7 +171,7 @@ app.factory('profileAvailabilityService', function(profileLabelService) {
     };
 });
 
-app.factory('profileRoleService', function(profileLabelService) {
+mentorProfileApp.factory('profileRoleService', function(profileLabelService) {
     var numberOfColumns = 2;
     return {
         buildRoleList: function(data) {
@@ -212,7 +212,7 @@ app.factory('profileRoleService', function(profileLabelService) {
     };
 });
 
-app.factory('profileHeroService', function() {
+mentorProfileApp.factory('profileHeroService', function() {
     return {
         buildHeroList: function(data) {
             if(!data || !data.data || !data.data.top_heroes) {
@@ -234,7 +234,7 @@ app.factory('profileHeroService', function() {
     };
 });
 
-app.factory('profileStatisticsService', function($filter, profileLabelService) {
+mentorProfileApp.factory('profileStatisticsService', function($filter, profileLabelService) {
     return {
         buildStatisticsList: function(data) {
             if(!data || !data.data || !data.data.statistics) {
@@ -265,8 +265,8 @@ app.factory('profileStatisticsService', function($filter, profileLabelService) {
 });
 /* global angular */
 
-var app = angular.module('app'); 
-app.factory('profileLabelService', function() {
+var mentorProfileApp = angular.module('mentorProfileApp'); 
+mentorProfileApp.factory('profileLabelService', function() {
   return {
     labels: {
       regions: {

@@ -1,7 +1,7 @@
 {% extends "pages/shared/page.html" %}
 {% load staticfiles %}
 
-{% block body_tag %}ng-app="app" ng-controller="ProfileController" ngCloak{% endblock %}
+{% block body_tag %}ng-app="mentorProfileApp" ng-controller="ProfileController" ngCloak{% endblock %}
 
 {% block content %}
 	<input type="hidden" name="mentorId" value="{{mentor_id}}" ng-init="profile.mentorId='{{mentor_id}}'" ng-value="{{mentor_id}}" ng-model="profile.mentorId" />
@@ -144,7 +144,7 @@
 
 {% block scripts %}
 	<script src="https://code.angularjs.org/1.2.13/angular-animate.js"></script>
-	<script type="text/javascript" src="{% static "js/mentor_profile.js" %}"></script>
-  	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
-  	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/shared.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/mentor_profile.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
 {% endblock %}
