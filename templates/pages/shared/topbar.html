@@ -13,11 +13,11 @@
           <a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a>
           <a class="w-nav-link drop-down-nav-link" href="#">Settings</a-->
         </div>
-        <a class="w-nav-link drop-down-nav-link" href="#">Log out</a>
+        <a class="w-nav-link drop-down-nav-link" ng-click="logout()">Log out</a>
       </nav>
       <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">{{username}}</a></div>
       {% else %}
-      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">Login</a></div>
+      <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" ng-click="login()">Login</a></div>
       {% endif %}
 
       {% if not is_mentor %}

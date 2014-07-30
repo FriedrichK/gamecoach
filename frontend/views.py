@@ -10,6 +10,14 @@ def index(request):
     return render(request, 'pages/index/index.html', context)
 
 
+def login(request):
+    context = get_basic_context(request)
+    data = {
+        'facebook_app_id': settings.FACEBOOK_APP_ID
+    }
+    return render(request, 'pages/user_login/user_login.html', dict(context.items() + data.items()))
+
+
 def results(request):
     context = get_basic_context(request)
     return render(request, 'pages/mentor_results/mentor_results.html', context)

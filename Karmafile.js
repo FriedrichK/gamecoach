@@ -23,6 +23,12 @@ module.exports = function(config) {
 
       'static/dev_js/shared/*.js',
 
+      'static/dev_js/navigation/*.js',
+
+      'static/dev_js/login/_app.js',
+      'static/dev_js/login/controllers.js',
+      'static/dev_js/login/services.js',
+
       'static/dev_js/mentor_contact/_app.js',
       'static/dev_js/mentor_contact/controllers.js',
 
