@@ -42,8 +42,11 @@ def register_mentor(request):
             'facebook_app_id': settings.FACEBOOK_APP_ID
         }
         return render(request, 'pages/mentor_signup/mentor_signup_step1.html', dict(context.items() + data.items()))
-    else:
+
+    if not is_mentor(request.user):
         return render(request, 'pages/mentor_signup/mentor_signup_step2.html', context)
+
+    return render(request, 'pages/conversation/hub.html', context)
 
 
 def mentor_contact(request, user_id):
