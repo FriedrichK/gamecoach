@@ -71,7 +71,8 @@ def get_basic_context(request):
 
 
 def is_mentor(user):
-    return has_profile(user, 'gamecoachprofile')
+    return False
+    #return has_profile(user, 'gamecoachprofile')
 
 
 def is_user(user):
