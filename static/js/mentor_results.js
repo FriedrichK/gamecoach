@@ -14,11 +14,14 @@ mentorResultsApp.controller('RefineSearchController', function($scope, $element,
     $scope.change = function(evt) {
         mentorSearchService.getMatchingMentors($scope.refine, function() {});
         refineSettingsService.set($scope.refine);
+        if(window.history !== undefined) {
+            window.history.pushState({}, "Mentor search resuls", generateUrlService.buildFromSettings($scope.refine));
+        } 
     };
-    $scope.test = function() {
+    /*$scope.test = function() {
         //console.log(generateUrlService.buildFromSettings($scope.refine));
         window.location = generateUrlService.buildFromSettings($scope.refine);
-    };
+    };*/
 });
 
 mentorResultsApp.controller('MentorListController', function($scope, mentorSearchService, refineSettingsService) {
