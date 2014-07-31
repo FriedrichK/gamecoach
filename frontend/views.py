@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import Http404
 from django.conf import settings
@@ -66,7 +68,7 @@ def get_basic_context(request):
     return {
         'is_mentor': is_mentor(request.user),
         'is_authenticated': request.user.is_authenticated(),
-        'username': request.user.username
+        'username': get_username(request.user)
     }
 
 
@@ -82,3 +84,12 @@ def has_profile(user, profile_name):
     if not hasattr(user, 'gamecoachprofile') or user.gamecoachprofile is None:
         return False
     return True
+
+
+def get_username(user):
+    if has_profile(user, 'gamecoachprofile'):
+        if not user.gamecoachprofile.data is None:
+            data = json.loads(user.gamecoachprofile.data)
+            if 'steamId' in data:
+                return data['steamId']
+    return user.username

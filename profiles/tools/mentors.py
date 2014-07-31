@@ -25,7 +25,6 @@ def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 
     m = GamecoachProfile.objects.filter(*filters)
-    print m.query
 
     ids = [mentor.user.id for mentor in m]
     profile_pictures_by_id = get_profile_pictures_by_ids(ids)

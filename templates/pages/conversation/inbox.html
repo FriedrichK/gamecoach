@@ -42,16 +42,16 @@
                 <img class="correspondent-image" src="{% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}" alt="image-placeholder.svg">
               </div>
               <div class="w-col w-col-6 ng-cloak" ng-show="profile.username">
-                <div class="user-name-mini-profile messages">{% templatetag openvariable %}profile.username{% templatetag closevariable %}</div>
+                <div class="user-name-mini-profile messages">{% templatetag openvariable %}profile.data.steamId{% templatetag closevariable %}</div>
               </div>
             </div>
-            <div class="w-row contact-stats-block ng-cloak" ng-show="profile.data.steamId">
+            <!--div class="w-row contact-stats-block ng-cloak" ng-show="profile.data.steamId">
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Steam ID</div>
               </div>
               <div class="w-col w-col-6"><a class="contact-stats-text" href="#">{% templatetag openvariable %}profile.data.steamId{% templatetag closevariable %}</a>
               </div>
-            </div>
+            </div-->
             <div class="w-row contact-stats-block ng-cloak" ng-show="regions">
               <div class="w-col w-col-6">
                 <div class="contact-stats-titles">Regions</div>
