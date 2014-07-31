@@ -9,7 +9,7 @@
  <div class="search-filter-section">
     <div class="w-container profile-background-image">
       <div class="full-profile-image-background">
-        <img class="full-profile-image ng-cloak" ng-show="profilePictureUri" src="{% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}" alt="image-placeholder.svg">
+        <div class="full-profile-image ng-cloak" ng-show="profilePictureUri" style="background-image: url({% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}); width: 125px; background-size: cover;"></div>
       </div>
       <h2 class="ng-cloak">{% templatetag openvariable %}profile.data.steamId{% templatetag closevariable %}</h2>
     </div>
