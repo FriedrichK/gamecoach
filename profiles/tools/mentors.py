@@ -25,6 +25,7 @@ def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 
     m = GamecoachProfile.objects.filter(*filters)
+    print m.query
 
     ids = [mentor.user.id for mentor in m]
     profile_pictures_by_id = get_profile_pictures_by_ids(ids)
@@ -44,7 +45,8 @@ def merge_filter_data(filter_data):
     for label in availability_labels:
         if label in filter_data:
             avail = dict(avail.items() + filter_data[label].items())
-    filter_data['availability'] = avail
+    if not avail == {}:
+        filter_data['availability'] = avail
     return filter_data
 
 
@@ -70,14 +72,14 @@ def generate_filters_for_category(category, data, value_list):
         if not label in data or data[label] is False:
             tick = '.'
         else:
-            tick = '1'
+            tick = '0'
         ticks.append(tick)
 
     pattern = '^' + '\|'.join(ticks) + '$'
 
     f = {}
     f[category + "__regex"] = pattern
-    return Q(**f)
+    return ~Q(**f)
 
 
 def get_profile_pictures_by_ids(ids):
