@@ -13,6 +13,16 @@ class ToolsMentorsTestCase(TestCase):
     def setUp(self):
         self._profiles = create_mock_profiles()
 
+    def test_returns_expected_result_with_all_role_filters_untrue(self):
+        filter_data = {
+            'roles': {
+                'carry': False
+            }
+        }
+        actual = get_all_mentors(filter_data)
+
+        self.assertEqual(len(actual), 3)
+
     def test_returns_expected_result_for_role_shared_by_all(self):
         filter_data = {
             'roles': {

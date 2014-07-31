@@ -75,6 +75,9 @@ def generate_filters_for_category(category, data, value_list):
             tick = '0'
         ticks.append(tick)
 
+    if not '0' in ticks:
+        return Q()
+
     pattern = '^' + '\|'.join(ticks) + '$'
 
     f = {}
