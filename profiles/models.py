@@ -13,6 +13,7 @@ from profiles.tools.serialization import deserialize_roles, deserialize_regions,
 
 class GamecoachProfile(models.Model):
     user = models.OneToOneField(User)
+    username = models.CharField(max_length=128)
     roles = models.CharField(max_length=512, blank=True, null=True)
     regions = models.CharField(max_length=512, blank=True, null=True)
     availability = models.CharField(max_length=512, blank=True, null=True)
@@ -31,6 +32,7 @@ class GamecoachProfile(models.Model):
         }
         try:
             data['username'] = self.user.username
+            data['name'] = self.username
             data['email'] = self.user.email
             data['first_name'] = self.user.first_name
             data['last_name'] = self.user.last_name
@@ -41,6 +43,7 @@ class GamecoachProfile(models.Model):
 
 class GamecoachProfileStudent(models.Model):
     user = models.OneToOneField(User)
+    username = models.CharField(max_length=128)
     roles = models.CharField(max_length=512, blank=True, null=True)
     regions = models.CharField(max_length=512, blank=True, null=True)
     availability = models.CharField(max_length=512, blank=True, null=True)
@@ -59,6 +62,7 @@ class GamecoachProfileStudent(models.Model):
         }
         try:
             data['username'] = self.user.username
+            data['name'] = self.username
             data['email'] = self.user.email
             data['first_name'] = self.user.first_name
             data['last_name'] = self.user.last_name
