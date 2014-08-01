@@ -36,7 +36,7 @@ mentorResultsApp.controller('MentorListController', function($scope, mentorSearc
 /* global angular */
 var mentorResultsApp = angular.module('mentorResultsApp');
 
-mentorResultsApp.factory('mentorSearchService', function($http) {
+mentorResultsApp.factory('mentorSearchService', function($http, mentorPreviewService) {
   return {
     getMatchingMentors: function(data, callable) {
       return $http({
@@ -45,7 +45,7 @@ mentorResultsApp.factory('mentorSearchService', function($http) {
         params: data
       })
         .then(function(result) {
-          callable(result.data);
+          callable(mentorPreviewService.postProcess(result.data));
         }
       );
     }
@@ -143,6 +143,64 @@ mentorResultsApp.factory('generateUrlService', function() {
     },
     _buildChoiceCategory: function(category, formContent) {
       return formContent[category];
+    }
+  };
+});
+
+mentorResultsApp.factory('mentorPreviewService', function($filter) {
+  var generateTopHeroText = function(entry) {
+    console.log(entry);
+    if(!entry.data.top_heroes || entry.data.top_heroes === []) {
+      return 'No top heroes listed';
+    }
+    return "Top heroes: " + entry.data.top_heroes.join(', ');
+  };
+
+  var generateStatisticsTextGamesPlayed = function(entry, statistics) {
+    if(!statistics.games_played) {
+      return;
+    }
+    return "Games played: " + $filter('number')(statistics.games_played, 0);
+  };
+
+  var generateStatisticsTextWinRate = function(entry, statistics) {
+    if(!statistics.win_rate) {
+      return;
+    }
+    return "Win rate: " + $filter('percentAsString')(statistics.win_rate);
+  };
+
+  var generateStatisticsTextSoloMmr = function(entry, statistics) {
+    if(!statistics.solo_mmr) {
+      return;
+    }
+    return "Solo MMR: " + $filter('number')(statistics.solo_mmr, 0);
+  };
+
+  var generateStatisticsText = function(entry) {
+    if(!entry.data || !entry.data.statistics) {
+      return;
+    }
+    var statistics = angular.fromJson(entry.data.statistics);
+
+    var processors = [generateStatisticsTextGamesPlayed, generateStatisticsTextWinRate, generateStatisticsTextSoloMmr];
+    var parts = [];
+    angular.forEach(processors, function(processor, index) {
+      var result = processor(entry, statistics);
+      if(result) {
+        parts.push(result);
+      }
+    });
+    return parts.join(' | ');
+  };
+
+  return {
+    postProcess: function(data) {
+      angular.forEach(data, function(entry, index) {
+        entry.data.topHeroText = generateTopHeroText(entry);
+        entry.data.statisticsText = generateStatisticsText(entry);
+      });
+      return data;
     }
   };
 });
