@@ -1,6 +1,6 @@
 /* global angular */
 var conversationApp = angular.module('conversationApp', ['gamecoachShared', 'gamecoachNavigation']);
-/* global angular, document, window, F, BaseProfileController */
+/* global angular, document, window, F, BaseProfileController, $ */
 
 var conversationApp = angular.module('conversationApp'); 
 conversationApp.controller('SubmissionController', function($scope) {
@@ -10,7 +10,8 @@ conversationApp.controller('SubmissionController', function($scope) {
 });
 
 conversationApp.controller('OtherUserProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
-	BaseProfileController.call(this, $scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService, 'fkauder');
+	var mentorId = $('input[type=hidden][name=conversationPartner]').val();
+	BaseProfileController.call(this, $scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService, mentorId);
 });
 
 conversationApp.controller('MessageController', function($scope, $element, conversationService, messsageStreamService) {
