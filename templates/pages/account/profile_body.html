@@ -1,0 +1,272 @@
+{% load string_formatting %}
+ <div class="w-container main-column title">
+    <div class="text title large">Edit your profile</div>
+  </div>
+  <div class="search-filter-section" ng-controller="EditProfileController">
+    <div class="w-container main-column settings">
+      <div class="w-form">
+        <form class="w-clearfix" id="profileForm" name="profileForm" action="/" onsubmit="return false">
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="name">Display name*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name" required="required" value="{{profile.name}}" ng-model="profile.displayName">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text ttile regular" for="name">Upload profile picture*</label>
+            </div>
+            <div class="w-col w-col-8 w-clearfix"><!--a class="nav-link upload" href="#">SELECT picture</a-->
+              <input type="file" class="nav-link upload" name="profilePicture" ng-controller="ProfilePictureController" ng-model="picture.profilePicture" ng-file-select="onFileSelect($files)" />
+              <div class="text paragraph upload">Maximum picture size: 140x140 pixels&nbsp;</div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="name">Steam ID&nbsp;name*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="name-2" type="text" placeholder="Steam ID" name="name-2" data-name="Name 2" required="required" value="{{profile.steamId}}" ng-model="profile.steamId">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="name">Your&nbsp;Steam ID&nbsp;link*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="name-3" type="text" placeholder="http://" name="name-3" data-name="Name 3" required="required" value="{{profile.steamIdLink}}" ng-model="profile.steamIdLink">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">About me*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <textarea class="w-input text form input-area" id="about-me" placeholder="Tell a bit about yourself" name="about-me" data-name="About me" required="required" ng-model="profile.about">{{profile.data.description}}</textarea>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">What roles do you Play?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role" type="checkbox" name="role-1" data-name="Role 1" {% if profile.roles.carry %}checked{% endif %} ng-model="profile.role.carry">
+                    <label class="w-form-label" for="role">Carry</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-9" type="checkbox" name="role-9" data-name="Role 9" {% if profile.roles.disabler %}checked{% endif %} ng-model="profile.role.disabler">
+                    <label class="w-form-label" for="role-9">Disabler</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-10" type="checkbox" name="role-10" data-name="Role 10" {% if profile.roles.ganker %}checked{% endif %} ng-model="profile.role.ganker">
+                    <label class="w-form-label" for="role-10">Ganker</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-11" type="checkbox" name="role-11" data-name="Role 11" {% if profile.roles.initiator %}checked{% endif %} ng-model="profile.role.initiator">
+                    <label class="w-form-label" for="role-11">Initiator</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-12" type="checkbox" name="role-12" data-name="Role 12" {% if profile.roles.jungler %}checked{% endif %} ng-model="profile.role.jungler">
+                    <label class="w-form-label" for="role-12">Jungler</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-13" type="checkbox" name="role-13" data-name="Role 13" {% if profile.roles.offlaner %}checked{% endif %} ng-model="profile.role.offlaner">
+                    <label class="w-form-label" for="role-13">Offlaner</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-14" type="checkbox" name="role-14" data-name="Role 14" {% if profile.roles.pusher %}checked{% endif %} ng-model="profile.role.pusher">
+                    <label class="w-form-label" for="role-14">Pusher</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-15" type="checkbox" name="role-15" data-name="Role 15" {% if profile.roles.support %}checked{% endif %} ng-model="profile.role.support">
+                    <label class="w-form-label" for="role-15">Support</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">What are your top heroes?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <select class="w-select text form" id="field-4" name="field-4" required="required" ng-model="profile.topheroes.first">
+                <option value="" disabled>1st place</option>
+                {% for top_hero_entry in top_heroes %}
+                    <option value="{{top_hero_entry.0}}" {% if top_hero_entry.0 = profile.data.top_heroes.0.0 %} selected{% endif %}>{{top_hero_entry.1}}</option>
+                {% endfor %}
+              </select>
+              <select class="w-select text form" id="field-5" name="field-5" ng-model="profile.topheroes.second">
+                <option value="" disabled>2nd place</option>
+                {% for top_hero_entry in top_heroes %}
+                    <option value="{{top_hero_entry.0}}" {% if top_hero_entry.0 = profile.data.top_heroes.1.0 %} selected{% endif %}>{{top_hero_entry.1}}</option>
+                {% endfor %}
+              </select>
+              <select class="w-select text form" id="field-6" name="field-6" ng-model="profile.topheroes.third">
+                <option value="" disabled>3rd place</option>
+                {% for top_hero_entry in top_heroes %}
+                    <option value="{{top_hero_entry.0}}" {% if top_hero_entry.0 = profile.data.top_heroes.2.0 %} selected{% endif %}>{{top_hero_entry.1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">Your statistics</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input text form" id="field" type="text" placeholder="Number of games played" name="field" required="required" value="{{profile.data.statistics.games_played}}" ng-model="profile.statistics.gamesPlayed">
+              <input class="w-input text form" id="field-2" type="text" placeholder="Win rate (%)" name="field-2" required="required" value="{{ profile.data.statistics.win_rate|percentage }}" ng-model="profile.statistics.winRate">
+              <input class="w-input text form" id="field-3" type="text" placeholder="Solo MMR" name="field-3" required="required" value="{{profile.data.statistics.solo_mmr}}" ng-model="profile.statistics.soloMmr">
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text ttile regular" for="email">Which regions do you play?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region" type="checkbox" name="region-1" data-name="Region 1" {% if profile.regions.uswest %}checked{% endif %} ng-model="profile.region.uswest">
+                    <label class="w-form-label" for="region">US West</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-9" type="checkbox" name="region-9" data-name="Region 9" {% if profile.regions.useast %}checked{% endif %} ng-model="profile.region.useast">
+                    <label class="w-form-label" for="region-9">US&nbsp;East</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-10" type="checkbox" name="region-10" data-name="Region 10" {% if profile.regions.euwest %}checked{% endif %} ng-model="profile.region.euwest">
+                    <label class="w-form-label" for="region-10">EU West</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-11" type="checkbox" name="region-11" data-name="Region 11" {% if profile.regions.eueast %}checked{% endif %} ng-model="profile.region.eueast">
+                    <label class="w-form-label" for="region-11">EU&nbsp;East</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="region-12" type="checkbox" name="region-12" data-name="Region 12" {% if profile.regions.russia %}checked{% endif %} ng-model="profile.region.russia">
+                    <label class="w-form-label" for="region-12">Russia</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="region-13" type="checkbox" name="region-13" data-name="Region 13" {% if profile.regions.southamerica %}checked{% endif %} ng-model="profile.region.southamerica">
+                    <label class="w-form-label" for="region-13">South America</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-14" type="checkbox" name="region-14" data-name="Region 14" {% if profile.regions.seasia %}checked{% endif %} ng-model="profile.region.seasia">
+                    <label class="w-form-label" for="region-14">SE Asia</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="region-15" type="checkbox" name="region-15" data-name="Region 15" {% if profile.regions.australia %}checked{% endif %} ng-model="profile.region.australia">
+                    <label class="w-form-label" for="region-15">Australia</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">When are you available to mentor students?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-3">
+                  <div class="w-radio w-clearfix">
+                    <input class="w-radio-input" id="node" type="radio" name="day" value="1" data-name="Day" {% if profile.availability.weekends %}checked{% endif %} ng-model="profile.day" ng-change="change()">
+                    <label class="w-form-label" for="node">Weekends only</label>
+                  </div>
+                  <div class="w-radio w-clearfix">
+                    <input class="w-radio-input" id="node-2" type="radio" name="day" value="2" data-name="Day" {% if profile.availability.anyday %}checked{% endif %} ng-model="profile.day" ng-change="change()">
+                    <label class="w-form-label" for="node-2">Any day</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3">
+                  <div class="w-radio">
+                    <input class="w-radio-input" id="node-3" type="radio" name="time" value="1" data-name="Time" {% if profile.availability.evenings %}checked{% endif %} ng-model="profile.time" ng-change="change()">
+                    <label class="w-form-label" for="node-3">Evenings only</label>
+                  </div>
+                  <div class="w-radio">
+                    <input class="w-radio-input" id="node-3" type="radio" name="time" value="2" data-name="Time" {% if profile.availability.anytime %}checked{% endif %} ng-model="profile.time" ng-change="change()">
+                    <label class="w-form-label" for="node-3">Any time</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-3"></div>
+                <div class="w-col w-col-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="w-row form-question">
+            <div class="w-col w-col-4">
+              <label class="text title regular" for="email">How would you like to mentor student?*</label>
+            </div>
+            <div class="w-col w-col-8">
+              <div class="w-row text form">
+                <div class="w-col w-col-6">
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role" type="checkbox" name="role-1" data-name="Role 1" {% if profile.mentoring.individual %}checked{% endif %} ng-model="profile.mentoring.individual">
+                    <label class="w-form-label" for="role">Individual mentoring</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-16" type="checkbox" name="role-16" data-name="Role 16" {% if profile.mentoring.team %}checked{% endif %} ng-model="profile.mentoring.team">
+                    <label class="w-form-label" for="role-16">Team mentoring</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-20" type="checkbox" name="role-20" data-name="Role 20" {% if profile.mentoring.spectating %}checked{% endif %} ng-model="profile.mentoring.spectating">
+                    <label class="w-form-label" for="role-20">Mentoring while spectating</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-19" type="checkbox" name="role-19" data-name="Role 19" {% if profile.mentoring.together %}checked{% endif %} ng-model="profile.mentoring.together">
+                    <label class="w-form-label" for="role-19">Mentoring while playing together</label>
+                  </div>
+                </div>
+                <div class="w-col w-col-6">
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-17" type="checkbox" name="role-17" data-name="Role 17" {% if profile.mentoring.analysing %}checked{% endif %} ng-model="profile.mentoring.analysing">
+                    <label class="w-form-label" for="role-17">Analysing replys</label>
+                  </div>
+                  <div class="w-checkbox w-clearfix">
+                    <input class="w-checkbox-input" id="role-18" type="checkbox" name="role-18" data-name="Role 18" {% if profile.mentoring.questions %}checked{% endif %} ng-model="profile.mentoring.questions">
+                    <label class="w-form-label" for="role-18">General questions &amp;&nbsp;answers</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-21" type="checkbox" name="role-21" data-name="Role 21" {% if profile.mentoring.voicechat %}checked{% endif %} ng-model="profile.mentoring.voicechat">
+                    <label class="w-form-label" for="role-21">Voice chat</label>
+                  </div>
+                  <div class="w-checkbox">
+                    <input class="w-checkbox-input" id="role-22" type="checkbox" name="role-22" data-name="Role 22" {% if profile.mentoring.textchat %}checked{% endif %} ng-model="profile.mentoring.textchat">
+                    <label class="w-form-label" for="role-22">Text chat</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--button class="w-button save-settings-button" type="button" value="Save changes" data-wait="Save changes" ng-click="save(profileForm)">Save changes</button-->
+          <button class="w-button save-settings-button" ng-click="save(profileForm)">Save</button>
+        </form>
+        <div class="w-form-done">
+          <p>Thank you! Your submission has been received!</p>
+        </div>
+        <div class="w-form-fail">
+          <p>Oops! Something went wrong while submitting the form :(</p>
+        </div>
+      </div>
+      <div class="text paragraph">*Mandatory questions</div>
+    </div>
+  </div>
+  <div>

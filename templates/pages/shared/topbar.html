@@ -12,8 +12,9 @@
           <!--a class="w-nav-link drop-down-nav-link" href="#">Inbox (5)</a>
           <a class="w-nav-link drop-down-nav-link" href="#">Edit profile</a>
           <a class="w-nav-link drop-down-nav-link" href="#">Settings</a-->
+          <a class="w-nav-link drop-down-nav-link" ng-click="editProfile()">Edit Profile</a>
+          <a class="w-nav-link drop-down-nav-link" ng-click="logout()">Log out</a>
         </div>
-        <a class="w-nav-link drop-down-nav-link" ng-click="logout()">Log out</a>
       </nav>
       <div class="w-nav-button menu-botton"><a class="w-nav-link nav-link login" href="#">{{username}}</a></div>
       {% else %}

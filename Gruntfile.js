@@ -39,6 +39,10 @@ module.exports = function(grunt) {
       conversation: {
         src: ['static/dev_js/conversation/**/*.js', '!static/dev_js/conversation/**/*.test.js'],
         dest: 'static/js/conversation.js'
+      },
+      edit_profile: {
+        src: ['static/dev_js/edit_profile/**/*.js', '!static/dev_js/edit_profile/**/*.test.js'],
+        dest: 'static/js/edit_profile.js'
       }
     },
     uglify: {
@@ -77,6 +81,10 @@ module.exports = function(grunt) {
       conversation: {
         src: 'static/js/conversation.js',
         dest: 'static/js/conversation.min.js'
+      },
+      edit_profile: {
+        src: 'static/js/edit_profile.js',
+        dest: 'static/js/edit_profile.min.js'
       }
     },
     jshint: {
@@ -111,7 +119,8 @@ module.exports = function(grunt) {
           'static/dev_css/mentor_profile.css': 'static/dev_scss/mentor_profile/mentor_profile.scss',
           'static/dev_css/mentor_signup.css': 'static/dev_scss/mentor_signup/mentor_signup.scss',
           'static/dev_css/mentor_contact.css': 'static/dev_scss/mentor_signup/mentor_contact.scss',
-          'static/dev_css/conversation.css': 'static/dev_scss/mentor_signup/conversation.scss'
+          'static/dev_css/conversation.css': 'static/dev_scss/mentor_signup/conversation.scss',
+          'static/dev_css/edit_profile.css': 'static/dev_scss/edit_profile/edit_profile.scss'
         }
       }
     },
@@ -126,7 +135,8 @@ module.exports = function(grunt) {
           'static/css/mentor_profile.css': 'static/dev_css/mentor_profile.css',
           'static/css/mentor_signup.css': 'static/dev_css/mentor_signup.css',
           'static/css/mentor_contact.css': 'static/dev_css/mentor_contact.css',
-          'static/css/conversation.css': 'static/dev_css/conversation.css'
+          'static/css/conversation.css': 'static/dev_css/conversation.css',
+          'static/css/edit_profile.css': 'static/dev_css/edit_profile.css'
         }
       }
     },

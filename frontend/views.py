@@ -1,10 +1,12 @@
 import json
+from operator import itemgetter
 
 from django.shortcuts import render
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
 from profiles.tools.mentors import get_mentor_by_id
+from profiles.settings import HEROES_HASH
 
 
 def index(request):
@@ -64,6 +66,24 @@ def mentor_contact(request, user_id):
     return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
 
 
+def edit_profile(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
+
+    profile = {}
+    if is_mentor(request.user):
+        profile = request.user.gamecoachprofile.deserialize()
+    if 'data' in profile and 'top_heroes' in profile['data']:
+        profile['data']['top_heroes'] = post_process_top_heroes(profile['data']['top_heroes'])
+    print profile
+
+    context = get_basic_context(request)
+    context['profile'] = profile
+    context['user_id'] = request.user.username
+    context['top_heroes'] = build_top_heroes_list(HEROES_HASH)
+    return render(request, 'pages/account/profile.html', context)
+
+
 def get_basic_context(request):
     return {
         'is_mentor': is_mentor(request.user),
@@ -93,3 +113,20 @@ def get_username(user):
             if 'steamId' in data:
                 return data['steamId']
     return user.username
+
+
+def post_process_top_heroes(raw_top_heroes):
+    top_heroes = []
+    for label in raw_top_heroes:
+        for key, value in HEROES_HASH.items():
+            if value == label:
+                top_heroes.append((key, value,))
+    return top_heroes
+
+
+def build_top_heroes_list(hash):
+    top_heroes_list = []
+    for key, value in hash.items():
+        top_heroes_list.append((key, value,))
+    top_heroes_list = sorted(top_heroes_list, key=itemgetter(1))
+    return top_heroes_list

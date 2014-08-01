@@ -1,0 +1,70 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block body_tag %}ng-app="editProfileApp"{% endblock %}
+
+{% block content %}
+	<input type="hidden" name="conversationPartner" value="{{ user_id }}" />
+	<script>
+		var prefilledValues = {
+			displayName: '{{ profile.name }}',
+			steamId: '{{ profile.data.steamId}}',
+			steamIdLink: '{{ profile.data.steamIdLink }}',
+			about: '{{ profile.data.description }}',
+			statistics: {
+				gamesPlayed: '{{profile.data.statistics.games_played}}',
+				winRate: '{{profile.data.statistics.win_rate}}',
+				soloMmr: '{{profile.data.statistics.solo_mmr}}'
+			},
+			role: {
+				carry: {% if profile.roles.carry %}true{% else %}false{% endif %},
+				disabler: {% if profile.roles.disabler %}true{% else %}false{% endif %},
+				ganker: {% if profile.roles.ganker %}true{% else %}false{% endif %},
+				initiator: {% if profile.roles.initiator %}true{% else %}false{% endif %},
+				jungler: {% if profile.roles.jungler %}true{% else %}false{% endif %},
+				offlaner: {% if profile.roles.offlaner %}true{% else %}false{% endif %},
+				pusher: {% if profile.roles.pusher %}true{% else %}false{% endif %},
+				support: {% if profile.roles.support %}true{% else %}false{% endif %},
+			},
+			region: {
+				uswest: {% if profile.regions.uswest %}true{% else %}false{% endif %},
+				useast: {% if profile.regions.useast %}true{% else %}false{% endif %},
+				euwest: {% if profile.regions.euwest %}true{% else %}false{% endif %},
+				eueast: {% if profile.regions.eueast %}true{% else %}false{% endif %},
+				russia: {% if profile.regions.russia %}true{% else %}false{% endif %},
+				southamerica: {% if profile.regions.southamerica %}true{% else %}false{% endif %},
+				seasia: {% if profile.regions.seasia %}true{% else %}false{% endif %},
+				australia: {% if profile.regions.australia %}true{% else %}false{% endif %},
+			},
+			mentoring: {
+				individual: {% if profile.mentoring.individual %}true{% else %}false{% endif %},
+				team: {% if profile.mentoring.team %}true{% else %}false{% endif %},
+				spectating: {% if profile.mentoring.spectating %}true{% else %}false{% endif %},
+				together: {% if profile.mentoring.together %}true{% else %}false{% endif %},
+				analysing: {% if profile.mentoring.analysing %}true{% else %}false{% endif %},
+				questions: {% if profile.mentoring.questions %}true{% else %}false{% endif %},
+				voicechat: {% if profile.mentoring.voicechat %}true{% else %}false{% endif %},
+				textchat: {% if profile.mentoring.textchat %}true{% else %}false{% endif %},
+			},
+			topheroes: {
+				first: {% if profile.data.top_heroes.0 %}'{{ profile.data.top_heroes.0.0 }}'{% else %}undefined{% endif %},
+				second: {% if profile.data.top_heroes.1 %}'{{ profile.data.top_heroes.1.0 }}'{% else %}undefined{% endif %},
+				third: {% if profile.data.top_heroes.2 %}'{{ profile.data.top_heroes.2.0 }}'{% else %}undefined{% endif %},
+			},
+			day: {% if profile.availability.weekends and not profile.availability.anyday %}1{% elif not  profile.availability.weekends and profile.availability.anyday %}2{% else %}undefined{% endif %},
+			time: {% if profile.availability.evenings and not profile.availability.anytime %}1{% elif not  profile.availability.evenings and profile.availability.anytime %}2{% else %}undefined{% endif %}
+		}
+	</script>
+	{% include "pages/account/profile_body.html" %}
+{% endblock %}
+
+{% block scripts_pre %}
+  <script src="{% static "js/angular-file-upload-shim.min.js" %}"></script> 
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/edit_profile.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

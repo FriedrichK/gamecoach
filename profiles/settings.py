@@ -1,8 +1,10 @@
 ROLES = ['carry', 'ganker', 'jungler', 'pusher', 'disabler', 'initiator', 'offlaner', 'support']
 REGIONS = ['US West', 'US East', 'EU West', 'EU East', 'Russia', 'South America', 'SE Asia', 'Australia']
 REGIONS_LABELS = ['uswest', 'useast', 'euwest', 'eueast', 'russia', 'southamerica', 'seasia', 'australia']
-AVAILABILITY = ['Weekends only', 'Any day', 'Evenings only', 'Any time']
-AVAILABILITY_LABELS = ['weekends', 'anyday', 'evenings', 'anytime']
+AVAILABILITY = ['weekends', 'anyday', 'evenings', 'anytime']
+AVAILABILITY_LABELS = ['Weekends only', 'Any day', 'Evenings only', 'Any time']
+MENTORING = ['individual', 'team', 'spectating', 'together', 'analysing', 'questions', 'voicechat', 'textchat']
+MENTORING_LABELS = ['individual mentoring', 'team monitoring', 'mentoring while spectating', 'mentoring while playing together', 'anaylsing replies', 'general questions & answers', 'voice chat', 'text chat']
 HEROES = [
     "Abaddon",
     "Alchemist",

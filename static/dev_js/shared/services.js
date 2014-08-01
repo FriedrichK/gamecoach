@@ -1,6 +1,14 @@
-/* global document, angular */
+/* global document, angular, $ */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
+gamecoachShared.factory('gCStringService', function() {
+    return {
+        decodeHtml: function(stringInput) {
+            return $('<div/>').html(stringInput).text(); 
+        }
+    };
+});
+
 gamecoachShared.factory('heroesService', function() {
   return {
     getHeroHash: function() {

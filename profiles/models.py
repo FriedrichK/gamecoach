@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django_facebook.models import FacebookCustomUser as User
 
-from profiles.tools.serialization import deserialize_roles, deserialize_regions, deserialize_availability, deserialize_data, deserialize_date
+from profiles.tools.serialization import deserialize_roles, deserialize_regions, deserialize_mentoring, deserialize_availability, deserialize_data, deserialize_date
 
 
 class GamecoachProfile(models.Model):
@@ -16,6 +16,7 @@ class GamecoachProfile(models.Model):
     username = models.CharField(max_length=128)
     roles = models.CharField(max_length=512, blank=True, null=True)
     regions = models.CharField(max_length=512, blank=True, null=True)
+    mentoring = models.CharField(max_length=512, blank=True, null=True)
     availability = models.CharField(max_length=512, blank=True, null=True)
     data = models.TextField(blank=True, null=True)
     created = models.DateField(default=datetime.now(), blank=True)
@@ -25,6 +26,7 @@ class GamecoachProfile(models.Model):
         data = {
             'roles': deserialize_roles(self.roles),
             'regions': deserialize_regions(self.regions),
+            'mentoring': deserialize_mentoring(self.mentoring),
             'availability': deserialize_availability(self.availability),
             'data': deserialize_data(self.data),
             'created': deserialize_date(self.created),
@@ -46,6 +48,7 @@ class GamecoachProfileStudent(models.Model):
     username = models.CharField(max_length=128)
     roles = models.CharField(max_length=512, blank=True, null=True)
     regions = models.CharField(max_length=512, blank=True, null=True)
+    mentoring = models.CharField(max_length=512, blank=True, null=True)
     availability = models.CharField(max_length=512, blank=True, null=True)
     data = models.TextField(blank=True, null=True)
     created = models.DateField(default=datetime.now(), blank=True)
@@ -55,6 +58,7 @@ class GamecoachProfileStudent(models.Model):
         data = {
             'roles': deserialize_roles(self.roles),
             'regions': deserialize_regions(self.regions),
+            'mentoring': deserialize_mentoring(self.mentoring),
             'availability': deserialize_availability(self.availability),
             'data': deserialize_data(self.data),
             'created': deserialize_date(self.created),

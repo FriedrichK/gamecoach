@@ -31,7 +31,6 @@ def merge_filter_data(filter_data):
 
 
 def generate_filters(filter_data):
-    print filter_data
     if filter_data is None:
         return {}
 

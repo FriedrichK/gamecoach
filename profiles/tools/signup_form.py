@@ -4,7 +4,7 @@ import re
 
 from profiles.settings import SIGNUP_FORM
 from profiles.models import GamecoachProfile
-from profiles.tools.serialization import serialize_roles, serialize_regions, serialize_availability
+from profiles.tools.serialization import serialize_roles, serialize_regions, serialize_mentoring, serialize_availability
 from profiles.settings import HEROES_HASH
 
 WIN_RATE_REGEX_PATTERN = re.compile('([0-9\\.]+)')
@@ -41,8 +41,10 @@ def build_profile_from_signup_form_data(signup_form_data):
 
 def generate_form_data(signup_form_data):
     return {
+        'username': signup_form_data['displayName'],
         'roles': serialize_roles(get_hash(signup_form_data, 'role')),
         'regions': serialize_regions(get_hash(signup_form_data, 'region')),
+        'mentoring': serialize_mentoring(get_hash(signup_form_data, 'mentoring')),
         'availability': serialize_availability(get_hash(signup_form_data, 'day'), get_hash(signup_form_data, 'time')),
         'data': json.dumps(generate_form_data_data(signup_form_data)),
         'created': datetime.datetime.now(),

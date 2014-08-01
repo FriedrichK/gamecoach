@@ -1,6 +1,6 @@
 import json
 
-from profiles.settings import ROLES, REGIONS, REGIONS_LABELS, AVAILABILITY
+from profiles.settings import ROLES, REGIONS, REGIONS_LABELS, MENTORING, MENTORING_LABELS, AVAILABILITY
 
 
 def serialize_data(data_hash):
@@ -10,7 +10,11 @@ def serialize_data(data_hash):
 def deserialize_data(input_string):
     if input_string is None:
         return {}
-    return json.loads(input_string)
+    data = json.loads(input_string)
+    if 'statistics' in data and not data['statistics'] is None:
+        data['statistics'] = json.loads(data['statistics'])
+    data['statistics']
+    return data
 
 
 def serialize_roles(data_hash):
@@ -27,6 +31,14 @@ def serialize_regions(data_hash):
 
 def deserialize_regions(input_string):
     return deserialize_string_storage(input_string, REGIONS_LABELS)
+
+
+def serialize_mentoring(input_string):
+    return serialize_string_storage(input_string, MENTORING)
+
+
+def deserialize_mentoring(input_string):
+    return deserialize_string_storage(input_string, MENTORING)
 
 
 def serialize_availability(day, time):

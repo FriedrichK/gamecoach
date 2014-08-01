@@ -19,4 +19,7 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http) {
             window.location.reload();
         });
 	};
+	$scope.editProfile = function() {
+		window.location = "/profile/edit";
+	};
 });
