@@ -26,9 +26,9 @@
             </div>
           </div>
           <div class="w-clearfix message-block  my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in messageStream" ng-show="messageStream" ng-click="goToMessage(message.id)">
-            <img class="user-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
-            <div class="user-name">Minced Unicorn</div>
-            <div class="message-time full-message">11:35am</div>
+            <div class="user-image" style="background-image: url('/data/mentor/{% templatetag openvariable %}message.sender.username{% templatetag closevariable %}/profilePicture'); width: 75px; background-size: cover;"></div>
+            <div class="user-name">{% templatetag openvariable %}message.sender.username2{% templatetag closevariable %}</div>
+            <div class="message-time full-message">{% templatetag openvariable %}message.sent_at{% templatetag closevariable %}</div>
             <div class="message-text">{% templatetag openvariable %}message.body{% templatetag closevariable %}</div>
           </div>
         </div>

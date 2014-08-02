@@ -22,13 +22,13 @@ conversationApp.controller('OtherUserProfileController', function($scope, $eleme
 	BaseProfileController.call(this, $scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService, mentorId);
 });
 
-conversationApp.controller('MessageController', function($scope, $element, conversationService) {
+conversationApp.controller('MessageController', function($scope, $element, conversationService, messageStreamFormattingService) {
 	var userId = '123';
 	var partnerId = $('input[type=hidden][name=conversationPartner]').val();
 	var updateMessages = function() {
 		conversationService.getConversation(userId, partnerId, function(data) {
 			var stream = "main";
-			$scope.messageStream = data;
+			$scope.messageStream = messageStreamFormattingService.format(data);
 		});
 	};
 	angular.element($element).ready(function() {

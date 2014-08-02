@@ -14,8 +14,16 @@ def serialize_message(message):
     return {
         'subject': message.subject,
         'body': message.body,
-        'sender': message.sender.id,
-        'recipient': message.recipient.id,
+        'sender': {
+            'id': message.sender.id,
+            'username': message.sender.username,
+            'username2': message.sender.gamecoachprofile.username
+        },
+        'recipient': {
+            'id': message.recipient.id,
+            'username': message.recipient.username,
+            'username2': message.recipient.gamecoachprofile.username
+        },
         'email': message.email,
         'parent': save_getter(message, 'parent.id'),
         'thread': save_getter(message, 'thread.id'),
