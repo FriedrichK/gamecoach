@@ -12,8 +12,11 @@ gamecoachShared.filter('capitalize', function() {
 });
 
 gamecoachShared.filter('percentAsString', function() {
-	return function(input) {
-		return Math.round(input * 100, 0) + "%";
+	return function(input, precision) {
+		if(!precision) {
+			precision = 0;
+		}
+		return (parseFloat(input)*100).toFixed(precision) + "%";
 	};
 });
 
