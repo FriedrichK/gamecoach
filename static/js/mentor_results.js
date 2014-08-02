@@ -149,7 +149,6 @@ mentorResultsApp.factory('generateUrlService', function() {
 
 mentorResultsApp.factory('mentorPreviewService', function($filter) {
   var generateTopHeroText = function(entry) {
-    console.log(entry);
     if(!entry.data.top_heroes || entry.data.top_heroes === []) {
       return 'No top heroes listed';
     }

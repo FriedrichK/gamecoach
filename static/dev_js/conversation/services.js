@@ -17,10 +17,17 @@ conversationApp.factory('conversationService', function($http) {
   };
 });
 
-conversationApp.factory('messsageStreamService', function() {
+conversationApp.factory('messageService', function($http) {
   return {
-    updateStream: function(stream, data) {
-      return 1;
+    postMessage: function(partnerId, message, callback) {
+      return $http({
+        url: '/api/conversation/message/',
+        method: 'POST',
+        data: {recipient: partnerId, message: message}
+      })
+        .then(function(result) {
+          callback(result);
+        });
     }
   };
 });

@@ -25,14 +25,11 @@
               </div>
             </div>
           </div>
-          <div class="w-clearfix message-block  my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in messages" ng-show="message" ng-click="goToMessage(message.id)">
+          <div class="w-clearfix message-block  my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in messageStream" ng-show="messageStream" ng-click="goToMessage(message.id)">
             <img class="user-image" src="https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg" alt="image-placeholder.svg">
             <div class="user-name">Minced Unicorn</div>
             <div class="message-time full-message">11:35am</div>
-            <div class="message-text">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo
-                cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-            </div>
+            <div class="message-text">{% templatetag openvariable %}message.body{% templatetag closevariable %}</div>
           </div>
         </div>
         <div class="w-col w-col-4">

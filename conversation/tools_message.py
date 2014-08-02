@@ -7,7 +7,29 @@ except ImportError:
     from datetime import datetime
     now = datetime.now
 
-from shared.tools import serialize_datetime
+from shared.tools import serialize_datetime, save_getter
+
+
+def serialize_message(message):
+    return {
+        'subject': message.subject,
+        'body': message.body,
+        'sender': message.sender.id,
+        'recipient': message.recipient.id,
+        'email': message.email,
+        'parent': save_getter(message, 'parent.id'),
+        'thread': save_getter(message, 'thread.id'),
+        'sent_at': serialize_datetime(message.sent_at),
+        'replied_at': serialize_datetime(message.replied_at),
+        'sender_archived': message.sender_archived,
+        'recipient_archived': message.recipient_archived,
+        'sender_deleted_at': message.sender_deleted_at,
+        'recipient_deleted_at': message.recipient_deleted_at,
+        'moderation_status': message.moderation_status,
+        'moderated_by': save_getter(message, 'moderated_by.id'),
+        'moderation_date': serialize_datetime(message.moderation_date),
+        'moderation_reason': message.moderation_reason
+    }
 
 
 def _get_site():

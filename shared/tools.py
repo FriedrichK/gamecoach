@@ -46,3 +46,15 @@ def sanitize_file_field_url(raw_url):
     if None:
         return None
     return raw_url.replace(settings.BASE_DIR, '')
+
+
+def save_getter(input_object, path, default=None):
+    if input_object is None or path is None:
+        return None
+    path_elements = path.split('.')
+    base = input_object
+    for element in path_elements:
+        if not hasattr(base, element):
+            return None
+        base = getattr(base, element)
+    return base
