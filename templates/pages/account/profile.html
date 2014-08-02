@@ -51,8 +51,8 @@
 				second: {% if profile.data.top_heroes.1 %}'{{ profile.data.top_heroes.1.0 }}'{% else %}undefined{% endif %},
 				third: {% if profile.data.top_heroes.2 %}'{{ profile.data.top_heroes.2.0 }}'{% else %}undefined{% endif %},
 			},
-			day: {% if profile.availability.weekends and not profile.availability.anyday %}1{% elif not  profile.availability.weekends and profile.availability.anyday %}2{% else %}undefined{% endif %},
-			time: {% if profile.availability.evenings and not profile.availability.anytime %}1{% elif not  profile.availability.evenings and profile.availability.anytime %}2{% else %}undefined{% endif %}
+			day: '{% if profile.availability.weekends and not profile.availability.anyday %}1{% elif not  profile.availability.weekends and profile.availability.anyday %}2{% else %}undefined{% endif %}',
+			time: '{% if profile.availability.evenings and not profile.availability.anytime %}1{% elif not  profile.availability.evenings and profile.availability.anytime %}2{% else %}undefined{% endif %}'
 		}
 	</script>
 	{% include "pages/account/profile_body.html" %}
