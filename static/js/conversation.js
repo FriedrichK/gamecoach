@@ -25,10 +25,9 @@ conversationApp.controller('OtherUserProfileController', function($scope, $eleme
 });
 
 conversationApp.controller('MessageController', function($scope, $element, conversationService, messageStreamFormattingService) {
-	var userId = '123';
 	var partnerId = $('input[type=hidden][name=conversationPartner]').val();
 	var updateMessages = function() {
-		conversationService.getConversation(userId, partnerId, function(data) {
+		conversationService.getConversation(null, partnerId, function(data) {
 			var stream = "main";
 			$scope.messageStream = messageStreamFormattingService.format(data);
 		});
@@ -39,6 +38,20 @@ conversationApp.controller('MessageController', function($scope, $element, conve
 	$scope.$on('newMessageSuccessfullySent', function(event) {
 		updateMessages();
 	});
+});
+
+conversationApp.controller('InboxController', function($scope, $element, inboxService, messageStreamFormattingService) {
+	var updateInbox = function() {
+		inboxService.getInbox(function(data) {
+			$scope.inbox = messageStreamFormattingService.format(data);
+		});
+	};
+	angular.element($element).ready(function() {
+		updateInbox();
+	});
+	$scope.goToConversation = function(conversationPartnerUsername) {
+		window.location = '/conversation/' + conversationPartnerUsername;
+	};
 });
 /* global angular */
 var conversationApp = angular.module('conversationApp');
@@ -74,31 +87,25 @@ conversationApp.factory('messageService', function($http) {
   };
 });
 
-conversationApp.factory('messageStreamFormattingService', function($filter) {
-  var isToday = function(d) {
-    var now = new Date();
-    if(d.getYear() === now.getYear() && d.getMonth() === now.getMonth() + 1 && d.getDate() === now.getDate()) {
-      console.log("match");
-      return true;
+conversationApp.factory('inboxService', function($http) {
+  return {
+    getInbox: function(callback) {
+      return $http({
+        url: '/api/conversation/',
+        method: 'GET'
+      })
+        .then(function(result) {
+          callback(result.data);
+        });
     }
-    return false;
   };
-  var convertJsonToDate = function(d) {
-    return new Date(d.year, d.month, d.day, d.hour, d.minute, d.second, 0);
-  };
-  var formatMessage = function(message) {
-    var date = convertJsonToDate(message.sent_at);
-    var format = 'shortDate';
-    if(isToday(date)) {
-      format = 'shortTime';
-    }
-    message.sent_at = $filter('date')(date, format);
-    return message;
-  };
+});
+
+conversationApp.factory('messageStreamFormattingService', function($filter, timeService) {
   var formatMessages = function(messages) {
     var formattedMessages = [];
     angular.forEach(messages, function(message) {
-      formattedMessages.push(formatMessage(message));
+      formattedMessages.push(timeService.formatMessageDate(message));
     });
     return formattedMessages;
   };

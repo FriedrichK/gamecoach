@@ -1,1 +1,14 @@
-PLACEHOLDER FOR THE INBOX
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block body_tag %}ng-app="conversationApp"{% endblock %}
+
+{% block content %}
+	{% include "pages/conversation/hub_body.html" %}
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script> 
+	<script type="text/javascript" src="{% static "js/conversation.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

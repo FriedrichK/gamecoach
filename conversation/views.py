@@ -1,26 +1,28 @@
 #import os
 import json
-import urllib
 
-from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseForbidden, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.timezone import now
 
 from django_facebook.models import FacebookCustomUser as User
 
 from profiles.tools.mentors import get_mentor_by_username
 from conversation.tools_message import create_message, serialize_message
-from conversation.tools_folder import get_conversation
+from conversation.tools_folder import get_conversation, get_inbox_slice
 
 
 @csrf_exempt
-def conversation(request, partnerId):
-    if request.user is None or not request.user.is_authenticated():
+def conversation(request, partner_id):
+    if request.user is None or not request.user.is_authenticated() or not request.user.is_active:
         return HttpResponseForbidden(json.dumps({'success': False, 'message': 'access_not_allowed'}))
-    if partnerId is None:
-        return HttpResponseNotFound(json.dumps({'success': False, 'message': 'no_partner_id'}))
 
-    conversation_partner = get_mentor_by_username(partnerId)
+    if partner_id is None or partner_id == "":
+        message_items = get_inbox_slice(request.user, now(), items=500)
+        messages = [serialize_message(message) for message in message_items]
+        return HttpResponse(json.dumps(messages))
+
+    conversation_partner = get_mentor_by_username(partner_id)
     if conversation_partner is None or not conversation_partner.is_active:
         return HttpResponseNotFound(json.dumps({'success': False, 'message': 'other user in the conversation could not be found'}))
 

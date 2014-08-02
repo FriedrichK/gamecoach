@@ -23,10 +23,9 @@ conversationApp.controller('OtherUserProfileController', function($scope, $eleme
 });
 
 conversationApp.controller('MessageController', function($scope, $element, conversationService, messageStreamFormattingService) {
-	var userId = '123';
 	var partnerId = $('input[type=hidden][name=conversationPartner]').val();
 	var updateMessages = function() {
-		conversationService.getConversation(userId, partnerId, function(data) {
+		conversationService.getConversation(null, partnerId, function(data) {
 			var stream = "main";
 			$scope.messageStream = messageStreamFormattingService.format(data);
 		});
@@ -37,4 +36,18 @@ conversationApp.controller('MessageController', function($scope, $element, conve
 	$scope.$on('newMessageSuccessfullySent', function(event) {
 		updateMessages();
 	});
+});
+
+conversationApp.controller('InboxController', function($scope, $element, inboxService, messageStreamFormattingService) {
+	var updateInbox = function() {
+		inboxService.getInbox(function(data) {
+			$scope.inbox = messageStreamFormattingService.format(data);
+		});
+	};
+	angular.element($element).ready(function() {
+		updateInbox();
+	});
+	$scope.goToConversation = function(conversationPartnerUsername) {
+		window.location = '/conversation/' + conversationPartnerUsername;
+	};
 });

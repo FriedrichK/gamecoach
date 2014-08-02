@@ -11,7 +11,10 @@ from profiles.settings import HEROES_HASH
 
 def index(request):
     context = get_basic_context(request)
-    return render(request, 'pages/index/index.html', context)
+    if request.user.is_authenticated and request.user.is_active:
+        return render(request, 'pages/conversation/hub.html', context)
+    else:
+        return render(request, 'pages/index/index.html', context)
 
 
 def login(request):
@@ -63,6 +66,21 @@ def mentor_contact(request, user_id):
         return render(request, 'pages/mentor_contact/mentor_contact_step1.html', dict(context.items() + data.items()))
     if not is_user(request.user):
         return render(request, 'pages/mentor_contact/mentor_contact_step2.html', dict(context.items() + data.items()))
+    return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
+
+
+def conversation(request, user_id):
+    context = get_basic_context(request)
+    data = {
+        'user_id': user_id,
+    }
+
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login?next=/conversation/' + user_id)
+
+    if request.user.username == user_id:
+        return render(request, 'pages/conversation/hub.html', context)
+
     return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
 
 
