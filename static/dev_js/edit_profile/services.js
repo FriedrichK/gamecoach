@@ -10,7 +10,6 @@ editProfileApp.factory('profileService', function($http) {
                 data: data
             })
             .then(function(result) {
-                console.log(result);
                 if(result.status === 200) {
                     //
                 }
