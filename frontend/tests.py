@@ -18,6 +18,7 @@ from profiles.models import GamecoachProfile
 
 from shared.testing.factories.account.user import create_user
 from shared.testing.factories.account import create_account
+from shared.testing.factories.conversation import create_fake_conversation
 from shared.testing.selenium import fill_textfield, change_checkbox, select_option, get_as_user
 from profiles.models import GamecoachProfile
 from frontend.views import mentor_contact
@@ -113,6 +114,7 @@ class MentorContactTestCase(LiveServerTestCase):
         submit_button.click()
 
 
+"""
 class ConversationTestCase(LiveServerTestCase):
 
     @classmethod
@@ -141,6 +143,7 @@ class ConversationTestCase(LiveServerTestCase):
         home_button.click()
 
         self.assertTrue('Get coached by experienced gamers' in self.selenium.page_source)
+"""
 
 
 class ContactMentorTestCase(LiveServerTestCase):
@@ -182,6 +185,35 @@ class ContactMentorTestCase(LiveServerTestCase):
         entries = create_account()
         get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT), user=entries['user'])
         self.assertIn('BLABLA', self.selenium.page_source)  # This will break whenever the 404 page changes, but apparently there is no clean way to check status codes (!)
+
+
+class ConversationTestCase(LiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = get_web_driver()
+        super(ConversationTestCase, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(ConversationTestCase, cls).tearDownClass()
+
+    def test_should_produce_expected_conversation(self):
+        account1 = create_account()
+        account2 = create_account()
+        account3 = create_account()
+
+        create_fake_conversation(account1['user'], account2['user'], account3['user'], items=3)
+
+        url = self.live_server_url + '/conversation/' + account2['user'].username
+        get_as_user(self.selenium, self.live_server_url, url, user=account1['user'])
+
+        time.sleep(2)
+
+        conversation_items = self.selenium.find_element_by_css_selector('.message-block')
+
+        self.assertEqual(len(conversation_items), 6)
 
 
 def get_web_driver():
