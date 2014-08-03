@@ -65,8 +65,8 @@ def message_create(request):
     if recipient_user is None or not recipient_user.is_active:
         return HttpResponseNotFound(json.dumps({'success': False, 'message': 'recipient user could not be found or is inactive'}))
 
-    #if recipient_user == request.user:
-    #    return HttpResponseForbidden(json.dumps({'success': False, 'message': 'recipient is you. You cannot send yourself a message'}))
+    if recipient_user == request.user:
+        return HttpResponseForbidden(json.dumps({'success': False, 'message': 'recipient is you. You cannot send yourself a message'}))
 
     message = create_message(request.user, recipient_user, '[automatic]', data['message'])
 
