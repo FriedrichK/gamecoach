@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
+from django_facebook.models import FacebookCustomUser as User
+
 from profiles.tools.mentors import get_mentor_by_id, get_mentor_by_username
 from profiles.settings import HEROES_HASH
 

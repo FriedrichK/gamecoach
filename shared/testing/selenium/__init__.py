@@ -28,6 +28,7 @@ def create_session_store():
     engine = import_module(settings.SESSION_ENGINE)
     store = engine.SessionStore()
     store.save()
+    store.modfied = True
     return store
 
 
@@ -43,4 +44,4 @@ def get_as_user(selenium, live_server_url, url, user=None):
 
     selenium.get(live_server_url)
     selenium.add_cookie({'name': settings.SESSION_COOKIE_NAME, 'value': session_store.session_key, "path": "/", "secure": False})
-    selenium.get(url)
+    return selenium.get(url)

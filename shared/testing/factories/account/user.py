@@ -75,7 +75,9 @@ def create_profile(fake, user, fake_name, fake_username):
         'image': 'images/facebook_profiles/%s.jpg' % (fake_username),
         'user': user
     }
-    profile = Profile(**content)
+    profile, created = Profile.objects.get_or_create(user=user)
+    for key, value in content.items():
+        setattr(profile, key, value)
     profile.save()
     return profile
 

@@ -13,7 +13,11 @@ from selenium import webdriver
 
 from mock import patch
 
+from django_facebook.models import FacebookCustomUser as User
+from profiles.models import GamecoachProfile
+
 from shared.testing.factories.account.user import create_user
+from shared.testing.factories.account import create_account
 from shared.testing.selenium import fill_textfield, change_checkbox, select_option, get_as_user
 from profiles.models import GamecoachProfile
 from frontend.views import mentor_contact
@@ -118,11 +122,12 @@ class ConversationTestCase(LiveServerTestCase):
         else:
             cls.selenium = WebDriver()
         super(ConversationTestCase, cls).setUpClass()
+        cls.selenium.implicitly_wait(3)
 
     @classmethod
     def tearDownClass(cls):
-        cls.selenium.quit()
         super(ConversationTestCase, cls).tearDownClass()
+        cls.selenium.quit()
 
     @patch('frontend.views.mentor_contact')
     def test_should_redirect_to_home_on_logo_click(self, mentor_contact_mock):
@@ -150,18 +155,17 @@ class ContactMentorTestCase(LiveServerTestCase):
         cls.selenium.quit()
         super(ContactMentorTestCase, cls).tearDownClass()
 
-    @skip
-    @patch('frontend.views.mentor_contact')
-    def test_should_show_login_page_as_expected(self, mentor_contact_mock):
-        mock_request = build_request_mock()
-        mentor_contact_mock.return_value = mentor_contact(mock_request, MOCK_MENTOR_USERNAME)
-
+    def test_should_show_login_page_as_expected(self):
         self.selenium.get('%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT))
 
         self.assertTrue('login with facebook' in self.selenium.page_source)
         self.assertTrue('sign up with facebook' in self.selenium.page_source)
 
-    @skip
+    def test_should_show_message_hub_if_user_tries_to_contact_herself(self):
+        user, profile = create_user()
+        get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, '/mentor/%s/contact' % user.username), user=user)
+        self.assertIn('InboxController', self.selenium.page_source)
+
     def test_should_submit_profile_as_expected(self):
         user, profile = create_user()
 
@@ -175,13 +179,10 @@ class ContactMentorTestCase(LiveServerTestCase):
         GamecoachProfile.objects.get(user=user)
 
     @skip
-    @patch('frontend.views.mentor_contact')
-    def test_should_do_something_as_expected(self, mentor_contact_mock):
-        mentor_contact_mock = build_mentor_contact_mock(mentor_contact_mock, page='pages/conversation/inbox.html')
-
-        self.selenium.get('%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT))
-
-        self.assertTrue(False)
+    def test_should_throw_404_if_the_mentor_to_be_contacted_cannot_be_found(self):
+        entries = create_account()
+        get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT), user=entries['user'])
+        self.assertEqual(self.selenium.status_code, 404)
 
 
 def get_web_driver():
