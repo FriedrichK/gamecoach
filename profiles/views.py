@@ -14,7 +14,6 @@ from profiles.models import ProfilePicture
 
 @csrf_exempt
 def mentor(request, mentor_id):
-    print "incoming!", request.method
     if request.method == "POST":
         return mentor_create_or_update(request, mentor_id)
     if request.method == "GET":
