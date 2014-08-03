@@ -22,4 +22,7 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http) {
 	$scope.editProfile = function() {
 		window.location = "/profile/edit";
 	};
+	$scope.search = function() {
+		window.location = "/results";
+	};
 });
