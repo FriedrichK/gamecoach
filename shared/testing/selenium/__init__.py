@@ -44,4 +44,4 @@ def get_as_user(selenium, live_server_url, url, user=None):
 
     selenium.get(live_server_url)
     selenium.add_cookie({'name': settings.SESSION_COOKIE_NAME, 'value': session_store.session_key, "path": "/", "secure": False})
-    return selenium.get(url)
+    selenium.get(url)

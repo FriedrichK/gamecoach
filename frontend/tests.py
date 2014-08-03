@@ -178,11 +178,10 @@ class ContactMentorTestCase(LiveServerTestCase):
 
         GamecoachProfile.objects.get(user=user)
 
-    @skip
     def test_should_throw_404_if_the_mentor_to_be_contacted_cannot_be_found(self):
         entries = create_account()
         get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT), user=entries['user'])
-        self.assertEqual(self.selenium.status_code, 404)
+        self.assertIn('BLABLA', self.selenium.page_source)  # This will break whenever the 404 page changes, but apparently there is no clean way to check status codes (!)
 
 
 def get_web_driver():
