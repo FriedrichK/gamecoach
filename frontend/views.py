@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
-from profiles.tools.mentors import get_mentor_by_id
+from profiles.tools.mentors import get_mentor_by_id, get_mentor_by_username
 from profiles.settings import HEROES_HASH
 
 
@@ -50,7 +50,7 @@ def register_mentor(request):
         }
         return render(request, 'pages/mentor_signup/mentor_signup_step1.html', dict(context.items() + data.items()))
 
-    if not is_mentor(request.user):
+    if not has_profile(request.user):
         return render(request, 'pages/mentor_signup/mentor_signup_step2.html', context)
 
     return render(request, 'pages/conversation/hub.html', context)
@@ -68,8 +68,11 @@ def mentor_contact(request, user_id):
     if request.user.username == user_id:
         return render(request, 'pages/conversation/hub.html', context)
 
-    if not is_user(request.user):
+    if not has_profile(request.user):
         return render(request, 'pages/mentor_contact/mentor_contact_step2.html', dict(context.items() + data.items()))
+
+    if get_mentor_by_username(user_id) is None:
+        raise Http404()
 
     return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
 
@@ -94,7 +97,7 @@ def edit_profile(request):
         return HttpResponseRedirect('/login')
 
     profile = {}
-    if is_mentor(request.user):
+    if has_profile(request.user):
         profile = request.user.gamecoachprofile.deserialize()
     if 'data' in profile and 'top_heroes' in profile['data']:
         profile['data']['top_heroes'] = post_process_top_heroes(profile['data']['top_heroes'])
@@ -109,28 +112,20 @@ def edit_profile(request):
 
 def get_basic_context(request):
     return {
-        'is_mentor': is_mentor(request.user),
+        'is_mentor': has_profile(request.user),
         'is_authenticated': request.user.is_authenticated(),
         'username': get_username(request.user)
     }
 
 
-def is_mentor(user):
-    return has_profile(user, 'gamecoachprofile')
-
-
-def is_user(user):
-    return has_profile(user, 'gamecoachprofilestudent')
-
-
-def has_profile(user, profile_name):
+def has_profile(user):
     if not hasattr(user, 'gamecoachprofile') or user.gamecoachprofile is None:
         return False
     return True
 
 
 def get_username(user):
-    if has_profile(user, 'gamecoachprofile'):
+    if has_profile(user):
         if not user.gamecoachprofile.data is None:
             data = json.loads(user.gamecoachprofile.data)
             if 'steamId' in data:

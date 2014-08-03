@@ -48,15 +48,15 @@ var mentorContactApp = angular.module('mentorContactApp');
 
 mentorContactApp.factory('userProfileService', function($http) {
     return {
-        submit: function(data) {
+        submit: function(data, mentor) {
             return $http({
-                url: '/api/users/',
+                url: '/api/mentors/',
                 method: 'POST',
                 data: data
             })
             .then(function(result) {
                 if(result.status === 200) {
-                    window.location = "/register/mentor";
+                    window.location = window.location;
                 }
             });
         }

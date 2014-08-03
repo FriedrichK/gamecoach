@@ -57,7 +57,7 @@ class ViewsTestCase(TestCase):
 class ToolsMessageTestCase(TestCase):
 
     def setUp(self):
-        self._accounts = create_accounts(NUMBER_OF_FAKE_USERS_GENERATED, is_user=True, is_mentor=True)
+        self._accounts = create_accounts(NUMBER_OF_FAKE_USERS_GENERATED)
 
     def test_creates_message_as_expected(self):
         recipient_user = self._get_user(1)
@@ -252,7 +252,7 @@ class ToolsMessageTestCase(TestCase):
 class ToolsFolderTestCase(TestCase):
 
     def setUp(self):
-        self._accounts = create_accounts(NUMBER_OF_FAKE_USERS_GENERATED, is_user=True, is_mentor=True)
+        self._accounts = create_accounts(NUMBER_OF_FAKE_USERS_GENERATED)
 
     def test_returns_expected_conversation(self):
         user1 = self._get_user(0)

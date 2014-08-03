@@ -5,13 +5,9 @@ import copy
 from django.utils import timezone
 
 from profiles.settings import ROLES, REGIONS, AVAILABILITY, HEROES
-from profiles.models import GamecoachProfileStudent, GamecoachProfile
+from profiles.models import GamecoachProfile
 
 from faker import Faker
-
-
-def create_student_profile(user, profile):
-    return create_profile(user, profile, GamecoachProfileStudent)
 
 
 def create_mentor_profile(user, profile):
