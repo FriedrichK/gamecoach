@@ -16,7 +16,7 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http, $
             method: 'GET'
         })
         .then(function(result) {
-            window.location.reload();
+            window.location = '/';
         });
 	};
 	$scope.editProfile = function() {
