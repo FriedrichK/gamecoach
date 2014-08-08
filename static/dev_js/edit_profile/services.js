@@ -11,7 +11,7 @@ editProfileApp.factory('profileService', function($http) {
             })
             .then(function(result) {
                 if(result.status === 200) {
-                    //
+                    window.location = '/profile/';
                 }
             });
         }

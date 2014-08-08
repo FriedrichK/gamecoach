@@ -48,6 +48,17 @@ def results(request):
     return render(request, 'pages/mentor_results/mentor_results.html', context)
 
 
+def profile(request):
+    if not request.user.is_authenticated():
+        raise Http404()
+
+    context = {
+        'mentor_id': request.user.username
+    }
+    context = dict(context.items() + get_basic_context(request).items())
+    return render(request, 'pages/mentor_profile/mentor_profile.html', context)
+
+
 def mentor(request, mentor_id):
     mentor = get_mentor_by_id(mentor_id)
     if mentor is None:
@@ -119,7 +130,13 @@ def edit_profile(request):
         profile = request.user.gamecoachprofile.deserialize()
     if 'data' in profile and 'top_heroes' in profile['data']:
         profile['data']['top_heroes'] = post_process_top_heroes(profile['data']['top_heroes'])
-    print profile
+
+    if 'data' in profile and 'statistics' in profile['data']:
+        try:
+            statistics = json.loads(profile['data']['statistics'])
+            profile['data']['statistics'] = statistics
+        except ValueError:
+            pass
 
     context = get_basic_context(request)
     context['profile'] = profile

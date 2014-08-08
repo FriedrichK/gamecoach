@@ -25,7 +25,6 @@ def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 
     m = GamecoachProfile.objects.filter(*filters)
-    print m.query
 
     ids = [mentor.user.id for mentor in m]
     profile_pictures_by_id = get_profile_pictures_by_ids(ids)
@@ -65,7 +64,6 @@ def generate_filters(filter_data):
             f = generate_filters_for_availability(filter_data['availability'], AVAILABILITY)
         else:
             f = generate_filters_for_category(category, filter_data[category], value_list)
-        print f
         filters.append(f)
     return filters
 
