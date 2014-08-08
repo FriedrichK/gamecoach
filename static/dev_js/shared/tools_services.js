@@ -20,7 +20,7 @@ gamecoachShared.factory('timeService', function($filter) {
 			return message;
 		},
 		convertJsonToDate: function(d) {
-			return new Date(d.year, d.month, d.day, d.hour, d.minute, d.second, 0);
+			return new Date(d.year, d.month - 1, d.day, d.hour, d.minute, d.second, 0);
 		}
 	};
 });
