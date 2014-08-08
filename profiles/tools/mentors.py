@@ -91,3 +91,8 @@ def get_profile_pictures_by_ids(ids):
         if not entry.image is None:
             profile_pictures_by_ids[entry.user.id] = entry.image.url
     return profile_pictures_by_ids
+
+
+def get_number_of_mentors():
+    active_users = User.objects.filter(is_active=True, gamecoachprofile__is_mentor=True)
+    return len(active_users)

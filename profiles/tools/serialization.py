@@ -11,8 +11,12 @@ def deserialize_data(input_string):
     if input_string is None:
         return {}
     data = json.loads(input_string)
-    if 'statistics' in data and not data['statistics'] is None:
-        data['statistics'] = json.loads(data['statistics'])
+    #if 'statistics' in data and not data['statistics'] is None:
+    #    try:
+    #        data['statistics'] = json.loads(data['statistics'])
+    #    except TypeError:
+    #        print data['statistics']
+    #        raise TypeError()
     data['statistics']
     return data
 
