@@ -11,7 +11,7 @@ gamecoachShared.filter('capitalize', function() {
 
 gamecoachShared.filter('percentAsString', function() {
 	return function(input, precision) {
-		if(!input || input == '' || isNaN(input)) {
+		if(!input || input === '' || isNaN(input)) {
 			return null;
 		}
 
