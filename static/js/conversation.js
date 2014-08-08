@@ -22,6 +22,9 @@ conversationApp.controller('SubmissionController', function($rootScope, $scope, 
 conversationApp.controller('OtherUserProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
 	var mentorId = $('input[type=hidden][name=conversationPartner]').val();
 	BaseProfileController.call(this, $scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService, mentorId);
+	$scope.goToProfile = function() {
+		window.location = '/mentor/' + mentorId;
+	};
 });
 
 conversationApp.controller('MessageController', function($scope, $element, conversationService, messageStreamFormattingService) {
