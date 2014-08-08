@@ -27,7 +27,7 @@ conversationApp.controller('OtherUserProfileController', function($scope, $eleme
 	};
 });
 
-conversationApp.controller('MessageController', function($scope, $element, conversationService, messageStreamFormattingService) {
+conversationApp.controller('MessageController', function($scope, $element, $interval, conversationService, messageStreamFormattingService) {
 	var partnerId = $('input[type=hidden][name=conversationPartner]').val();
 	var updateMessages = function() {
 		conversationService.getConversation(null, partnerId, function(data) {
@@ -38,12 +38,15 @@ conversationApp.controller('MessageController', function($scope, $element, conve
 	angular.element($element).ready(function() {
 		updateMessages();
 	});
+	$interval(function(){
+		updateMessages();
+	}, 3000);
 	$scope.$on('newMessageSuccessfullySent', function(event) {
 		updateMessages();
 	});
 });
 
-conversationApp.controller('InboxController', function($scope, $element, inboxService, messageStreamFormattingService) {
+conversationApp.controller('InboxController', function($scope, $element, $interval, inboxService, messageStreamFormattingService) {
 	var updateInbox = function() {
 		inboxService.getInbox(function(data) {
 			$scope.inbox = messageStreamFormattingService.format(data);
@@ -52,6 +55,9 @@ conversationApp.controller('InboxController', function($scope, $element, inboxSe
 	angular.element($element).ready(function() {
 		updateInbox();
 	});
+	$interval(function(){
+		updateInbox();
+	}, 3000);
 	$scope.goToConversation = function(conversationPartnerUsername) {
 		window.location = '/conversation/' + conversationPartnerUsername;
 	};
