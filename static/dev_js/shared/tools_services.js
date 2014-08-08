@@ -3,9 +3,12 @@
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('timeService', function($filter) {
 	return {
+		getCurrentDate: function() {
+			return new Date();
+		},
 		isToday: function(d) {
-			var now = new Date();
-			if(d.getYear() === now.getYear() && d.getMonth() === now.getMonth() + 1 && d.getDate() === now.getDate()) {
+			var now = this.getCurrentDate();
+			if(d.getYear() === now.getYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate()) {
 				return true;
 			}
 			return false;

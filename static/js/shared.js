@@ -412,9 +412,12 @@ gamecoachShared.factory('heroesService', function() {
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('timeService', function($filter) {
 	return {
+		getCurrentDate: function() {
+			return new Date();
+		},
 		isToday: function(d) {
-			var now = new Date();
-			if(d.getYear() === now.getYear() && d.getMonth() === now.getMonth() + 1 && d.getDate() === now.getDate()) {
+			var now = this.getCurrentDate();
+			if(d.getYear() === now.getYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate()) {
 				return true;
 			}
 			return false;
@@ -444,6 +447,9 @@ describe('tools_services', function() {
 
 	beforeEach(inject(function(_timeService_) {
 		timeService = _timeService_;
+		timeService.getCurrentDate = function() {
+			return new Date(2014, 7, 5, 12, 12, 20);
+		};
 	}));
 
 	it('shouldConvertJsonToExpectedDate', function() {
@@ -457,6 +463,20 @@ describe('tools_services', function() {
 		};
 		var actual = timeService.convertJsonToDate(json);
 		expect(actual.toJSON()).toEqual('2014-08-09T16:12:20.000Z');
+	});
+
+	it('shouldRecognizeDateIsToday', function() {
+		var mockToday = {
+			year: 2014,
+			month: 8,
+			day: 9,
+			hour: 6,
+			minute: 13,
+			second: 4
+		};
+		var mockDate = new Date(2014, 7, 5, 18, 12, 20);
+		var actual = timeService.isToday(mockDate);
+		expect(actual).toBe(true);
 	});
 
 });
