@@ -2,7 +2,7 @@ from django.db.models import Q
 
 from django_facebook.models import FacebookCustomUser as User
 
-from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
+from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY
 from profiles.models import GamecoachProfile, ProfilePicture
 from shared.tools import sanitize_file_field_url
 
@@ -25,6 +25,7 @@ def get_all_mentors(filter_data):
     filters = generate_filters(filter_data)
 
     m = GamecoachProfile.objects.filter(*filters)
+    print m.query
 
     ids = [mentor.user.id for mentor in m]
     profile_pictures_by_id = get_profile_pictures_by_ids(ids)
@@ -56,11 +57,15 @@ def generate_filters(filter_data):
     filter_data = merge_filter_data(filter_data)
 
     filters = []
-    categories = {'roles': ROLES, 'regions': REGIONS_LABELS, 'availability': AVAILABILITY_LABELS}
+    categories = {'roles': ROLES, 'regions': REGIONS_LABELS, 'availability': AVAILABILITY}
     for category, value_list in categories.items():
         if not category in filter_data:
             continue
-        f = generate_filters_for_category(category, filter_data[category], value_list)
+        if category == 'availability':
+            f = generate_filters_for_availability(filter_data['availability'], AVAILABILITY)
+        else:
+            f = generate_filters_for_category(category, filter_data[category], value_list)
+        print f
         filters.append(f)
     return filters
 
@@ -82,6 +87,22 @@ def generate_filters_for_category(category, data, value_list):
     f = {}
     f[category + "__regex"] = pattern
     return ~Q(**f)
+
+
+def generate_filters_for_availability(data, value_list):
+    base = Q()
+
+    if 'weekends' in data and data['weekends'] is True:
+        base = Q(availability__regex='^1\|0\|.\|.$')
+    if 'anyday' in data and data['anyday'] is True:
+        base = Q(availability__regex='^0\|1\|.\|.$')
+
+    if 'evenings' in data and data['evenings'] is True:
+        base &= Q(availability__regex='^.\|.\|1\|0$')
+    if 'anytime' in data and data['anytime'] is True:
+        base &= Q(availability__regex='^.\|.\|0\|1$')
+
+    return base
 
 
 def get_profile_pictures_by_ids(ids):

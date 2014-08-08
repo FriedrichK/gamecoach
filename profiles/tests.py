@@ -54,7 +54,7 @@ class ToolsMentorsTestCase(TestCase):
 
         self.assertEqual(len(actual), 3)
 
-    def test_returns_expected_reuslt_for_single_region(self):
+    def test_returns_expected_result_for_single_region(self):
         filter_data = {
             'regions': {
                 'euwest': True,
@@ -64,7 +64,7 @@ class ToolsMentorsTestCase(TestCase):
 
         self.assertEqual(len(actual), 1)
 
-    def test_returns_expected_reuslt_for_three_regions(self):
+    def test_returns_expected_result_for_three_regions(self):
         filter_data = {
             'regions': {
                 'seasia': True,
@@ -76,19 +76,73 @@ class ToolsMentorsTestCase(TestCase):
 
         self.assertEqual(len(actual), 3)
 
+    def test_returns_expected_result_for_availability_weekends(self):
+        filter_data = {
+            'availability': {
+                'weekends': True
+            }
+        }
+        actual = get_all_mentors(filter_data)
+
+        self.assertEqual(len(actual), 1)
+
+    def test_returns_expected_result_for_availability_anyday_anytime(self):
+        filter_data = {
+            'availability': {
+                'anyday': True,
+                'anytime': True
+            }
+        }
+        actual = get_all_mentors(filter_data)
+
+        self.assertEqual(len(actual), 1)
+
+    def test_returns_expected_result_for_availability_weekends_anytime(self):
+        filter_data = {
+            'availability': {
+                'weekends': True,
+                'anytime': True
+            }
+        }
+        actual = get_all_mentors(filter_data)
+
+        self.assertEqual(len(actual), 0)
+
+    def test_returns_expected_result_for_availability_anyday(self):
+        filter_data = {
+            'availability': {
+                'anyday': True,
+            }
+        }
+        actual = get_all_mentors(filter_data)
+
+        self.assertEqual(len(actual), 2)
+
+    def test_returns_expected_result_for_no_availability_filters(self):
+        filter_data = {}
+        actual = get_all_mentors(filter_data)
+
+        self.assertEqual(len(actual), 3)
+
 
 def create_mock_profiles():
     profiles = []
     data = [
-        {'roles': {'carry': True, 'ganker': True}, 'regions': {'euwest': True, 'seasia': True}},
-        {'roles': {'carry': True, 'ganker': True}, 'regions': {'eueast': True, 'russia': True}},
-        {'roles': {'carry': True, 'disabler': True}, 'regions': {'eueast': True, 'australia': True}}
+        {'roles': {'carry': True, 'ganker': True}, 'regions': {'euwest': True, 'seasia': True}, 'day': '1', 'time': '1'},
+        {'roles': {'carry': True, 'ganker': True}, 'regions': {'eueast': True, 'russia': True}, 'day': '2', 'time': '1'},
+        {'roles': {'carry': True, 'disabler': True}, 'regions': {'eueast': True, 'australia': True}, 'day': '2', 'time': '2'}
     ]
     for i in range(len(data)):
         mock_user = User(username=unicode(i))
         mock_user.save()
 
-        profile = GamecoachProfile(user=mock_user, roles=serialize_string_storage(data[i]['roles'], ROLES), regions=serialize_string_storage(data[i]['regions'], REGIONS_LABELS))
+        profile = GamecoachProfile(
+            user=mock_user,
+            roles=serialize_string_storage(data[i]['roles'], ROLES),
+            regions=serialize_string_storage(data[i]['regions'], REGIONS_LABELS),
+            availability=serialize_availability(data[i]['day'], data[i]['time'])
+        )
+        print profile.availability
         profile.save()
         profiles.append(profile)
     return profiles
@@ -108,3 +162,16 @@ def build_data_string(data_hash, value_list):
             token = '1'
         tokens.append(token)
     return '|'.join(tokens)
+
+
+def serialize_availability(day, time):
+    tokens = []
+    if day == "1":
+        tokens += ["1", "0"]
+    if day == "2":
+        tokens += ["0", "1"]
+    if time == "1":
+        tokens += ["1", "0"]
+    if time == "2":
+        tokens += ["0", "1"]
+    return "|".join(tokens)
