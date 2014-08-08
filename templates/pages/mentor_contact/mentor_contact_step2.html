@@ -1,6 +1,10 @@
 {% extends "pages/shared/page.html" %}
 {% load staticfiles %}
 
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/mentor_contact.css" %}">
+{% endblock %}
+
 {% block body_tag %}ng-app="mentorContactApp"{% endblock %}
 
 {% block content %}
