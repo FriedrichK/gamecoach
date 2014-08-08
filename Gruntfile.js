@@ -128,7 +128,7 @@ module.exports = function(grunt) {
           'static/dev_css/mentor_profile.css': 'static/dev_scss/mentor_profile/mentor_profile.scss',
           'static/dev_css/mentor_signup.css': 'static/dev_scss/mentor_signup/mentor_signup.scss',
           'static/dev_css/mentor_contact.css': 'static/dev_scss/mentor_signup/mentor_contact.scss',
-          'static/dev_css/conversation.css': 'static/dev_scss/mentor_signup/conversation.scss',
+          'static/dev_css/conversation.css': 'static/dev_scss/conversation/conversation.scss',
           'static/dev_css/edit_profile.css': 'static/dev_scss/edit_profile/edit_profile.scss'
         }
       }
