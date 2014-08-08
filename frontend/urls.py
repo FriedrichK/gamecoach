@@ -5,6 +5,7 @@ urlpatterns = patterns(
     '',
     url(r'login', 'frontend.views.login', name='login'),
     url(r'settings', 'frontend.views.edit_settings', name='settings'),
+    url(r'inbox', 'frontend.views.message_hub', name='message_hub'),
     url(r'results', 'frontend.views.results', name='results'),
     url(r'profile/edit', 'frontend.views.edit_profile', name='edit_profile'),
     url(r'mentor/(.*)/contact', 'frontend.views.mentor_contact', name='mentor_contact'),

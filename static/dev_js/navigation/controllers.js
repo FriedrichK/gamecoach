@@ -1,6 +1,6 @@
 /* global document, angular, window */
 var gamecoachNavigation = angular.module('gamecoachNavigation', []);
-gamecoachNavigation.controller('NavigationController', function($scope, $http) {
+gamecoachNavigation.controller('NavigationController', function($scope, $http, $location) {
 	$scope.homeLink = function() {
 		window.location = '/';
 	};
@@ -8,7 +8,7 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http) {
 		window.location = '/register/mentor';
 	};
 	$scope.login = function() {
-		window.location = '/login';
+		window.location = '/login?next=' + $location.path();
 	};
 	$scope.logout = function() {
 		$http({
@@ -27,5 +27,8 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http) {
 	};
 	$scope.editSettings = function() {
 		window.location = "/settings";
+	};
+	$scope.inbox = function() {
+		window.location = "/inbox";
 	};
 });

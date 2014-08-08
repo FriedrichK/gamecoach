@@ -15,10 +15,12 @@ from profiles.settings import HEROES_HASH
 
 def index(request):
     context = get_basic_context(request)
-    if request.user.is_authenticated and request.user.is_active:
-        return render(request, 'pages/conversation/hub.html', context)
-    else:
-        return render(request, 'pages/index/index.html', context)
+    return render(request, 'pages/index/index.html', context)
+
+
+def message_hub(request):
+    context = get_basic_context(request)
+    return render(request, 'pages/conversation/hub.html', context)
 
 
 def login(request):
