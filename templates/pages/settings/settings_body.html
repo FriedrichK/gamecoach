@@ -1,0 +1,44 @@
+  <div class="search-filter-section">
+    <div class="w-container main-column settings">
+      <div class="w-form">
+        <form class="w-clearfix" id="emailForm" name="emailForm" action="/" onsubmit="return false">
+          <div class="w-row">
+            <div class="w-col w-col-4">
+              <label class="setting-titles" for="email">Email Address:</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input settings-text-field" id="email" type="email" placeholder="Enter your email address" name="email" required="required" ng-model="userSettings.email">
+            </div>
+          </div>
+          <div class="w-row">
+            <div class="w-col w-col-4">
+              <label class="setting-titles" for="email">Confirm email Address:</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input settings-text-field" id="email-2" type="email" placeholder="Enter your email address" name="email-2" data-name="Email 2" required="required" ng-model="userSettings.email2">
+            </div>
+          </div>
+          <input class="w-button save-settings-button" type="submit" value="Save changes" data-wait="Save changes" wait="Save changes" ng-click="submitEmail(emailForm)"/>
+        </form>
+        <div class="w-form-done">
+          <p>Thank you! Your submission has been received!</p>
+        </div>
+        <div class="w-form-fail">
+          <p>Oops! Something went wrong while submitting the form :(</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-container main-column other-settings{% if is_mentor %} ng-hide{% endif %}">
+      <div class="setting-titles">Become a mentor</div>
+      <div class="settings-text">If you choose to become a mentor, your profile will be&nbsp;shown in the mentor search results. You will also begin to receive coaching requests from students. As a mentor, you can still ask other mentors to coach you. If you get tired of mentoring,
+        you can always switch to being a student.</div><a class="switch-to-mentor" ng-click="switchToMentor()">Switch to mentor profile</a>
+    </div>
+    <div class="w-container main-column other-settings{% if not is_mentor %} ng-hide{% endif %}">
+      <div class="setting-titles">Become a Student</div>
+      <div class="settings-text">If you choose to become a student, your profile will no longer be&nbsp;shown in the mentor search results. You will not receive coaching requests from students. If you change your mind you can become a mentor at any time.</div><a class="switch-to-mentor" ng-click="switchToStudent()">Switch to Student profile</a>
+    </div>
+    <div class="w-container main-column other-settings">
+      <div class="setting-titles">Deactivate account</div>
+      <div class="settings-text">Game over? Noooooo! If you deactivate your account, we will remove all information associate with your account. To reopen an account, you will create a new profile. Are you sure you want to leave?</div><a class="deactivate-account" ng-click="deactivate()">Deactivate account</a>
+    </div>
+  </div>

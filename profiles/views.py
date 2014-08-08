@@ -3,12 +3,11 @@ import json
 import urllib
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 
-from tools.mentors import get_all_mentors, get_mentor_by_id, get_mentor_by_username
-from tools.signup_form import add_profile_for_user, update_profile_for_user, get_mentor_signup_form_from_request
-
+from profiles.tools.mentors import get_all_mentors, get_mentor_by_id, get_mentor_by_username
+from profiles.tools.signup_form import add_profile_for_user, update_profile_for_user, get_mentor_signup_form_from_request
 from profiles.models import ProfilePicture
 
 
@@ -18,6 +17,8 @@ def mentor(request, mentor_id):
         return mentor_create_or_update(request, mentor_id)
     if request.method == "GET":
         return mentor_read(request, mentor_id)
+    if request.method == "DELETE":
+        return mentor_delete(request, mentor_id)
 
 
 def mentor_read(request, mentor_id):
@@ -47,6 +48,17 @@ def mentor_create(request, mentor_signup_form):
 def mentor_update(request, mentor_id, mentor_signup_form):
     result = update_profile_for_user(request.user, mentor_signup_form)
     return HttpResponse(json.dumps({'bla': 'blub'}))
+
+
+def mentor_delete(request, mentor_id):
+    if request.user is None or not request.user.is_authenticated():
+        return HttpResponseNotFound(json.dumps({'success': False, 'error': 'no_valid_user_found'}))
+    if not request.user.username == mentor_id:
+        return HttpResponseBadRequest(json.dumps({'success': False, 'error': 'access denied'}))
+    request.user.is_active = False
+    request.user.save()
+
+    return HttpResponse(json.dumps({'success': True, 'message': 'user deactivated'}))
 
 
 def get_filtered_mentors(request):

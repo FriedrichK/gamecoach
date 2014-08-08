@@ -7,7 +7,9 @@ from django.conf import settings
 
 from django_facebook.models import FacebookCustomUser as User
 
+from profiles.tools.auth import user_is_available
 from profiles.tools.mentors import get_mentor_by_id, get_mentor_by_username
+from profiles.tools.settings import get_email
 from profiles.settings import HEROES_HASH
 
 
@@ -25,6 +27,18 @@ def login(request):
         'facebook_app_id': settings.FACEBOOK_APP_ID
     }
     return render(request, 'pages/user_login/user_login.html', dict(context.items() + data.items()))
+
+
+def edit_settings(request):
+    if not user_is_available(request.user):
+        return HttpResponseRedirect('/login?next=/settings/')
+
+    context = get_basic_context(request)
+    user_settings = {}
+    email = get_email(request.user)
+    if not email is None:
+        user_settings['email'] = email
+    return render(request, 'pages/settings/settings.html', dict(context.items() + user_settings.items()))
 
 
 def results(request):
@@ -114,7 +128,8 @@ def edit_profile(request):
 
 def get_basic_context(request):
     return {
-        'is_mentor': has_profile(request.user),
+        'has_profile': has_profile(request.user),
+        'is_mentor': is_mentor(request.user),
         'is_authenticated': request.user.is_authenticated(),
         'username': get_username(request.user)
     }
@@ -124,6 +139,12 @@ def has_profile(user):
     if not hasattr(user, 'gamecoachprofile') or user.gamecoachprofile is None:
         return False
     return True
+
+
+def is_mentor(user):
+    if not has_profile(user):
+        return False
+    return user.gamecoachprofile.is_mentor
 
 
 def get_username(user):

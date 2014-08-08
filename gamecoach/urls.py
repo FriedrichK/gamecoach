@@ -12,6 +12,9 @@ urlpatterns = patterns(
 
     url(r'^api/mentor', include('profiles.urls_api')),
     url(r'^data/mentor', include('profiles.urls_data')),
+
+    url(r'^api/settings', include('user_settings.urls_api')),
+
     url(r'^api/conversation', include('conversation.urls_api')),
 
     url(r'^', include('frontend.urls')),

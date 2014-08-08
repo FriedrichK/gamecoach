@@ -1,0 +1,20 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block body_tag %}ng-app="editSettingsApp" ng-controller="EditSettingsController"{% endblock %}
+
+{% block content %}
+	<script>
+		var userSettings = {
+			email: "{{email}}"
+		};
+	</script>
+	<input type="hidden" name="username" value="{{username}}" />
+	{% include "pages/settings/settings_body.html" %}
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/settings.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

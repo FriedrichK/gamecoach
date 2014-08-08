@@ -16,6 +16,10 @@ module.exports = function(grunt) {
         src: ['static/dev_js/login/**/*.js', '!static/dev_js/login/**/*.test.js'],
         dest: 'static/js/login.js'
       },
+      settings: {
+        src: ['static/dev_js/settings/**/*.js', '!static/dev_js/settings/**/*.test.js', '!static/dev_js/settings/**/*.test.js'],
+        dest: 'static/js/settings.js'
+      },
       index: {
         src: ['static/dev_js/index/**/*.js', '!static/dev_js/index/**/*.test.js'],
         dest: 'static/js/index.js'
@@ -57,6 +61,10 @@ module.exports = function(grunt) {
       login: {
         src: 'static/js/login.js',
         dest: 'static/js/login.min.js'
+      },
+      settings: {
+        src: 'static/js/settings.js',
+        dest: 'static/js/settings.min.js'
       },
       index: {
         src: 'static/js/index.js',
@@ -114,6 +122,7 @@ module.exports = function(grunt) {
           'static/dev_css/shared.css': 'static/dev_scss/shared/shared.scss',
           'static/dev_css/navigation.css': 'static/dev_scss/navigation/navigation.scss',
           'static/dev_css/login.css': 'static/dev_scss/login/login.scss',
+          'static/dev_css/settings.css': 'static/dev_scss/settings/settings.scss',
           'static/dev_css/index.css': 'static/dev_scss/index/index.scss',
           'static/dev_css/mentor_results.css': 'static/dev_scss/mentor_results/mentor_results.scss',
           'static/dev_css/mentor_profile.css': 'static/dev_scss/mentor_profile/mentor_profile.scss',
@@ -130,6 +139,7 @@ module.exports = function(grunt) {
           'static/css/shared.css': 'static/dev_css/shared.css',
           'static/css/navigation.css': 'static/dev_css/navigation.css',
           'static/css/login.css': 'static/dev_css/login.css',
+          'static/css/settings.css': 'static/dev_css/settings.css',
           'static/css/index.css': 'static/dev_css/index.css',
           'static/css/mentor_results.css': 'static/dev_css/mentor_results.css',
           'static/css/mentor_profile.css': 'static/dev_css/mentor_profile.css',
