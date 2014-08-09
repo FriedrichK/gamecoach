@@ -38,7 +38,6 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
         return []
 
     filters = ~Q(sender=request_user, recipient=request_user)
-    #filters = ~Q(sender=request_user)
     if older:
         filters &= Q(sent_at__lt=time_anchor)
     else:
@@ -54,17 +53,28 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
     else:
         filters &= Q(recipient_deleted_at__isnull=False)
 
-    conversations = Message.objects.filter(filters).distinct('sender', 'recipient').order_by('sender', 'recipient', '-sent_at')[:items]
+    conversations_with_incoming_messages_from_other_users = Message.objects.filter(filters & ~Q(sender=request_user)).distinct('sender').order_by('sender', '-sent_at')[:items]
+    conversations_with_only_our_messages = Message.objects.filter(filters & Q(sender=request_user)).distinct('recipient').order_by('recipient', '-sent_at')[:items]
 
-    clean_conversations = []
-    recipients = []
-    for conversation in conversations:
+    conversations = []
+    other_users = []
+    for conversation in conversations_with_incoming_messages_from_other_users:
         other_user = get_other_user(request_user, conversation)
-        if not other_user in recipients:
-            clean_conversations.append(conversation)
-            recipients.append(other_user)
+        if not other_user in other_users:
+            conversations.append(conversation)
+            other_users.append(other_user)
 
-    return clean_conversations
+    for conversation in conversations_with_only_our_messages:
+        other_user = get_other_user(request_user, conversation)
+        if not other_user in other_users:
+            conversations.append(conversation)
+            other_users.append(other_user)
+
+    conversations = sorted(conversations, key=lambda item: item.sent_at)
+
+    conversations.reverse()
+
+    return conversations[:items]
 
 
 def get_other_user(request_user, conversation):
