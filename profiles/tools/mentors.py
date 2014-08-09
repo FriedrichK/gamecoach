@@ -65,6 +65,9 @@ def generate_filters(filter_data):
         else:
             f = generate_filters_for_category(category, filter_data[category], value_list)
         filters.append(f)
+
+    filters.append(Q(is_mentor=True))
+
     return filters
 
 
