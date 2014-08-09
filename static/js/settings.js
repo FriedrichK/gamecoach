@@ -39,7 +39,8 @@ editSettingsApp.factory('emailService', function($http) {
             })
             .then(function(result) {
                 if(result.status === 200) {
-                    console.log("settings successfully updated", result);
+                    //console.log("settings successfully updated", result);
+                    window.location.reload();
                 }
             });
         }
