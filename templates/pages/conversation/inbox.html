@@ -31,7 +31,7 @@
           </div>
           <div class="w-clearfix message-block  my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in messageStream" ng-show="messageStream" ng-click="goToMessage(message.id)">
             <div class="user-image" style="background-image: url('/data/mentor/{% templatetag openvariable %}message.sender.username{% templatetag closevariable %}/profilePicture'); width: 75px; background-size: cover;"></div>
-            <div class="user-name">{% templatetag openvariable %}message.sender.username{% templatetag closevariable %}</div>
+            <div class="user-name">{% templatetag openvariable %}message.sender.username2{% templatetag closevariable %}</div>
             <div class="message-time full-message">{% templatetag openvariable %}message.sent_at{% templatetag closevariable %}</div>
             <div class="message-text">{% templatetag openvariable %}message.body{% templatetag closevariable %}</div>
           </div>
@@ -43,7 +43,7 @@
                 <div class="correspondent-image" style="background-image: url('{% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}'); width: 100px; background-size: cover;" ng-click="goToProfile()"></div>
               </div>
               <div class="w-col w-col-6 ng-cloak" ng-show="profile.username">
-                <div class="user-name-mini-profile messages">{% templatetag openvariable %}profile.username{% templatetag closevariable %}</div>
+                <div class="user-name-mini-profile messages">{% templatetag openvariable %}profile.name{% templatetag closevariable %}</div>
               </div>
             </div>
             <div class="w-row contact-stats-block ng-cloak" ng-show="profile.data.steamId">

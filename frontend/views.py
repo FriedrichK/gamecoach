@@ -169,11 +169,9 @@ def is_mentor(user):
 
 
 def get_username(user):
-    #if has_profile(user):
-    #    if not user.gamecoachprofile.data is None:
-    #        data = json.loads(user.gamecoachprofile.data)
-    #        if 'steamId' in data:
-    #            return data['steamId']
+    if has_profile(user):
+        if hasattr(user.gamecoachprofile, 'username') and not user.gamecoachprofile.username is None:
+            return user.gamecoachprofile.username
     return user.username
 
 
