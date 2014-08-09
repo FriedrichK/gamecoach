@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       shared: {
-        src: ['static/dev_js/shared/**/*.js'],
+        src: ['static/dev_js/shared/**/*.js', '!static/dev_js/shared/**/*.test.js'],
         dest: 'static/js/shared.js'
       },
       navigation: {
