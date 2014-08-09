@@ -85,6 +85,9 @@ def register_mentor(request):
     if not has_profile(request.user):
         return render(request, 'pages/mentor_signup/mentor_signup_step2.html', context)
 
+    if not is_mentor(request.user):
+        return render(request, 'pages/mentor_switch/mentor_switch.html', context)
+
     return render(request, 'pages/conversation/hub.html', context)
 
 

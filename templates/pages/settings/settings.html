@@ -1,6 +1,10 @@
 {% extends "pages/shared/page.html" %}
 {% load staticfiles %}
 
+{% block styles %}
+ <link rel="stylesheet" type="text/css" href="{% static "css/settings.css" %}">
+{% endblock %}
+
 {% block body_tag %}ng-app="editSettingsApp" ng-controller="EditSettingsController"{% endblock %}
 
 {% block content %}

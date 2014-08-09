@@ -1,0 +1,28 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+ <link rel="stylesheet" type="text/css" href="{% static "css/settings.css" %}">
+{% endblock %}
+
+{% block body_tag %}ng-app="editSettingsApp" ng-controller="EditSettingsController"{% endblock %}
+
+{% block content %}
+  <script>
+    var userSettings = {};
+  </script>
+	<div class="search-filter-section">
+    <div class="w-container main-column other-settings">
+      <div class="setting-titles">Become a mentor</div>
+      <div class="settings-text">If you choose to become a mentor, your profile will be&nbsp;shown in the mentor search results. You will also begin to receive coaching requests from students. As a mentor, you can still ask other mentors to coach you. If you get tired of mentoring,
+        you can always switch to being a student in your settings.</div><a class="switch-to-mentor" ng-click="switchToMentor()">Switch to mentor profile</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script> 
+	<script type="text/javascript" src="{% static "js/settings.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}
