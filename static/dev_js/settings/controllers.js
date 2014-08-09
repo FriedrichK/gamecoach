@@ -17,7 +17,7 @@ editSettingsApp.controller('EditSettingsController', function($scope, $element, 
 		mentorStatusService.change(false);
 	};
 	$scope.deactivate = function() {
-		var mentor_username = angular.element('input[type=hidden][name=username]').val();
-		deactivateUserService.deactivate(mentor_username);
+		var system_username = angular.element('input[type=hidden][name=system_username]').val();
+		deactivateUserService.deactivate(system_username);
 	};
 });

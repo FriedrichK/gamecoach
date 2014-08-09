@@ -7,8 +7,19 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
 from django_facebook.models import FacebookCustomUser as User
+from django_facebook import signals
+from django_facebook.utils import get_user_model
+from django.contrib.auth.signals import user_logged_in
 
 from profiles.tools.serialization import deserialize_roles, deserialize_regions, deserialize_mentoring, deserialize_availability, deserialize_data, deserialize_date
+
+
+def activate_user(sender, user, request, **kwargs):
+    if not user.is_active:
+        user.is_active = True
+        user.save()
+
+user_logged_in.connect(activate_user, sender=get_user_model())
 
 
 class GamecoachProfile(models.Model):

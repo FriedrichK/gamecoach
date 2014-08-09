@@ -63,7 +63,7 @@ def profile(request):
 
 def mentor(request, mentor_id):
     mentor = get_mentor_by_id(mentor_id)
-    if mentor is None:
+    if mentor is None or not mentor.user.is_active:
         raise Http404()
 
     context = {

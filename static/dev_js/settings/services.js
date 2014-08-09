@@ -44,7 +44,15 @@ editSettingsApp.factory('deactivateUserService', function($http) {
                 method: 'DELETE'
             })
             .then(function(result) {
-                console.log(result);
+                $http({
+                    url: '/accounts/logout/',
+                    method: 'GET'
+                })
+                .then(function(result){
+                    if(result.status === 200) {
+                        window.location = "/";
+                    }
+                });
             });
         }
     };

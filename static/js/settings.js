@@ -22,8 +22,8 @@ editSettingsApp.controller('EditSettingsController', function($scope, $element, 
 		mentorStatusService.change(false);
 	};
 	$scope.deactivate = function() {
-		var mentor_username = angular.element('input[type=hidden][name=username]').val();
-		deactivateUserService.deactivate(mentor_username);
+		var system_username = angular.element('input[type=hidden][name=system_username]').val();
+		deactivateUserService.deactivate(system_username);
 	};
 });
 /* global angular, window */
@@ -72,7 +72,15 @@ editSettingsApp.factory('deactivateUserService', function($http) {
                 method: 'DELETE'
             })
             .then(function(result) {
-                console.log(result);
+                $http({
+                    url: '/accounts/logout/',
+                    method: 'GET'
+                })
+                .then(function(result){
+                    if(result.status === 200) {
+                        window.location = "/";
+                    }
+                });
             });
         }
     };

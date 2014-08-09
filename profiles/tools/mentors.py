@@ -67,6 +67,7 @@ def generate_filters(filter_data):
         filters.append(f)
 
     filters.append(Q(is_mentor=True))
+    filters.append(Q(user__is_active=True))
 
     return filters
 
