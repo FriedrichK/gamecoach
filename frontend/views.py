@@ -53,6 +53,7 @@ def profile(request):
         raise Http404()
 
     context = {
+        'is_me': True,
         'mentor_id': request.user.username
     }
     context = dict(context.items() + get_basic_context(request).items())
@@ -65,6 +66,7 @@ def mentor(request, mentor_id):
         raise Http404()
 
     context = {
+        'is_me': is_same_user(request.user, mentor_id),
         'mentor_id': mentor_id
     }
     context = dict(context.items() + get_basic_context(request).items())
@@ -190,3 +192,10 @@ def build_top_heroes_list(hash):
         top_heroes_list.append((key, value,))
     top_heroes_list = sorted(top_heroes_list, key=itemgetter(1))
     return top_heroes_list
+
+
+def is_same_user(user, username):
+    print user.username, username
+    if user is None or not hasattr(user, 'username'):
+        return False
+    return (user.username == username)
