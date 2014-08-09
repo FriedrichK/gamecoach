@@ -130,6 +130,47 @@ mentorProfileApp.factory('profileRoleService', function(profileLabelService) {
     };
 });
 
+mentorProfileApp.factory('profileMentoringService', function(profileLabelService) {
+    var numberOfColumns = 2;
+    return {
+        buildMentoringList: function(data) {
+            if(!data.mentoring) {
+                return [];
+            }
+            var rawList = this._buildRawList(data);
+            var mentoring = this._divideRawListIntoColumns(rawList, numberOfColumns);
+            return mentoring;
+        },
+        _buildRawList: function(data) {
+            var me = this;
+            var mentoring = [];
+            angular.forEach(data.mentoring, function(value, key) {
+                if(value === true) {
+                    mentoring.push({
+                        label: me._getLabel(key),
+                        identifier: key
+                    });
+                }
+            });
+            return mentoring;
+        },
+        _divideRawListIntoColumns: function(rawList, numberOfColumns) {
+            var itemsByColumn = Math.ceil(rawList.length/numberOfColumns);
+            var columns = [];
+            for(var i = 0, total = numberOfColumns; i < total; i++) {
+                var start = i * itemsByColumn;
+                var end = (i + 1) * itemsByColumn;
+                columns.push(rawList.slice(start, end));
+            }
+            return columns;
+        },
+        _getLabel: function(key) {
+            var label = profileLabelService.getNameForLabel('mentoring', key);
+            return label.charAt(0).toUpperCase() + label.slice(1);
+        }
+    };
+});
+
 mentorProfileApp.factory('profileHeroService', function() {
     return {
         buildHeroList: function(data) {

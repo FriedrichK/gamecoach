@@ -1,7 +1,7 @@
 /* global document, angular, window */
 
 var mentorProfileApp = angular.module('mentorProfileApp'); 
-mentorProfileApp.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
+mentorProfileApp.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileMentoringService, profileHeroService, profileStatisticsService) {
     angular.element(document).ready(function () {
         var mentorId = $scope.profile.mentorId;
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
@@ -9,6 +9,7 @@ mentorProfileApp.controller('ProfileController', function($scope, $element, prof
             $scope.regions = profileRegionService.buildRegionList(data);
             $scope.availabilityProcessed = profileAvailabilityService.buildAvailabilityList(data);
             $scope.rolesProcessed = profileRoleService.buildRoleList(data);
+            $scope.mentoringProcessed = profileMentoringService.buildMentoringList(data);
             $scope.heroesProcessed = profileHeroService.buildHeroList(data);
             $scope.statistics = profileStatisticsService.buildStatisticsList(data);
         });

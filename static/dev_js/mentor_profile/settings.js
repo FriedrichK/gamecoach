@@ -28,6 +28,16 @@ mentorProfileApp.factory('profileLabelService', function() {
         'games_played': 'games played',
         'win_rate': 'win rate',
         'solo_mmr': 'solo MMR'
+      },
+      mentoring: {
+        'individual': 'individual mentoring',
+        'team': 'team monitoring',
+        'spectating': 'mentoring while spectating',
+        'together': 'mentoring while playing together',
+        'analysing': 'anaylsing replies',
+        'questions': 'general questions & answers',
+        'voicechat': 'voice chat',
+        'textchat': 'text chat'
       }
     },
     labelOrder: {

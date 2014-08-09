@@ -76,6 +76,18 @@
             </div>
           </div>
           <div class="about-player">
+            <h5>How I mentor students</h5>
+            <div class="w-row">
+              <div class="w-col w-col-6 ng-cloak" ng-repeat="column in mentoringProcessed">
+                <ul class="profile-text">
+                  <li identifier="{% templatetag openvariable %}mentoring.identifier{% templatetag closevariable %}" ng-repeat="mentoring in column">
+                    {% templatetag openvariable %}mentoring.label|capitalize{% templatetag closevariable %}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="about-player">
             <h5>My top heroes</h5>
             <div class="w-row">
               <div class="w-col w-col-6">

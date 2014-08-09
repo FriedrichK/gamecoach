@@ -6,7 +6,7 @@ var mentorProfileApp = angular.module('mentorProfileApp', ['ngAnimate', 'gamecoa
 /* global document, angular, window */
 
 var mentorProfileApp = angular.module('mentorProfileApp'); 
-mentorProfileApp.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileHeroService, profileStatisticsService) {
+mentorProfileApp.controller('ProfileController', function($scope, $element, profileDataService, profileRegionService, profileAvailabilityService, profileRoleService, profileMentoringService, profileHeroService, profileStatisticsService) {
     angular.element(document).ready(function () {
         var mentorId = $scope.profile.mentorId;
         profileDataService.getMentorProfile($scope.profile.mentorId, function(data) {
@@ -14,6 +14,7 @@ mentorProfileApp.controller('ProfileController', function($scope, $element, prof
             $scope.regions = profileRegionService.buildRegionList(data);
             $scope.availabilityProcessed = profileAvailabilityService.buildAvailabilityList(data);
             $scope.rolesProcessed = profileRoleService.buildRoleList(data);
+            $scope.mentoringProcessed = profileMentoringService.buildMentoringList(data);
             $scope.heroesProcessed = profileHeroService.buildHeroList(data);
             $scope.statistics = profileStatisticsService.buildStatisticsList(data);
         });
@@ -212,6 +213,47 @@ mentorProfileApp.factory('profileRoleService', function(profileLabelService) {
     };
 });
 
+mentorProfileApp.factory('profileMentoringService', function(profileLabelService) {
+    var numberOfColumns = 2;
+    return {
+        buildMentoringList: function(data) {
+            if(!data.mentoring) {
+                return [];
+            }
+            var rawList = this._buildRawList(data);
+            var mentoring = this._divideRawListIntoColumns(rawList, numberOfColumns);
+            return mentoring;
+        },
+        _buildRawList: function(data) {
+            var me = this;
+            var mentoring = [];
+            angular.forEach(data.mentoring, function(value, key) {
+                if(value === true) {
+                    mentoring.push({
+                        label: me._getLabel(key),
+                        identifier: key
+                    });
+                }
+            });
+            return mentoring;
+        },
+        _divideRawListIntoColumns: function(rawList, numberOfColumns) {
+            var itemsByColumn = Math.ceil(rawList.length/numberOfColumns);
+            var columns = [];
+            for(var i = 0, total = numberOfColumns; i < total; i++) {
+                var start = i * itemsByColumn;
+                var end = (i + 1) * itemsByColumn;
+                columns.push(rawList.slice(start, end));
+            }
+            return columns;
+        },
+        _getLabel: function(key) {
+            var label = profileLabelService.getNameForLabel('mentoring', key);
+            return label.charAt(0).toUpperCase() + label.slice(1);
+        }
+    };
+});
+
 mentorProfileApp.factory('profileHeroService', function() {
     return {
         buildHeroList: function(data) {
@@ -293,6 +335,16 @@ mentorProfileApp.factory('profileLabelService', function() {
         'games_played': 'games played',
         'win_rate': 'win rate',
         'solo_mmr': 'solo MMR'
+      },
+      mentoring: {
+        'individual': 'individual mentoring',
+        'team': 'team monitoring',
+        'spectating': 'mentoring while spectating',
+        'together': 'mentoring while playing together',
+        'analysing': 'anaylsing replies',
+        'questions': 'general questions & answers',
+        'voicechat': 'voice chat',
+        'textchat': 'text chat'
       }
     },
     labelOrder: {
