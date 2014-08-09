@@ -57,7 +57,8 @@ conversationApp.controller('InboxController', function($scope, $element, $interv
 		updateInbox();
 	}, 3000);
 	$scope.goToConversation = function(senderUsername, recipientUsername) {
-		var mentorId = $('input[type=hidden][name=mentor_id]').val();
+		var mentorId = $('input[type=hidden][name=system_username]').val();
+		console.log(senderUsername, recipientUsername, mentorId, (senderUsername === mentorId));
 		var conversationPartnerUsername = senderUsername;
 		if(senderUsername === mentorId) {
 			conversationPartnerUsername = recipientUsername;

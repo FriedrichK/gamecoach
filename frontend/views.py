@@ -156,7 +156,7 @@ def get_basic_context(request):
         'is_mentor': is_mentor(request.user),
         'is_authenticated': request.user.is_authenticated(),
         'username': get_username(request.user),
-        'mentor_id': get_system_username(request.user)
+        'system_username': get_system_username(request.user)
     }
 
 

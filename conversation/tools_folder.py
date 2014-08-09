@@ -37,7 +37,7 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
     if deleted and not is_allowed_to_read_all_messages(request_user):
         return []
 
-    filters = Q()
+    filters = ~Q(sender=request_user, recipient=request_user)
     #filters = ~Q(sender=request_user)
     if older:
         filters &= Q(sent_at__lt=time_anchor)
@@ -54,8 +54,24 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
     else:
         filters &= Q(recipient_deleted_at__isnull=False)
 
-    incoming_users = Message.objects.filter(filters).distinct('sender').order_by('sender', '-sent_at')[:items]
-    return incoming_users
+    conversations = Message.objects.filter(filters).distinct('sender', 'recipient').order_by('sender', 'recipient', '-sent_at')[:items]
+
+    clean_conversations = []
+    recipients = []
+    for conversation in conversations:
+        other_user = get_other_user(request_user, conversation)
+        if not other_user in recipients:
+            clean_conversations.append(conversation)
+            recipients.append(other_user)
+
+    return clean_conversations
+
+
+def get_other_user(request_user, conversation):
+    if not conversation.sender == request_user:
+        return conversation.sender
+    if not conversation.recipient == request_user:
+        return conversation.recipient
 
 
 def get_filter_for_validity(request_user, discussion_partners, archived=False, deleted=False):
