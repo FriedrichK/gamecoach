@@ -20,6 +20,7 @@ def index(request):
 
 def message_hub(request):
     context = get_basic_context(request)
+    context['mentor_id'] = request.user.username
     return render(request, 'pages/conversation/hub.html', context)
 
 
@@ -91,7 +92,8 @@ def mentor_contact(request, user_id):
     context = get_basic_context(request)
     data = {
         'user_id': user_id,
-        'facebook_app_id': settings.FACEBOOK_APP_ID
+        'facebook_app_id': settings.FACEBOOK_APP_ID,
+        'mentor_id': request.user.username
     }
     if not request.user.is_authenticated():
         return render(request, 'pages/mentor_contact/mentor_contact_step1.html', dict(context.items() + data.items()))
@@ -112,6 +114,7 @@ def conversation(request, user_id):
     context = get_basic_context(request)
     data = {
         'user_id': user_id,
+        'mentor_id': request.user.username
     }
 
     if not request.user.is_authenticated():
@@ -152,7 +155,8 @@ def get_basic_context(request):
         'has_profile': has_profile(request.user),
         'is_mentor': is_mentor(request.user),
         'is_authenticated': request.user.is_authenticated(),
-        'username': get_username(request.user)
+        'username': get_username(request.user),
+        'mentor_id': get_system_username(request.user)
     }
 
 
@@ -166,6 +170,12 @@ def is_mentor(user):
     if not has_profile(user):
         return False
     return user.gamecoachprofile.is_mentor
+
+
+def get_system_username(user):
+    if not hasattr(user, 'username'):
+        return None
+    return user.username
 
 
 def get_username(user):
@@ -193,7 +203,6 @@ def build_top_heroes_list(hash):
 
 
 def is_same_user(user, username):
-    print user.username, username
     if user is None or not hasattr(user, 'username'):
         return False
     return (user.username == username)

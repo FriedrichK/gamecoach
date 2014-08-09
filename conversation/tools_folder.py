@@ -37,7 +37,8 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
     if deleted and not is_allowed_to_read_all_messages(request_user):
         return []
 
-    filters = ~Q(sender=request_user)
+    filters = Q()
+    #filters = ~Q(sender=request_user)
     if older:
         filters &= Q(sent_at__lt=time_anchor)
     else:

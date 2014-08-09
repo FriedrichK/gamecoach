@@ -8,7 +8,7 @@
 <div class="search-filter-section" ng-controller="InboxController">
     <div class="w-container main-column---messages">
 
-      <div class="w-clearfix inbox-block my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in inbox" ng-show="inbox" ng-click="goToConversation(message.sender.username)">
+      <div class="w-clearfix inbox-block my-repeat-animation ng-cloak" identifier="{% templatetag openvariable %}message.id{% templatetag closevariable %}" ng-repeat="message in inbox" ng-show="inbox" ng-click="goToConversation(message.sender.username, message.recipient.username)">
         <div class="inbox-image" style="background-image: url('/data/mentor/{% templatetag openvariable %}message.sender.username{% templatetag closevariable %}/profilePicture');"></div>
         <div class="w-clearfix message-content-preview">
           <div class="inbox-sender-s-name unread">{% templatetag openvariable %}message.sender.username2{% templatetag closevariable %}</div>

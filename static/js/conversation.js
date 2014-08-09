@@ -58,7 +58,12 @@ conversationApp.controller('InboxController', function($scope, $element, $interv
 	$interval(function(){
 		updateInbox();
 	}, 3000);
-	$scope.goToConversation = function(conversationPartnerUsername) {
+	$scope.goToConversation = function(senderUsername, recipientUsername) {
+		var mentorId = $('input[type=hidden][name=mentor_id]').val();
+		var conversationPartnerUsername = senderUsername;
+		if(senderUsername === mentorId) {
+			conversationPartnerUsername = recipientUsername;
+		}
 		window.location = '/conversation/' + conversationPartnerUsername;
 	};
 });

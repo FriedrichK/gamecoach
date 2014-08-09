@@ -4,6 +4,7 @@
 {% block body_tag %}ng-app="conversationApp"{% endblock %}
 
 {% block content %}
+	<input type="hidden" name="mentor_id" value="{{mentor_id}}" />
 	{% include "pages/conversation/hub_body.html" %}
 {% endblock %}
 
