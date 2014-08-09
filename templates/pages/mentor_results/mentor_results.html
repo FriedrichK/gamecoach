@@ -190,7 +190,7 @@
       <div class="w-clearfix search-result-block my-repeat-animation ng-hide" identifier="{% templatetag openvariable %}mentor.username{% templatetag closevariable %}" ng-repeat="mentor in mentors" ng-show="mentors" ng-click="goToProfile(mentor.username)">
         <div class="mentor-image" style="background-image: url('/data/mentor/{% templatetag openvariable %}mentor.username{% templatetag closevariable %}/profilePicture'); width: 100px; background-size: cover;"></div>
         <div class="w-clearfix mentor-profile-preview-block">
-          <div class="mentor-name">{% templatetag openvariable %}mentor.username{% templatetag closevariable %}</div>
+          <div class="mentor-name">{% templatetag openvariable %}mentor.name{% templatetag closevariable %}</div>
           <div class="mentor-profile-preview">{% templatetag openvariable %}mentor.data.topHeroText{% templatetag closevariable %}</div>
           <div class="mentor-profile-preview">{% templatetag openvariable %}mentor.data.statisticsText{% templatetag closevariable %}</div>
           <!--div class="number-of-reviews">
