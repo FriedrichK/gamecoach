@@ -21,7 +21,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 3)
+        self.assertEqual(len(actual), 4)
 
     def test_returns_expected_result_for_role_shared_by_all(self):
         filter_data = {
@@ -31,7 +31,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 3)
+        self.assertEqual(len(actual), 4)
 
     def test_returns_expected_result_for_role_shared_by_two(self):
         filter_data = {
@@ -52,7 +52,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 3)
+        self.assertEqual(len(actual), 4)
 
     def test_returns_expected_result_for_single_region(self):
         filter_data = {
@@ -74,7 +74,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 3)
+        self.assertEqual(len(actual), 4)
 
     def test_returns_expected_result_for_availability_weekends(self):
         filter_data = {
@@ -122,7 +122,7 @@ class ToolsMentorsTestCase(TestCase):
         filter_data = {}
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 3)
+        self.assertEqual(len(actual), 4)
 
 
 def create_mock_profiles():
@@ -130,7 +130,8 @@ def create_mock_profiles():
     data = [
         {'roles': {'carry': True, 'ganker': True}, 'regions': {'euwest': True, 'seasia': True}, 'day': '1', 'time': '1'},
         {'roles': {'carry': True, 'ganker': True}, 'regions': {'eueast': True, 'russia': True}, 'day': '2', 'time': '1'},
-        {'roles': {'carry': True, 'disabler': True}, 'regions': {'eueast': True, 'australia': True}, 'day': '2', 'time': '2'}
+        {'roles': {'carry': True, 'disabler': True}, 'regions': {'eueast': True, 'australia': True}, 'day': '2', 'time': '2'},
+        {'roles': {'carry': True, 'disabler': True}, 'regions': {'eueast': True, 'australia': True}, 'day': None, 'time': None}
     ]
     for i in range(len(data)):
         mock_user = User(username=unicode(i))
@@ -142,7 +143,6 @@ def create_mock_profiles():
             regions=serialize_string_storage(data[i]['regions'], REGIONS_LABELS),
             availability=serialize_availability(data[i]['day'], data[i]['time'])
         )
-        print profile.availability
         profile.save()
         profiles.append(profile)
     return profiles

@@ -91,14 +91,14 @@ def generate_filters_for_availability(data, value_list):
     base = Q()
 
     if 'weekends' in data and data['weekends'] is True:
-        base = Q(availability__regex='^1\|0\|.\|.$')
-    if 'anyday' in data and data['anyday'] is True:
-        base = Q(availability__regex='^0\|1\|.\|.$')
+        base = Q(availability__regex='^1\|.\|.\|.$')
+    #if 'anyday' in data and data['anyday'] is True:
+    #    base = Q(availability__regex='^.\|1\|.\|.$')
 
     if 'evenings' in data and data['evenings'] is True:
-        base &= Q(availability__regex='^.\|.\|1\|0$')
-    if 'anytime' in data and data['anytime'] is True:
-        base &= Q(availability__regex='^.\|.\|0\|1$')
+        base &= Q(availability__regex='^.\|.\|1\|.$')
+    #if 'anytime' in data and data['anytime'] is True:
+    #    base &= Q(availability__regex='^.\|.\|.\|1$')
 
     return base
 
