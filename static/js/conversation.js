@@ -48,8 +48,9 @@ conversationApp.controller('MessageController', function($scope, $element, $inte
 
 conversationApp.controller('InboxController', function($scope, $element, $interval, inboxService, messageStreamFormattingService) {
 	var updateInbox = function() {
+		var mentorId = $('input[type=hidden][name=system_username]').val();
 		inboxService.getInbox(function(data) {
-			$scope.inbox = messageStreamFormattingService.format(data);
+			$scope.inbox = messageStreamFormattingService.format(mentorId, data);
 		});
 	};
 	angular.element($element).ready(function() {
@@ -117,16 +118,26 @@ conversationApp.factory('inboxService', function($http) {
 });
 
 conversationApp.factory('messageStreamFormattingService', function($filter, timeService) {
-  var formatMessages = function(messages) {
+  var affixOtherUsernames = function(mentorId, message) {
+    message['other_username'] = message.sender.username;
+    message['other_username2'] = message.sender.username2;
+    if(message.sender.username === mentorId) {
+      message['other_username'] = message.recipient.username;
+      message['other_username2'] = message.recipient.username2;
+    }
+    return message;
+  };
+  var formatMessages = function(mentorId, messages) {
     var formattedMessages = [];
     angular.forEach(messages, function(message) {
+      message = affixOtherUsernames(mentorId, message);
       formattedMessages.push(timeService.formatMessageDate(message));
     });
     return formattedMessages;
   };
   return {
-    format: function(messages) {
-      return formatMessages(messages);
+    format: function(mentorId, messages) {
+      return formatMessages(mentorId, messages);
     }
   };
 });
