@@ -147,10 +147,10 @@ mentorProfileApp.factory('profileAvailabilityService', function(profileLabelServ
                 return [];
             }
             var day = [];
-            if(data.availability["Any day"] === true) {
+            if(data.availability["anyday"] === true) {
                 day = [{label: 'Any day', identifier: 'anyday'}];
             }
-             if(data.availability["Weekends only"] === true) {
+             if(data.availability["weekends"] === true) {
                 day = [{label: 'Weekends only', identifier: 'weekends'}];
             }
             return day;
@@ -160,10 +160,10 @@ mentorProfileApp.factory('profileAvailabilityService', function(profileLabelServ
                 return [];
             }
             var time = [];
-            if(data.availability["Any time"] === true) {
+            if(data.availability["anytime"] === true) {
                 time = [{label: 'Any time', identifier: 'anytime'}];
             }
-             if(data.availability["Evenings only"] === true) {
+             if(data.availability["evenings"] === true) {
                 time = [{label: 'Evenings only', identifier: 'evenings'}];
             }
             return time;
