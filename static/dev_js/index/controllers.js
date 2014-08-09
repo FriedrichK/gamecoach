@@ -6,6 +6,22 @@ indexApp.controller('IndexFormController', function($scope, $http) {
 		var game = $scope.game;
 		var region = $scope.region;
 		var role = $scope.role;
-		window.location = '/results?regions=' + region + '&roles=' + role;
+
+		var parts = [];
+
+		if(region && region !== 'donotknow') {
+			parts.push('regions=' + region);
+		}
+
+		if(role && role !== 'donotknow') {
+			parts.push('roles=' + role);
+		}
+
+		var prefix = '';
+		if(parts.length > 0) {
+			prefix = '?';
+		}
+
+		window.location = '/results' + prefix + parts.join('&');
 	};
 });
