@@ -105,6 +105,7 @@ gamecoachShared.factory('heroesService', function() {
         "storm_spirit": "Storm Spirit",
         "sven": "Sven",
         "templar_assassin": "Templar Assassin",
+        "terrorblade": "Terrorblade",
         "tidehunter": "Tidehunter",
         "timbersaw": "Timbersaw",
         "tinker": "Tinker",
