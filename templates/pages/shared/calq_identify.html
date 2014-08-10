@@ -1,0 +1,10 @@
+<script>
+	try {
+		var userId = document.getElementById('system_username').value;
+		if(userId && userId !== '') {
+			calq.user.identify(userId);
+		}
+	} catch(err) {
+
+	}
+</script>
