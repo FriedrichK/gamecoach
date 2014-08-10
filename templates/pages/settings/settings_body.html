@@ -4,6 +4,14 @@
         <form class="w-clearfix" id="emailForm" name="emailForm" action="/" onsubmit="return false">
           <div class="w-row">
             <div class="w-col w-col-4">
+              <label class="setting-titles" for="email">Current email Address:</label>
+            </div>
+            <div class="w-col w-col-8">
+              <input class="w-input settings-text-field current" id="Current-email" type="email" value="{{email}}" name="Current-email" ng-model="userSettings.currentEmail" disabled>
+            </div>
+          </div>
+          <div class="w-row">
+            <div class="w-col w-col-4">
               <label class="setting-titles" for="email">Email Address:</label>
             </div>
             <div class="w-col w-col-8">
