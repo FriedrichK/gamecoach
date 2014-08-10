@@ -1,4 +1,4 @@
-/* global angular, document, window, F, BaseProfileController, $, prefilledValues, htmlDecode */
+/* global angular, document, window, F, BaseProfileController, $, prefilledValues, htmlDecode, calq */
 
 var editProfileApp = angular.module('editProfileApp'); 
 editProfileApp.controller('EditProfileController', function($scope, $filter, profileService, gCStringService) {
@@ -12,6 +12,7 @@ editProfileApp.controller('EditProfileController', function($scope, $filter, pro
 	$scope.save = function(profileForm) {
 		var formIsValid = profileForm.$valid;
 		if(formIsValid) {
+			calq.user.profile($scope.profile);
 			profileService.submit($scope.profile);
 		}
 	};

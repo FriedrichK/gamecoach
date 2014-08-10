@@ -1,4 +1,4 @@
-/* global angular, document, window, F */
+/* global angular, document, window, F, calq */
 
 var mentorSignupApp = angular.module('mentorSignupApp'); 
 mentorSignupApp.controller('MentorSignupController', function($scope, $element) {
@@ -26,6 +26,7 @@ mentorSignupApp.controller('MentorProfileController', function($scope, mentorPro
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
 		if(formIsValid) {
+			calq.user.profile($scope.mentor);
 			mentorProfileService.submit($scope.mentor);
 		}
 	};

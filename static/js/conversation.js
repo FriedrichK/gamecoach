@@ -1,6 +1,6 @@
 /* global angular */
 var conversationApp = angular.module('conversationApp', ['gamecoachShared', 'gamecoachNavigation']);
-/* global angular, document, window, F, BaseProfileController, $ */
+/* global angular, document, window, F, BaseProfileController, $, calq */
 
 var conversationApp = angular.module('conversationApp'); 
 conversationApp.controller('SubmissionController', function($rootScope, $scope, messageService) {
@@ -12,8 +12,17 @@ conversationApp.controller('SubmissionController', function($rootScope, $scope, 
 		}
 		messageService.postMessage(mentorId, message, function(result) {
 			if(result.status === 200) {
+				calq.action.trackSale(
+					"Message sent",
+					{ "Recipient": mentorId, "Message": message },
+					"USD", 
+					0.1
+				);
+
 				angular.element('textarea[name=field]').val('');
 				$rootScope.$broadcast('newMessageSuccessfullySent');
+			} else {
+
 			}
 		});
 	};

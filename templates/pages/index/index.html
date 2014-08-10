@@ -32,6 +32,8 @@
   <input type="hidden" id="page_name" name="page_name" value="{{page_name}}"/>
   <input type="hidden" id="page_identifier" name="page_identfier" value="{{page_identifier}}"/>
 
+  {% include "pages/shared/calq_set_global_properties.html" %}
+  {% include "pages/shared/calq_identify.html" %}
   {% include "pages/shared/calq_loaded_page.html" %}
 
   {% include "pages/shared/topbar.html" %}
