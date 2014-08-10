@@ -50,7 +50,7 @@ conversationApp.controller('InboxController', function($scope, $element, $interv
 	var updateInbox = function() {
 		var mentorId = $('input[type=hidden][name=system_username]').val();
 		inboxService.getInbox(function(data) {
-			$scope.inbox = messageStreamFormattingService.format(mentorId, data);
+			$scope.inbox = messageStreamFormattingService.format(data, mentorId);
 		});
 	};
 	angular.element($element).ready(function() {
@@ -127,10 +127,12 @@ conversationApp.factory('messageStreamFormattingService', function($filter, time
     }
     return message;
   };
-  var formatMessages = function(mentorId, messages) {
+  var formatMessages = function(messages, mentorId) {
     var formattedMessages = [];
     angular.forEach(messages, function(message) {
-      message = affixOtherUsernames(mentorId, message);
+      if(mentorId) {
+        message = affixOtherUsernames(mentorId, message);
+      }
       formattedMessages.push(timeService.formatMessageDate(message));
     });
     return formattedMessages;

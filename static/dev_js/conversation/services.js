@@ -56,10 +56,12 @@ conversationApp.factory('messageStreamFormattingService', function($filter, time
     }
     return message;
   };
-  var formatMessages = function(mentorId, messages) {
+  var formatMessages = function(messages, mentorId) {
     var formattedMessages = [];
     angular.forEach(messages, function(message) {
-      message = affixOtherUsernames(mentorId, message);
+      if(mentorId) {
+        message = affixOtherUsernames(mentorId, message);
+      }
       formattedMessages.push(timeService.formatMessageDate(message));
     });
     return formattedMessages;

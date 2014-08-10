@@ -48,7 +48,7 @@ conversationApp.controller('InboxController', function($scope, $element, $interv
 	var updateInbox = function() {
 		var mentorId = $('input[type=hidden][name=system_username]').val();
 		inboxService.getInbox(function(data) {
-			$scope.inbox = messageStreamFormattingService.format(mentorId, data);
+			$scope.inbox = messageStreamFormattingService.format(data, mentorId);
 		});
 	};
 	angular.element($element).ready(function() {
