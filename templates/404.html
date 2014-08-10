@@ -1,1 +1,18 @@
-BLABLA
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block body_tag %}{% endblock %}
+
+{% block content %}
+	<div class="search-filter-section">
+		<div class="w-container main-column---messages">
+			<div class="text title empty-inbox">the page you are looking for can’t be found</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script> 
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

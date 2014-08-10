@@ -16,7 +16,7 @@ SECRET_KEY = '6ug(5zb3$&kt5fwkh@yd%=1htq5ww#754q4tn^nmhglybj$)!_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['*']
 
@@ -124,5 +124,7 @@ AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 MEDIA_ROOT = env('MEDIA_ROOT')
+
+DISTRIBUTION = env('DISTRIBUTION')
 
 os.environ['REUSE_DB'] = "1"

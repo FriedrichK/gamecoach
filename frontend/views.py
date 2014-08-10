@@ -15,17 +15,20 @@ from profiles.settings import HEROES_HASH
 
 def index(request):
     context = get_basic_context(request)
+    context['page_name'] = 'index'
     return render(request, 'pages/index/index.html', context)
 
 
 def message_hub(request):
     context = get_basic_context(request)
     context['mentor_id'] = request.user.username
+    context['page_name'] = 'inbox'
     return render(request, 'pages/conversation/hub.html', context)
 
 
 def login(request):
     context = get_basic_context(request)
+    context['page_name'] = 'login'
     data = {
         'facebook_app_id': settings.FACEBOOK_APP_ID
     }
@@ -37,6 +40,7 @@ def edit_settings(request):
         return HttpResponseRedirect('/login?next=/settings/')
 
     context = get_basic_context(request)
+    context['page_name'] = 'settings'
     user_settings = {}
     email = get_email(request.user)
     if not email is None:
@@ -46,6 +50,7 @@ def edit_settings(request):
 
 def results(request):
     context = get_basic_context(request)
+    context['page_name'] = 'results'
     return render(request, 'pages/mentor_results/mentor_results.html', context)
 
 
@@ -55,7 +60,9 @@ def profile(request):
 
     context = {
         'is_me': True,
-        'mentor_id': request.user.username
+        'mentor_id': request.user.username,
+        'page_name': 'mentor_profile',
+        'page_identifier': request.user.username
     }
     context = dict(context.items() + get_basic_context(request).items())
     return render(request, 'pages/mentor_profile/mentor_profile.html', context)
@@ -68,7 +75,9 @@ def mentor(request, mentor_id):
 
     context = {
         'is_me': is_same_user(request.user, mentor_id),
-        'mentor_id': mentor_id
+        'mentor_id': mentor_id,
+        'page_name': 'mentor_profile',
+        'page_identifier': mentor_id
     }
     context = dict(context.items() + get_basic_context(request).items())
     return render(request, 'pages/mentor_profile/mentor_profile.html', context)
@@ -78,14 +87,17 @@ def register_mentor(request):
     context = get_basic_context(request)
     if not request.user.is_authenticated():
         data = {
-            'facebook_app_id': settings.FACEBOOK_APP_ID
+            'facebook_app_id': settings.FACEBOOK_APP_ID,
+            'page_name': 'register_mentor_facebook'
         }
         return render(request, 'pages/mentor_signup/mentor_signup_step1.html', dict(context.items() + data.items()))
 
     if not has_profile(request.user):
+        context['page_name'] = 'register_mentor_profile'
         return render(request, 'pages/mentor_signup/mentor_signup_step2.html', context)
 
     if not is_mentor(request.user):
+        context['page_name'] = 'register_mentor_switch_to_mentor'
         return render(request, 'pages/mentor_switch/mentor_switch.html', context)
 
     return HttpResponseRedirect('/')
@@ -99,17 +111,25 @@ def mentor_contact(request, user_id):
         'mentor_id': request.user.username
     }
     if not request.user.is_authenticated():
+        context['page_name'] = 'mentor_contact_login'
+        context['page_identifier'] = user_id
         return render(request, 'pages/mentor_contact/mentor_contact_step1.html', dict(context.items() + data.items()))
 
     if request.user.username == user_id:
+        context['page_name'] = 'inbox'
+        context['page_identifier'] = user_id
         return render(request, 'pages/conversation/hub.html', context)
 
     if not has_profile(request.user):
+        context['page_name'] = 'mentor_contact_profile'
+        context['page_identifier'] = user_id
         return render(request, 'pages/mentor_contact/mentor_contact_step2.html', dict(context.items() + data.items()))
 
     if get_mentor_by_username(user_id) is None:
         raise Http404()
 
+    context['page_name'] = 'conversation'
+    context['page_identifier'] = user_id
     return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
 
 
@@ -124,8 +144,11 @@ def conversation(request, user_id):
         return HttpResponseRedirect('/login?next=/conversation/' + user_id)
 
     if request.user.username == user_id:
+        context['page_name'] = 'inbox'
         return render(request, 'pages/conversation/hub.html', context)
 
+    context['page_name'] = 'conversation'
+    context['page_identifier'] = user_id
     return render(request, 'pages/conversation/inbox.html', dict(context.items() + data.items()))
 
 
@@ -150,6 +173,7 @@ def edit_profile(request):
     context['profile'] = profile
     context['user_id'] = request.user.username
     context['top_heroes'] = build_top_heroes_list(HEROES_HASH)
+    context['page_name'] = 'edit_profile'
     return render(request, 'pages/account/profile.html', context)
 
 
@@ -159,7 +183,8 @@ def get_basic_context(request):
         'is_mentor': is_mentor(request.user),
         'is_authenticated': request.user.is_authenticated(),
         'username': get_username(request.user),
-        'system_username': get_system_username(request.user)
+        'system_username': get_system_username(request.user),
+        'distribution': settings.DISTRIBUTION
     }
 
 
