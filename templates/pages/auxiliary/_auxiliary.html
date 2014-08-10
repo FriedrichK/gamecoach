@@ -1,0 +1,14 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+ <link rel="stylesheet" type="text/css" href="{% static "css/generic.css" %}">
+{% endblock %}
+
+{% block body_tag %}ng-app="genericApp"{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/generic.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

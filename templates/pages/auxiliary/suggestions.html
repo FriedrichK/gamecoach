@@ -1,0 +1,14 @@
+{% extends "pages/auxiliary/_auxiliary.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="w-container main-column title">
+ 	<div class="text title large">Please visit our Facebook page to leave your feedback</div>
+ </div>
+<div class="search-filter-section">
+	<div class="w-container main-column settings">
+		{% include "pages/shared/facebook_sdk.html" %}
+		<div class="fb-like-box" data-href="https://www.facebook.com/dota2mentors" data-show-faces="true" data-width="900" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="false"></div>
+	</div>
+</div>
+{% endblock %}

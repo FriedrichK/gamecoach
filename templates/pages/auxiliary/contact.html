@@ -1,0 +1,27 @@
+{% extends "pages/auxiliary/_auxiliary.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="search-filter-section">
+    <div class="w-container main-column title">
+      <div class="text title large">Contact us</div>
+    </div>
+    <div class="w-container main-column">
+      <div class="type-message-block">
+        <div class="w-form">
+          <form class="w-clearfix" id="email-form" name="email-form" data-name="Email Form" action="/" onsubmit="return false">
+            <textarea class="w-input type-message" id="field-3" placeholder="Type your message" name="field-3" required="required" data-name="Field 3"></textarea>
+            <input class="w-input text form" id="field-4" type="text" placeholder="Enter your email address" name="field-4" required="required" data-name="Field 4">
+            <input class="w-button send-button" type="submit" value="Send" data-wait="Send" wait="Send">
+          </form>
+          <div class="w-form-done">
+            <p>Thank you! Your submission has been received!</p>
+          </div>
+          <div class="w-form-fail">
+            <p>Oops! Something went wrong while submitting the form :(</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

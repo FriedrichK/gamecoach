@@ -177,6 +177,42 @@ def edit_profile(request):
     return render(request, 'pages/account/profile.html', context)
 
 
+def about(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'about'
+    return render(request, 'pages/auxiliary/about.html', context)
+
+
+def contact(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'contact'
+    return render(request, 'pages/auxiliary/contact.html', context)
+
+
+def cookies(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'cookies'
+    return render(request, 'pages/auxiliary/cookies.html', context)
+
+
+def privacy(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'privacy'
+    return render(request, 'pages/auxiliary/privacy.html', context)
+
+
+def suggestions(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'suggestions'
+    return render(request, 'pages/auxiliary/suggestions.html', context)
+
+
+def terms(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'terms'
+    return render(request, 'pages/auxiliary/terms.html', context)
+
+
 def page404(request):
     context = get_basic_context(request)
     context['page_name'] = 'error_page_404'
