@@ -88,7 +88,7 @@ def register_mentor(request):
     if not is_mentor(request.user):
         return render(request, 'pages/mentor_switch/mentor_switch.html', context)
 
-    return render(request, 'pages/conversation/hub.html', context)
+    return HttpResponseRedirect('/')
 
 
 def mentor_contact(request, user_id):
