@@ -1,7 +1,9 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url, handler404, handler500
 
 from django.contrib import admin
 admin.autodiscover()
+
+from frontend.views import page404, page500
 
 urlpatterns = patterns(
     '',
@@ -19,3 +21,6 @@ urlpatterns = patterns(
 
     url(r'^', include('frontend.urls')),
 )
+
+handler404 = page404
+handler500 = page500

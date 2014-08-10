@@ -1,10 +1,13 @@
 <script>
-calq.action.track(
-    "Loaded page",
-    { 
-		"User": document.getElementById('system_username').value,
-		"Page": document.getElementById('page_name').value,
-		"Page Identifier": document.getElementById('page_identifier').value
-    }
-);
+try {
+		calq.action.track(
+		    "Loaded page",
+		    { 
+				"User": document.getElementById('system_username').value,
+				"Page": document.getElementById('page_name').value,
+				"Page Identifier": document.getElementById('page_identifier').value
+		    }
+		);
+	} catch(err) {
+	}
 </script>

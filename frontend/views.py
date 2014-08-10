@@ -177,6 +177,18 @@ def edit_profile(request):
     return render(request, 'pages/account/profile.html', context)
 
 
+def page404(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'error_page_404'
+    return render(request, '404.html', context)
+
+
+def page500(request):
+    context = get_basic_context(request)
+    context['page_name'] = 'error_page_500'
+    return render(request, '500.html', context)
+
+
 def get_basic_context(request):
     return {
         'has_profile': has_profile(request.user),

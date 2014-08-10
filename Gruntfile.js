@@ -12,6 +12,10 @@ module.exports = function(grunt) {
         src: ['static/dev_js/navigation/**/*.js', '!static/dev_js/navigation/**/*.test.js'],
         dest: 'static/js/navigation.js'
       },
+      generic: {
+        src: ['static/dev_js/generic/**/*.js', '!static/dev_js/generic/**/*.test.js'],
+        dest: 'static/js/generic.js'
+      },
       login: {
         src: ['static/dev_js/login/**/*.js', '!static/dev_js/login/**/*.test.js'],
         dest: 'static/js/login.js'
@@ -57,6 +61,10 @@ module.exports = function(grunt) {
       navigation: {
         src: 'static/js/navigation.js',
         dest: 'static/js/navigation.min.js'
+      },
+      generic: {
+        src: 'static/js/generic.js',
+        dest: 'static/js/generic.min.js'
       },
       login: {
         src: 'static/js/login.js',
@@ -121,6 +129,7 @@ module.exports = function(grunt) {
         files: {
           'static/dev_css/shared.css': 'static/dev_scss/shared/shared.scss',
           'static/dev_css/navigation.css': 'static/dev_scss/navigation/navigation.scss',
+          'static/dev_css/generic.css': 'static/dev_scss/generic/generic.scss',
           'static/dev_css/login.css': 'static/dev_scss/login/login.scss',
           'static/dev_css/settings.css': 'static/dev_scss/settings/settings.scss',
           'static/dev_css/index.css': 'static/dev_scss/index/index.scss',
@@ -138,6 +147,7 @@ module.exports = function(grunt) {
         files: {
           'static/css/shared.css': 'static/dev_css/shared.css',
           'static/css/navigation.css': 'static/dev_css/navigation.css',
+          'static/css/generic.css': 'static/dev_css/generic.css',
           'static/css/login.css': 'static/dev_css/login.css',
           'static/css/settings.css': 'static/dev_css/settings.css',
           'static/css/index.css': 'static/dev_css/index.css',

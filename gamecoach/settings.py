@@ -14,7 +14,7 @@ from getenv import env
 SECRET_KEY = '6ug(5zb3$&kt5fwkh@yd%=1htq5ww#754q4tn^nmhglybj$)!_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
