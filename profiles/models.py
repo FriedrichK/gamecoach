@@ -24,7 +24,7 @@ user_logged_in.connect(activate_user, sender=get_user_model())
 
 class GamecoachProfile(models.Model):
     user = models.OneToOneField(User)
-    username = models.CharField(max_length=128)
+    username = models.CharField(max_length=128, unique=True)
     roles = models.CharField(max_length=512, blank=True, null=True)
     regions = models.CharField(max_length=512, blank=True, null=True)
     mentoring = models.CharField(max_length=512, blank=True, null=True)
