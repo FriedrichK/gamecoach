@@ -1,4 +1,4 @@
-/* global angular, document, window, userSettings, emailForm */
+/* global angular, document, window, userSettings, emailForm, calq */
 
 var editSettingsApp = angular.module('editSettingsApp'); 
 editSettingsApp.controller('EditSettingsController', function($scope, $element, emailService, mentorStatusService, deactivateUserService) {
@@ -11,9 +11,17 @@ editSettingsApp.controller('EditSettingsController', function($scope, $element, 
 		}
 	};
 	$scope.switchToMentor = function() {
+		try {
+			calq.action.track("Switched to mentor", {});
+		} catch(err) {
+		}
 		mentorStatusService.change(true);
 	};
 	$scope.switchToStudent = function() {
+		try {
+			calq.action.track("Switched to student", {});
+		} catch(err) {
+		}
 		mentorStatusService.change(false);
 	};
 	$scope.deactivate = function() {

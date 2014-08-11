@@ -12,12 +12,15 @@ conversationApp.controller('SubmissionController', function($rootScope, $scope, 
 		}
 		messageService.postMessage(mentorId, message, function(result) {
 			if(result.status === 200) {
-				calq.action.trackSale(
-					"Message sent",
-					{ "Recipient": mentorId, "Message": message },
-					"USD", 
-					0.1
-				);
+				try {
+					calq.action.trackSale(
+						"Message sent",
+						{ "Recipient": mentorId, "Message": message },
+						"USD", 
+						0.1
+					);
+				} catch(err) {
+				}
 
 				angular.element('textarea[name=field]').val('');
 				$rootScope.$broadcast('newMessageSuccessfullySent');

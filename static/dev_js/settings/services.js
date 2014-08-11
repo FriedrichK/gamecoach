@@ -1,4 +1,4 @@
-/* global angular, window */
+/* global angular, window, calq */
 var editSettingsApp = angular.module('editSettingsApp');
 
 editSettingsApp.factory('emailService', function($http) {
@@ -12,6 +12,10 @@ editSettingsApp.factory('emailService', function($http) {
             .then(function(result) {
                 if(result.status === 200) {
                     //console.log("settings successfully updated", result);
+                    try {
+                        calq.action.track("Updated email", {});
+                    } catch(err) {
+                    }
                     window.location.reload();
                 }
             });
@@ -50,6 +54,10 @@ editSettingsApp.factory('deactivateUserService', function($http) {
                 })
                 .then(function(result){
                     if(result.status === 200) {
+                        try {
+                            calq.action.track("Deactivated account", {});
+                        } catch(err) {
+                        }
                         window.location = "/";
                     }
                 });

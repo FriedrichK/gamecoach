@@ -1,4 +1,4 @@
-/* global angular, window */
+/* global angular, window, calq */
 var mentorContactApp = angular.module('mentorContactApp');
 
 mentorContactApp.factory('userProfileService', function($http) {
@@ -11,6 +11,10 @@ mentorContactApp.factory('userProfileService', function($http) {
             })
             .then(function(result) {
                 if(result.status === 200) {
+                    try {
+                        calq.action.track("Signed up as student", {});
+                    } catch(err) {
+                    }
                     window.location = window.location;
                 }
             });
@@ -29,6 +33,10 @@ mentorContactApp.factory('profilePictureUploadService', function($http, $upload)
                 console.log(evt);
             })
             .success(function(data, status, headers, config) {
+                try {
+                    calq.action.track("Uploaded profile picture", {});
+                } catch(err) {
+                }
                 console.log(data, status, headers, config);
             });
         }

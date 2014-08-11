@@ -1,4 +1,4 @@
-/* global angular, window */
+/* global angular, window, calq */
 var editProfileApp = angular.module('editProfileApp');
 
 editProfileApp.factory('profileService', function($http) {
@@ -29,6 +29,10 @@ editProfileApp.factory('profilePictureUploadService', function($http, $upload) {
                 console.log(evt);
             })
             .success(function(data, status, headers, config) {
+                try {
+                    calq.action.track("Uploaded profile picture", {});
+                } catch(err) {
+                }
                 console.log(data, status, headers, config);
             });
         }

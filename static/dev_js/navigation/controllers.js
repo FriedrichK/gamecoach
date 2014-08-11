@@ -1,4 +1,4 @@
-/* global document, angular, window */
+/* global document, angular, window, calq */
 var gamecoachNavigation = angular.module('gamecoachNavigation', []);
 gamecoachNavigation.controller('NavigationController', function($scope, $http, $location) {
 	$scope.homeLink = function() {
@@ -16,6 +16,10 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http, $
             method: 'GET'
         })
         .then(function(result) {
+			try {
+                calq.action.track("Logged out", {});
+            } catch(err) {
+            }
             window.location = '/';
         });
 	};

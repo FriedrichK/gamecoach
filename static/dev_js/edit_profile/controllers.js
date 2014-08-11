@@ -12,7 +12,10 @@ editProfileApp.controller('EditProfileController', function($scope, $filter, pro
 	$scope.save = function(profileForm) {
 		var formIsValid = profileForm.$valid;
 		if(formIsValid) {
-			calq.user.profile($scope.profile);
+			try {
+				calq.user.profile($scope.profile);
+			} catch(err) {
+			}
 			profileService.submit($scope.profile);
 		}
 	};

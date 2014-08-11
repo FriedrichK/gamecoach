@@ -3,7 +3,7 @@ var editSettingsApp = angular.module('editSettingsApp', ['gamecoachShared', 'gam
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
-/* global angular, document, window, userSettings, emailForm */
+/* global angular, document, window, userSettings, emailForm, calq */
 
 var editSettingsApp = angular.module('editSettingsApp'); 
 editSettingsApp.controller('EditSettingsController', function($scope, $element, emailService, mentorStatusService, deactivateUserService) {
@@ -16,9 +16,17 @@ editSettingsApp.controller('EditSettingsController', function($scope, $element, 
 		}
 	};
 	$scope.switchToMentor = function() {
+		try {
+			calq.action.track("Switched to mentor", {});
+		} catch(err) {
+		}
 		mentorStatusService.change(true);
 	};
 	$scope.switchToStudent = function() {
+		try {
+			calq.action.track("Switched to student", {});
+		} catch(err) {
+		}
 		mentorStatusService.change(false);
 	};
 	$scope.deactivate = function() {
@@ -26,7 +34,7 @@ editSettingsApp.controller('EditSettingsController', function($scope, $element, 
 		deactivateUserService.deactivate(system_username);
 	};
 });
-/* global angular, window */
+/* global angular, window, calq */
 var editSettingsApp = angular.module('editSettingsApp');
 
 editSettingsApp.factory('emailService', function($http) {
@@ -40,6 +48,10 @@ editSettingsApp.factory('emailService', function($http) {
             .then(function(result) {
                 if(result.status === 200) {
                     //console.log("settings successfully updated", result);
+                    try {
+                        calq.action.track("Updated email", {});
+                    } catch(err) {
+                    }
                     window.location.reload();
                 }
             });
@@ -78,6 +90,10 @@ editSettingsApp.factory('deactivateUserService', function($http) {
                 })
                 .then(function(result){
                     if(result.status === 200) {
+                        try {
+                            calq.action.track("Deactivated account", {});
+                        } catch(err) {
+                        }
                         window.location = "/";
                     }
                 });
