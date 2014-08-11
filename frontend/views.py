@@ -232,7 +232,8 @@ def get_basic_context(request):
         'is_authenticated': request.user.is_authenticated(),
         'username': get_username(request.user),
         'system_username': get_system_username(request.user),
-        'distribution': settings.DISTRIBUTION
+        'distribution': settings.DISTRIBUTION,
+        'calq_write_key': settings.CALQ_WRITE_KEY
     }
 
 
