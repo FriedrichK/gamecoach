@@ -3,12 +3,12 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns(
     '',
-    url(r'about', 'frontend.views.about', name='about'),
-    url(r'contact', 'frontend.views.contact', name='contact'),
-    url(r'cookies', 'frontend.views.cookies', name='cookies'),
-    url(r'privacy', 'frontend.views.privacy', name='privacy'),
-    url(r'suggestions', 'frontend.views.suggestions', name='suggestions'),
-    url(r'terms', 'frontend.views.terms', name='terms'),
+    url(r'^about/?$', 'frontend.views.about', name='about'),
+    url(r'^contact/?$', 'frontend.views.contact', name='contact'),
+    url(r'^cookies/?$', 'frontend.views.cookies', name='cookies'),
+    url(r'^privacy/?$', 'frontend.views.privacy', name='privacy'),
+    url(r'^suggestions/?$', 'frontend.views.suggestions', name='suggestions'),
+    url(r'^terms/?$', 'frontend.views.terms', name='terms'),
 
     url(r'login', 'frontend.views.login', name='login'),
     url(r'settings', 'frontend.views.edit_settings', name='settings'),
