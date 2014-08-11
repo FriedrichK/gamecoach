@@ -1,4 +1,5 @@
 import time
+import json
 
 HEADLESS = False
 
@@ -19,12 +20,47 @@ from profiles.models import GamecoachProfile
 from shared.testing.factories.account.user import create_user
 from shared.testing.factories.account import create_account
 from shared.testing.factories.conversation import create_fake_conversation
-from shared.testing.selenium import fill_textfield, change_checkbox, select_option, get_as_user
+from shared.testing import selenium as selenium_test_helper
+from shared.testing.selenium import fill_textfield, change_checkbox, select_option, get_as_user, fill_in_profile_form
 from profiles.models import GamecoachProfile
 from frontend.views import mentor_contact
 
 MOCK_MENTOR_USERNAME = 'mockUsername'
+
 URL_FOR_MENTOR_CONTACT = '/mentor/%s/contact' % MOCK_MENTOR_USERNAME
+URL_FOR_MENTOR_REGISTRATION = '/register/mentor'
+
+
+class GamecoachLiveServerTestCase(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        if HEADLESS:
+            cls.selenium = webdriver.PhantomJS('phantomjs')
+        else:
+            cls.selenium = WebDriver()
+        super(GamecoachLiveServerTestCase, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(GamecoachLiveServerTestCase, cls).tearDownClass()
+
+
+class RegisterAsMentorTestCase(GamecoachLiveServerTestCase):
+
+    def test_should_fill_in_and_save_mentor_form_as_expected(self):
+        user, profile = create_user()
+
+        get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_MENTOR_REGISTRATION), user=user)
+
+        fill_in_profile_form(self.selenium)
+
+        submit_button = self.selenium.find_element_by_css_selector('button[name=submit]')
+        submit_button.click()
+
+        profile = GamecoachProfile.objects.get(id=1)
+
+        self.assertEqual(profile.email, selenium_test_helper.MOCK_EMAIL_VALUE, 'the email saved to the profile does not match the expected value')
 
 
 class MentorContactTestCase(LiveServerTestCase):
@@ -112,38 +148,6 @@ class MentorContactTestCase(LiveServerTestCase):
 
         submit_button = self.selenium.find_element_by_css_selector('button[name=submit]')
         submit_button.click()
-
-
-"""
-class ConversationTestCase(LiveServerTestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        if HEADLESS:
-            cls.selenium = webdriver.PhantomJS('phantomjs')
-        else:
-            cls.selenium = WebDriver()
-        super(ConversationTestCase, cls).setUpClass()
-        cls.selenium.implicitly_wait(3)
-
-    @classmethod
-    def tearDownClass(cls):
-        super(ConversationTestCase, cls).tearDownClass()
-        cls.selenium.quit()
-
-    @patch('frontend.views.mentor_contact')
-    def test_should_redirect_to_home_on_logo_click(self, mentor_contact_mock):
-        request_factory = RequestFactory()
-        request = request_factory.get(URL_FOR_MENTOR_CONTACT)
-        mentor_contact_mock.return_value = render(request, 'pages/conversation/inbox.html', {'is_mentor': False})
-
-        self.selenium.get('%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT))
-
-        home_button = self.selenium.find_element_by_css_selector('.w-button sign-up-button')
-        home_button.click()
-
-        self.assertTrue('Get coached by experienced gamers' in self.selenium.page_source)
-"""
 
 
 class ContactMentorTestCase(LiveServerTestCase):

@@ -6,6 +6,8 @@ from selenium.webdriver.support.ui import Select
 
 from shared.testing.factories.account.user import create_user
 
+MOCK_EMAIL_VALUE = 'test@test.com'
+
 
 def fill_textfield(selenium, selector, content):
     element = selenium.find_element_by_css_selector(selector)
@@ -45,3 +47,37 @@ def get_as_user(selenium, live_server_url, url, user=None):
     selenium.get(live_server_url)
     selenium.add_cookie({'name': settings.SESSION_COOKIE_NAME, 'value': session_store.session_key, "path": "/", "secure": False})
     selenium.get(url)
+
+
+def fill_in_profile_form(selenium, has_terms_and_conditions=True):
+    fill_textfield(selenium, 'input[name=name]', 'Some Name')
+
+    fill_textfield(selenium, 'input[name="name-2"]', '12345')
+    fill_textfield(selenium, 'input[name="name-3"]', 'http://www.steam.com/12345')
+
+    fill_textfield(selenium, 'input[name=email]', MOCK_EMAIL_VALUE)
+    fill_textfield(selenium, 'input[name="email-2"]', MOCK_EMAIL_VALUE)
+
+    fill_textfield(selenium, 'textarea[name="about-me"]', 'Blablabla')
+
+    change_checkbox(selenium, 'input[name="role-13"]', True)
+
+    select_option(selenium, 'select[name="field-4"]', 1)
+    select_option(selenium, 'select[name="field-5"]', 2)
+    select_option(selenium, 'select[name="field-6"]', 3)
+
+    fill_textfield(selenium, 'input[name=field]', '1000')
+    fill_textfield(selenium, 'input[name="field-2"]', '50%')
+    fill_textfield(selenium, 'input[name="field-3"]', '100000')
+
+    change_checkbox(selenium, 'input[name="region-10"]', True)
+
+    change_checkbox(selenium, 'input[name=day][value="1"]', True)
+    change_checkbox(selenium, 'input[name=time][value="2"]', True)
+
+    change_checkbox(selenium, 'input[name=time][value="2"]', True)
+
+    change_checkbox(selenium, 'input[name="role-22"]', True)
+
+    if has_terms_and_conditions:
+        change_checkbox(selenium, 'input[name="i-agree-with-term-conditions"]', True)

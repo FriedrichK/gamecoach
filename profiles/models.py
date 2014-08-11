@@ -25,6 +25,7 @@ user_logged_in.connect(activate_user, sender=get_user_model())
 class GamecoachProfile(models.Model):
     user = models.OneToOneField(User)
     username = models.CharField(max_length=128, unique=True)
+    email = models.CharField(max_length=128, blank=True, null=True)
     roles = models.CharField(max_length=512, blank=True, null=True)
     regions = models.CharField(max_length=512, blank=True, null=True)
     mentoring = models.CharField(max_length=512, blank=True, null=True)
@@ -48,7 +49,7 @@ class GamecoachProfile(models.Model):
         try:
             data['username'] = self.user.username
             data['name'] = self.username
-            data['email'] = self.user.email
+            data['email'] = self.email
             data['first_name'] = self.user.first_name
             data['last_name'] = self.user.last_name
         except ObjectDoesNotExist:

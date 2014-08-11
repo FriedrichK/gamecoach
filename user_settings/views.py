@@ -22,18 +22,10 @@ def email(request):
     if not request_data['email'] == request_data['email2']:
         return HttpResponseBadRequest(json.dumps({'success': False, 'error': 'email and confirmation do not match'}))
 
-    data = request.user.gamecoachprofile.data
-    if data is None:
-        data = {}
-    else:
-        data = json.loads(data)
-
-    data['email'] = request_data['email']
-
-    request.user.gamecoachprofile.data = json.dumps(data)
+    request.user.gamecoachprofile.email = request_data['email']
     request.user.gamecoachprofile.save()
 
-    return HttpResponse(json.dumps({'success': True, 'message': 'email changed to %s' % (data['email'])}))
+    return HttpResponse(json.dumps({'success': True, 'message': 'email changed to %s' % (request_data['email'])}))
 
 
 @csrf_exempt

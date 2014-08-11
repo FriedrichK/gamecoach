@@ -42,6 +42,7 @@ def build_profile_from_signup_form_data(signup_form_data):
 def generate_form_data(signup_form_data):
     return {
         'username': signup_form_data['displayName'],
+        'email': signup_form_data['email'],
         'roles': serialize_roles(get_hash(signup_form_data, 'role')),
         'regions': serialize_regions(get_hash(signup_form_data, 'region')),
         'mentoring': serialize_mentoring(get_hash(signup_form_data, 'mentoring')),
