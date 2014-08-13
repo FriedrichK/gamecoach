@@ -9,7 +9,7 @@
       {% if is_authenticated %}
       <nav class="w-nav-menu nav-menu-drop-down" role="navigation">
         <div class="nav-menu-block">
-          <a class="w-nav-link drop-down-nav-link" ng-click="profile()">Profile</a>
+          {% if has_profile %}<a class="w-nav-link drop-down-nav-link" ng-click="profile()">Profile</a>{% endif %}
           <a class="w-nav-link drop-down-nav-link" ng-click="inbox()">Inbox</a>
           <a class="w-nav-link drop-down-nav-link" ng-click="editProfile()">Edit Profile</a>
           <a class="w-nav-link drop-down-nav-link" ng-click="editSettings()">Edit Settings</a>
