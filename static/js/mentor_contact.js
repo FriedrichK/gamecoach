@@ -3,7 +3,7 @@ var mentorContactApp = angular.module('mentorContactApp', ['angularFileUpload', 
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
-/* global angular, document, window, F */
+/* global angular, document, window, F, calq */
 
 var mentorContactApp = angular.module('mentorContactApp'); 
 mentorContactApp.controller('UserSignupController', function($scope, $element) {
@@ -11,6 +11,10 @@ mentorContactApp.controller('UserSignupController', function($scope, $element) {
 		var element = angular.element("#facebook-login-form");
 		var el = document.getElementById('facebook-login-form');
 		F.connect(element);
+		try {
+            calq.action.track("Signing up as student", {});
+        } catch(err) {
+        }
 		return false;
 	};
 });

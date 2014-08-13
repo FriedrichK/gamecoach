@@ -26,7 +26,10 @@ mentorSignupApp.controller('MentorProfileController', function($scope, mentorPro
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
 		if(formIsValid) {
-			calq.user.profile($scope.mentor);
+			try {
+				calq.user.profile($scope.mentor);
+			} catch(err) {
+			} 
 			mentorProfileService.submit($scope.mentor);
 		}
 	};
