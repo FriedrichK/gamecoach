@@ -38,4 +38,7 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http, $
 	$scope.inbox = function() {
 		window.location = "/inbox";
 	};
+	$scope.goToPage = function(destination) {
+		window.location = destination;
+	};
 });

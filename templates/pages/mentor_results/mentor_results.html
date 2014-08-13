@@ -215,12 +215,25 @@
 
     </div>
   </div>
+
+<style>
+    .footer-nav-link {
+      cursor: pointer;
+    }
+  </style>
+
   <div>
-    <div class="w-container footer-column fix">
+    <div class="w-container footer-column fix" ng-controller="NavigationController">
       <div class="w-row">
-        <div class="w-col w-col-2 w-clearfix"><a class="footer-nav-link" href="/about">About</a><a class="footer-nav-link" href="/suggestions">Suggestions</a><a class="footer-nav-link" href="/contact">Contact us</a>
+        <div class="w-col w-col-2 w-clearfix">
+          <a class="footer-nav-link" ng-click="goToPage('/about')">About us</a>
+          <a class="footer-nav-link" ng-click="goToPage('/suggestions')">suggestions</a>
+          <a class="footer-nav-link" ng-click="goToPage('/contact')">Contact us</a>
         </div>
-        <div class="w-col w-col-3"><a class="footer-nav-link" href="/terms">Terms &amp; Conditions</a><a class="footer-nav-link" href="/privacy">Privacy Policy</a><a class="footer-nav-link" href="/cookies">Cookies</a>
+        <div class="w-col w-col-3">
+          <a class="footer-nav-link" ng-click="goToPage('/terms')">Terms of Service</a>
+          <a class="footer-nav-link" ng-click="goToPage('/privacy')">Privacy Policy</a>
+          <a class="footer-nav-link" ng-click="goToPage('/cookies')">Cookies</a>
         </div>
         <div class="w-col w-col-7 w-clearfix">
           <a class="w-inline-block social-icon" href="https://twitter.com/Gamecoachco">
