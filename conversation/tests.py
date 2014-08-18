@@ -384,6 +384,29 @@ class ToolsFolderTestCase(TestCase):
 
         self.assertEqual(actual, [self._get_user(1).id, self._get_user(2).id])
 
+    def test_returns_expected_empty_inbox_slice_excluding_conversations_of_other_users(self):
+        user1 = self._get_user(0)
+        user2 = self._get_user(1)
+        user3 = self._get_user(2)
+
+        time_anchor = datetime.datetime(2014, 7, 28, 16, 0, 0, 0, get_current_timezone())
+
+        self._write_test_message(user2, user1, 'test_conversation', '1', sent_at=time_anchor + datetime.timedelta(minutes=-1))
+        self._write_test_message(user1, user2, 'test_conversation', 'A', sent_at=time_anchor + datetime.timedelta(minutes=-2))
+        self._write_test_message(user2, user3, 'test_conversation', '2', sent_at=time_anchor + datetime.timedelta(minutes=-3))
+        self._write_test_message(user3, user2, 'test_conversation', 'B', sent_at=time_anchor + datetime.timedelta(minutes=-4))
+        self._write_test_message(user2, user3, 'test_conversation', '3', sent_at=time_anchor + datetime.timedelta(minutes=-5))
+        self._write_test_message(user3, user2, 'test_conversation', 'C', sent_at=time_anchor + datetime.timedelta(minutes=-6))
+        self._write_test_message(user2, user3, 'test_conversation', '4', sent_at=time_anchor + datetime.timedelta(minutes=-7))
+        self._write_test_message(user3, user2, 'test_conversation', 'D', sent_at=time_anchor + datetime.timedelta(minutes=-8))
+
+        messages = Message.objects.all()
+        for message in messages:
+            print message.sent_at
+
+        actual = [message.body for message in get_inbox_slice(user1, time_anchor, older=True, items=5)]
+        self.assertEqual(actual, ['1'])
+
     def test_returns_expected_inbox_slice_for_archived_items(self):
         user1 = self._get_user(0)
         fake_conversation_batched, fake_conversation_flat = self._create_fake_conversation(items=9)
@@ -434,8 +457,8 @@ class ToolsFolderTestCase(TestCase):
     def _get_user(self, index):
         return self._accounts[index]['user']
 
-    def _write_test_message(self, sender, recipient, subject, body):
-        return create_message(sender, recipient, subject, body=body)
+    def _write_test_message(self, sender, recipient, subject, body, sent_at=None):
+        return create_message(sender, recipient, subject, body=body, sent_at=sent_at)
 
     @transaction.commit_manually
     def _create_fake_conversation(self, items=20):

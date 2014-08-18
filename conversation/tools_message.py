@@ -45,7 +45,7 @@ def _get_site():
     return Site.objects.get_current() if Site._meta.installed else None
 
 
-def create_message(sender, recipient, subject, body='', skip_notification=False, auto_archive=False, auto_delete=False, auto_moderators=None):
+def create_message(sender, recipient, subject, body='', skip_notification=False, auto_archive=False, auto_delete=False, auto_moderators=None, sent_at=None):
     if not user_is_valid(sender):
         raise InvalidSenderException()
     if not user_is_valid(recipient):
@@ -55,6 +55,8 @@ def create_message(sender, recipient, subject, body='', skip_notification=False,
     if body is None or body == '':
         raise NoMessageBodyException('this message has an empty message body. Empty message cannot be sent')
     message = Message(subject=subject, body=body, sender=sender, recipient=recipient)
+    if not sent_at is None:
+        message.sent_at = sent_at
     initial_status = message.moderation_status
     if auto_moderators:
         message.auto_moderate(auto_moderators)
