@@ -4,14 +4,12 @@ var loginApp = angular.module('loginApp', ['ngRoute', 'gamecoachShared', 'gameco
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
-/* global angular, document, window, F, calq */
+/* global angular, document, window, allauth, calq */
 
 var loginApp = angular.module('loginApp'); 
 loginApp.controller('LoginController', function($scope, $element) {
 	$scope.facebookLogin = function() {
-		var element = angular.element("#facebook-login-form");
-		var el = document.getElementById('facebook-login-form');
-		F.connect(element);
+		allauth.facebook.login('', 'authenticate', 'login');
 		try {
 			calq.action.track("Logging in", {});
 		} catch(err) {

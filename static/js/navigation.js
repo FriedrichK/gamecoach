@@ -12,8 +12,8 @@ gamecoachNavigation.controller('NavigationController', function($scope, $http, $
 	};
 	$scope.logout = function() {
 		$http({
-            url: '/accounts/logout/',
-            method: 'GET'
+            url: '/api/settings/logout/',
+            method: 'POST'
         })
         .then(function(result) {
 			try {

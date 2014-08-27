@@ -6,22 +6,17 @@
 </style>
 
 <div id="fb-root" style="display:none;"></div>
-
-<script src="{% static "/static/django_facebook/js/facebook.js" %}" type="text/javascript"></script>
-<script>
-    facebookAppId = '{{facebook_app_id}}';
-    facebookDefaultScope = ["email", "user_about_me", "user_birthday", "user_website"];
-    staticUrl = '/static/';
-    function facebookJSLoaded(){
-        FB.init({
-        	appId: facebookAppId,
-        	status: false,
-        	cookie: true,
-        	xfbml: true,
-        	oauth: true
-        });
+<script id="allauth-facebook-settings" type="application/json">
+    {
+        "cancelUrl": "/",
+        "loginByTokenUrl": "/accounts/facebook/login/token/", 
+        "loginOptions": {"scope": "email"},
+        "logoutUrl": "/logout/",
+        "errorUrl": "/login?error",
+        "appId": "{{facebook_app_id}}",
+        "locale": "{{locale}}",
+        "csrfToken": "{{csrf_token}}",
+        "channelUrl": "/accounts/facebook/channel/"
     }
-    window.fbAsyncInit = facebookJSLoaded;
-    F = new facebookClass(facebookAppId);
-    F.load();
 </script>
+<script type="text/javascript" src="{% static "/static/facebook/js/fbconnect.js" %}"></script>

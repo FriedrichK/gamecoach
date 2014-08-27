@@ -6,10 +6,9 @@ from django.conf import settings
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
-from django_facebook.models import FacebookCustomUser as User
-from django_facebook import signals
-from django_facebook.utils import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth import get_user_model
 
 from profiles.tools.serialization import deserialize_roles, deserialize_regions, deserialize_mentoring, deserialize_availability, deserialize_data, deserialize_date
 

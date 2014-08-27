@@ -1,11 +1,9 @@
-/* global angular, document, window, F, calq */
+/* global angular, document, window, allauth, calq */
 
 var mentorSignupApp = angular.module('mentorSignupApp'); 
 mentorSignupApp.controller('MentorSignupController', function($scope, $element) {
 	$scope.facebookLogin = function() {
-		var element = angular.element("#facebook-login-form");
-		var el = document.getElementById('facebook-login-form');
-		F.connect(element);
+		allauth.facebook.login('', 'authenticate', 'login');
 		return false;
 	};
 });

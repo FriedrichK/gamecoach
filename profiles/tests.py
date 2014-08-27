@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from django_facebook.models import FacebookCustomUser as User
+from django.contrib.auth.models import User
 
 #from shared.testing.factories.account import create_accounts
 from profiles.models import GamecoachProfile
@@ -95,7 +95,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 1)
+        self.assertEqual(len(actual), 4)
 
     def test_returns_expected_result_for_availability_weekends_anytime(self):
         filter_data = {
@@ -106,7 +106,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 0)
+        self.assertEqual(len(actual), 1)
 
     def test_returns_expected_result_for_availability_anyday(self):
         filter_data = {
@@ -116,7 +116,7 @@ class ToolsMentorsTestCase(TestCase):
         }
         actual = get_all_mentors(filter_data)
 
-        self.assertEqual(len(actual), 2)
+        self.assertEqual(len(actual), 4)
 
     def test_returns_expected_result_for_no_availability_filters(self):
         filter_data = {}
@@ -139,9 +139,11 @@ def create_mock_profiles():
 
         profile = GamecoachProfile(
             user=mock_user,
+            username=unicode(i) + "_username",
             roles=serialize_string_storage(data[i]['roles'], ROLES),
             regions=serialize_string_storage(data[i]['regions'], REGIONS_LABELS),
-            availability=serialize_availability(data[i]['day'], data[i]['time'])
+            availability=serialize_availability(data[i]['day'], data[i]['time']),
+            is_mentor=True
         )
         profile.save()
         profiles.append(profile)

@@ -7,10 +7,11 @@ from frontend.views import page404, page500
 
 urlpatterns = patterns(
     '',
-    #url(r'files/(.*)', 'profiles.views.profile_picture', 'p'),
+    (r'^admin/', include(admin.site.urls)),
 
-    url(r'^facebook/', include('django_facebook.urls')),
-    url(r'^accounts/', include('django_facebook.auth_urls')),
+    url(r'files/(.*)', 'profiles.views.profile_picture', 'p'),
+
+    (r'^accounts/', include('allauth.urls')),
 
     url(r'^api/mentor', include('profiles.urls_api')),
     url(r'^data/mentor', include('profiles.urls_data')),

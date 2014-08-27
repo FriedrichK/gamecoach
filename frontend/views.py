@@ -5,8 +5,6 @@ from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
-from django_facebook.models import FacebookCustomUser as User
-
 from profiles.tools.auth import user_is_available
 from profiles.tools.mentors import get_mentor_by_id, get_mentor_by_username
 from profiles.tools.settings import get_email
@@ -30,7 +28,8 @@ def login(request):
     context = get_basic_context(request)
     context['page_name'] = 'login'
     data = {
-        'facebook_app_id': settings.FACEBOOK_APP_ID
+        'facebook_app_id': settings.FACEBOOK_APP_ID,
+        'locale': settings.LANGUAGE_CODE
     }
     return render(request, 'pages/user_login/user_login.html', dict(context.items() + data.items()))
 
@@ -88,6 +87,7 @@ def register_mentor(request):
     if not request.user.is_authenticated():
         data = {
             'facebook_app_id': settings.FACEBOOK_APP_ID,
+            'locale': settings.LANGUAGE_CODE,
             'page_name': 'register_mentor_facebook'
         }
         return render(request, 'pages/mentor_signup/mentor_signup_step1.html', dict(context.items() + data.items()))
@@ -108,6 +108,7 @@ def mentor_contact(request, user_id):
     data = {
         'user_id': user_id,
         'facebook_app_id': settings.FACEBOOK_APP_ID,
+        'locale': settings.LANGUAGE_CODE,
         'mentor_id': request.user.username
     }
     if not request.user.is_authenticated():

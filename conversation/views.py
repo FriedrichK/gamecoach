@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseForbidde
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.timezone import now
 
-from django_facebook.models import FacebookCustomUser as User
+from django.contrib.auth.models import User
 
 from profiles.tools.mentors import get_mentor_by_username
 from conversation.tools_message import create_message, serialize_message

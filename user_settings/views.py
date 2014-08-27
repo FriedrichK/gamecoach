@@ -2,8 +2,19 @@ import json
 
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
+from django.contrib.auth import logout as auth_logout
 
 from profiles.tools.auth import user_is_available
+
+from allauth.account.adapter import get_adapter
+
+
+@csrf_exempt
+def logout(request):
+    get_adapter().add_message(request, messages.SUCCESS, 'account/messages/logged_out.txt')
+    auth_logout(request)
+    return HttpResponse(json.dumps({'success': True}))
 
 
 @csrf_exempt

@@ -1,6 +1,6 @@
 from django.db.models import Q
 
-from django_facebook.models import FacebookCustomUser as User
+from django.contrib.auth.models import User
 
 from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY
 from profiles.models import GamecoachProfile, ProfilePicture

@@ -1,20 +1,19 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import time
-import json
 
 HEADLESS = False
 
 from django.conf import settings
 from django.test import LiveServerTestCase, RequestFactory
-from django.utils.unittest import skip
 from django.shortcuts import render
 from django.contrib.auth.models import AnonymousUser
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium import webdriver
+from selenium.webdriver.support import ui
 
-from mock import patch
-
-from django_facebook.models import FacebookCustomUser as User
 from profiles.models import GamecoachProfile
 
 from shared.testing.factories.account.user import create_user
@@ -22,8 +21,6 @@ from shared.testing.factories.account import create_account
 from shared.testing.factories.conversation import create_fake_conversation
 from shared.testing import selenium as selenium_test_helper
 from shared.testing.selenium import fill_textfield, change_checkbox, select_option, get_as_user, fill_in_profile_form
-from profiles.models import GamecoachProfile
-from frontend.views import mentor_contact
 
 MOCK_MENTOR_USERNAME = 'mockUsername'
 
@@ -90,7 +87,7 @@ class MentorContactTestCase(LiveServerTestCase):
         time.sleep(1)
 
     def _click_login_button_and_change_to_facebook_popup_dialog(self):
-        self.selenium.find_element_by_xpath('//div[contains(@class, "login-screen") ]').click()
+        self.selenium.find_element_by_xpath('//a[contains(@class, "sign-up-button login") ]').click()
         windows = self.selenium.window_handles
         self.selenium.switch_to_window(windows[1])
 
@@ -188,7 +185,7 @@ class ContactMentorTestCase(LiveServerTestCase):
     def test_should_throw_404_if_the_mentor_to_be_contacted_cannot_be_found(self):
         entries = create_account()
         get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_MENTOR_CONTACT), user=entries['user'])
-        self.assertIn('BLABLA', self.selenium.page_source)  # This will break whenever the 404 page changes, but apparently there is no clean way to check status codes (!)
+        self.assertIn('the page you are looking for can\'t be found', self.selenium.page_source)  # This will break whenever the 404 page changes, but apparently there is no clean way to check status codes (!)
 
 
 class ConversationTestCase(LiveServerTestCase):
@@ -213,9 +210,11 @@ class ConversationTestCase(LiveServerTestCase):
         url = self.live_server_url + '/conversation/' + account2['user'].username
         get_as_user(self.selenium, self.live_server_url, url, user=account1['user'])
 
-        time.sleep(2)
+        wait = ui.WebDriverWait(self.selenium, 10)
 
-        conversation_items = self.selenium.find_element_by_css_selector('.message-block')
+        wait.until(lambda driver: self.selenium.find_elements_by_css_selector('.message-block.ng-scope'))
+
+        conversation_items = self.selenium.find_elements_by_css_selector('.message-block.ng-scope')
 
         self.assertEqual(len(conversation_items), 6)
 

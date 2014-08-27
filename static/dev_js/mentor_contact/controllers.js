@@ -1,11 +1,9 @@
-/* global angular, document, window, F, calq */
+/* global angular, document, window, allauth, calq */
 
 var mentorContactApp = angular.module('mentorContactApp'); 
 mentorContactApp.controller('UserSignupController', function($scope, $element) {
 	$scope.facebookLogin = function() {
-		var element = angular.element("#facebook-login-form");
-		var el = document.getElementById('facebook-login-form');
-		F.connect(element);
+		allauth.facebook.login(angular.element('input[type=hidden][name=next]').val(), 'authenticate', 'login');
 		try {
             calq.action.track("Signing up as student", {});
         } catch(err) {

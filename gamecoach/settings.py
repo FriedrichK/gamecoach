@@ -28,13 +28,19 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
     'postman',
-    'django_facebook',
+    #'django_facebook',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
     'south',
 
+    'shared',
     'frontend',
     'profiles',
     'conversation',
@@ -71,7 +77,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en_US'
 
 TIME_ZONE = 'UTC'
 
@@ -98,8 +104,9 @@ STATICFILES_DIRS = (
 POSTMAN_AUTO_MODERATE_AS = True
 
 AUTHENTICATION_BACKENDS = (
-    'django_facebook.auth_backends.FacebookBackend',
+    #'django_facebook.auth_backends.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -109,6 +116,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",  # Added
+
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages"
@@ -118,8 +129,8 @@ FACEBOOK_APP_ID = env('FACEBOOK_APP_ID')
 FACEBOOK_APP_SECRET = env('FACEBOOK_APP_SECRET')
 FACEBOOK_TEST_USER = env('FACEBOOK_TEST_USER')
 FACEBOOK_TEST_PASSWORD = env('FACEBOOK_TEST_PASSWORD')
-AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
-AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
+#AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
+#AUTH_PROFILE_MODULE = 'django_facebook.FacebookProfile'
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
@@ -130,3 +141,16 @@ DISTRIBUTION = env('DISTRIBUTION')
 CALQ_WRITE_KEY = env('CALQ_WRITE_KEY')
 
 os.environ['REUSE_DB'] = "1"
+
+SITE_DOMAIN = env('SITE_DOMAIN')
+SITE_NAME = env('SITE_NAME')
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email'],
+        'METHOD': 'js_sdk'
+    }
+}
