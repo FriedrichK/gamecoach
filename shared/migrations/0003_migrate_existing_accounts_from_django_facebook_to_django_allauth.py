@@ -1,7 +1,6 @@
 from django.db import connection
 
 from south.v2 import DataMigration
-from south.db import db
 
 DJANGO_FACEBOOK_USER_TABLE = 'django_facebook_facebookcustomuser'
 DJANGO_FACEBOOK_PROFILE_TABLE = 'django_facebook_facebookprofile'
@@ -23,14 +22,9 @@ class Migration(DataMigration):
             migrate_facebook_profile_data(orm, cursor, user, db_user)
             user_id_mapping[user[0]] = db_user
 
-        db.alter_column(u'profiles_profilepicture', 'user_id', self.gf('django.db.models.fields.IntegerField')(unique=False, blank=True, null=True))
-        db.alter_column(u'profiles_gamecoachprofile', 'user_id', self.gf('django.db.models.fields.IntegerField')(unique=False, blank=True, null=True))
-
         relink_gamecoach_profiles(orm, user_id_mapping)
         relink_gamecoach_profilepictures(orm, user_id_mapping)
-
-        db.alter_column(u'profiles_profilepicture', 'user_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True))
-        db.alter_column(u'profiles_gamecoachprofile', 'user_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True))
+        relink_messages(orm, user_id_mapping)
 
     models = {
         u'sites.site': {
@@ -139,14 +133,35 @@ class Migration(DataMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+        },
+        u'postman.message': {
+            'Meta': {'object_name': 'Message'},
+            'subject': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
+            'body': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'sender': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': True, 'blank': True}),
+            'recipient': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': True, 'blank': True}),
+            'email': ('django.db.models.fields.EmailField', [], {'blank': True}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['postman.message']", 'null': True, 'blank': True}),
+            'thread': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['postman.message']", 'null': True, 'blank': True}),
+            'sent_at': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime.now()'}),
+            'read_at': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime.now()'}),
+            'read_at': ('django.db.models.fields.DateField', [], {'null': True, 'blank': True}),
+            'replied_at': ('django.db.models.fields.DateField', [], {'null': True, 'blank': True}),
+            'sender_archived': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'recipient_archived': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'sender_deleted_at': ('django.db.models.fields.DateField', [], {'null': True, 'blank': True}),
+            'recipient_deleted_at': ('django.db.models.fields.DateField', [], {'null': True, 'blank': True}),
+            'moderation_status': ('django.db.models.fields.CharField', [], {'max_length': '1', 'default': '"p"'}),
+            'moderation_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.user']", 'null': 'True', 'blank': 'True'}),
+            'moderation_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime.now()'}),
+            'moderation_reason': ('django.db.models.fields.CharField', [], {'max_length': '120', 'blank': 'True'})
         }
     }
 
     def backwards(self, orm):
         pass
 
-    complete_apps = []
-    #complete_apps = ['shared']
+    complete_apps = ['shared']
 
 
 def old_user_table_exists(cursor):
@@ -266,6 +281,34 @@ def relink_gamecoach_profilepicture_data(old_gamecoach_profilepicture_data, user
         old_user_id = item['user_id']
         item['user_id'] = user_id_mapping[old_user_id].id
     return old_gamecoach_profilepicture_data
+
+
+def relink_messages(orm, user_id_mapping):
+    old_message_data = get_old_message_data(orm)
+
+    relinked_message_data = relink_message_data(old_message_data, user_id_mapping)
+
+    Message = orm['postman.message']
+    Message.objects.all().delete()
+    for item in relinked_message_data:
+        message = Message(**item)
+        message.save()
+
+
+def get_old_message_data(orm):
+    Message = orm['postman.message']
+    return Message.objects.all().values()
+
+
+def relink_message_data(old_message_data, user_id_mapping):
+    for item in old_message_data:
+        old_sender_id = item['sender_id']
+        item['sender_id'] = user_id_mapping[old_sender_id].id
+
+        old_recipient_id = item['recipient_id']
+        item['recipient_id'] = user_id_mapping[old_recipient_id].id
+
+    return old_message_data
 
 
 class CannotRetrieveDatabaseCursorException(Exception):
