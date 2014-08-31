@@ -230,7 +230,7 @@ def create_new_facebook_profile(orm, db_user, old_facebook_profile_data):
     profile.last_login = db_user.last_login
     profile.date_joined = db_user.date_joined
     profile.provider = "facebook"
-    profile.uid = old_facebook_profile_data[2]
+    profile.uid = old_facebook_profile_data[2] if not old_facebook_profile_data[2] is None else 0
     profile.extra_data = old_facebook_profile_data[10]
     profile.save()
 
