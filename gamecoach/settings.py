@@ -127,6 +127,51 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages"
 )
 
+LOGGING = {
+    'version': 1,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'logfile': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': env('LOGGING_MAIN_FILE'),
+            'formatter': 'verbose',
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'logfile'] if DEBUG else ['logfile'],
+            'propagate': True,
+            'level': 'DEBUG' if DEBUG else 'INFO',
+        },
+        'django.request': {
+            'handlers': ['console', 'logfile'] if DEBUG else ['logfile'],
+            'level': 'DEBUG' if DEBUG else 'ERROR',
+            'propagate': False,
+        },
+        'frontend': {
+            'handlers': ['console', 'logfile'] if DEBUG else ['logfile'],
+            'propagate': False,
+            'level': 'DEBUG' if DEBUG else 'INFO',
+        }
+    }
+}
+
 FACEBOOK_APP_ID = env('FACEBOOK_APP_ID')
 FACEBOOK_APP_SECRET = env('FACEBOOK_APP_SECRET')
 FACEBOOK_TEST_USER = env('FACEBOOK_TEST_USER')
