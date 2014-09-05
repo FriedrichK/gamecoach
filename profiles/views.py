@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadReque
 from django.views.decorators.csrf import csrf_exempt
 
 from profiles.tools.mentors import get_all_mentors, get_mentor_by_id, get_mentor_by_username
+from profiles.tools.profile_methods import get_profile_by_username
 from profiles.tools.signup_form import add_profile_for_user, update_profile_for_user, get_mentor_signup_form_from_request
 from profiles.models import ProfilePicture
 
@@ -42,12 +43,12 @@ def mentor_create_or_update(request, mentor_id):
 
 def mentor_create(request, mentor_signup_form):
     result = add_profile_for_user(request.user, mentor_signup_form)
-    return HttpResponse(json.dumps({'bla': 'bla'}))
+    return HttpResponse(json.dumps({'successs': True}))
 
 
 def mentor_update(request, mentor_id, mentor_signup_form):
     result = update_profile_for_user(request.user, mentor_signup_form)
-    return HttpResponse(json.dumps({'bla': 'blub'}))
+    return HttpResponse(json.dumps({'success': True}))
 
 
 def mentor_delete(request, mentor_id):
@@ -82,6 +83,18 @@ def profile_picture(request, user_id):
         return profile_picture_display(request, user_id)
     if request.method == "POST":
         return profile_picture_upload(request)
+
+
+@csrf_exempt
+def profile_username(request):
+    username = request.GET.get('profile_username', None)
+
+    no_username_message = json.dumps({'success': False, 'message': 'username %s does not exist' % username})
+    username_message = json.dumps({'success': True, 'message': 'username %s exists' % username})
+
+    if not username is None and not username == '' and not get_profile_by_username(username) is None:
+        return HttpResponse(username_message)
+    return HttpResponseNotFound(no_username_message)
 
 
 def profile_picture_display(request, username):

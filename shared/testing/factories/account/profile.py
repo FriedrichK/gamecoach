@@ -10,11 +10,11 @@ from profiles.models import GamecoachProfile
 from faker import Faker
 
 
-def create_mentor_profile(user, profile, is_mentor=True):
-    return create_profile(user, profile, GamecoachProfile, is_mentor)
+def create_mentor_profile(user, profile, is_mentor=True, values={}):
+    return create_profile(user, profile, GamecoachProfile, is_mentor, values=values)
 
 
-def create_profile(user, profile, Model, is_mentor=True):
+def create_profile(user, profile, Model, is_mentor=True, values={}):
     content = {
         'user': user,
         'username': user.username,
@@ -26,6 +26,9 @@ def create_profile(user, profile, Model, is_mentor=True):
         'updated': timezone.now(),
         'is_mentor': is_mentor
     }
+    for key, value in values.items():
+        if key in content:
+            content[key] = values[key]
     model = Model(**content)
     model.save()
     return model

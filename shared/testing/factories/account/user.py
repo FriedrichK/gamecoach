@@ -10,7 +10,7 @@ from faker import Faker
 TEST_PASSWORD = 'test'
 
 
-def create_user(is_superuser=False, is_staff=False, is_active=True):
+def create_user(is_superuser=False, is_staff=False, is_active=True, provider="facebook", values={}):
     seed = random.randint(0, 1000000000)
     fake = Faker()
     fake.seed(seed)
@@ -20,13 +20,13 @@ def create_user(is_superuser=False, is_staff=False, is_active=True):
     fake_name = '%s %s' % (fake_first_name, fake_last_name)
     fake_username = generate_fake_username(fake_name)
 
-    user = create_custom_user(fake_first_name, fake_last_name, fake_name, fake_username, is_superuser, is_staff, is_active)
-    social_account = create_social_account(fake, user, fake_name, fake_username)
+    user = create_custom_user(fake_first_name, fake_last_name, fake_name, fake_username, is_superuser, is_staff, is_active, values)
+    social_account = create_social_account(fake, user, fake_name, fake_username, provider, values)
 
     return user, social_account
 
 
-def create_custom_user(fake_first_name, fake_last_name, fake_name, fake_username, is_superuser, is_staff, is_active):
+def create_custom_user(fake_first_name, fake_last_name, fake_name, fake_username, is_superuser, is_staff, is_active, values):
     content = {
         'password': make_password(TEST_PASSWORD),
         'last_login': timezone.now(),
@@ -39,22 +39,27 @@ def create_custom_user(fake_first_name, fake_last_name, fake_name, fake_username
         'is_active': is_active,
         'date_joined': timezone.now(),
     }
+    for variable in values:
+        if variable in content:
+            content[variable] = values[variable]
     user = User(**content)
     user.save()
     return user
 
 
-def create_social_account(fake, user, fake_name, fake_username):
+def create_social_account(fake, user, fake_name, fake_username, provider, values):
     content = {
         'user': user,
         'last_login': timezone.now(),
         'date_joined': timezone.now(),
-        'provider': 'facebook',
+        'provider': provider,
         'uid': random.randint(0, 10000),
         'extra_data': generate_raw_data()
     }
     social_account, created = SocialAccount.objects.get_or_create(user=user)
     for key, value in content.items():
+        if key in values:
+            value = values[key]
         setattr(social_account, key, value)
     social_account.save()
     return social_account

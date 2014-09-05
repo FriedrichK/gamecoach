@@ -1,6 +1,14 @@
 /* global document, angular, $ */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
+gamecoachShared.factory('usernameValidationService', function($http) {
+    return {
+        validate: function(username) {
+            return $http({method: 'GET', url: '/someUrl', params: {username: username}});
+        }
+    };
+});
+
 gamecoachShared.factory('gCStringService', function() {
     return {
         decodeHtml: function(stringInput) {

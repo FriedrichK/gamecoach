@@ -11,7 +11,29 @@ editProfileApp.factory('profileService', function($http) {
             })
             .then(function(result) {
                 if(result.status === 200) {
+                    //window.location = '/profile/';
+                    console.log("PROFILE SUBMITTED");
+                } else {
+                    console.log("PROFILE ERROR", result);
+                }
+            });
+        }
+    };
+});
+
+editProfileApp.factory('profileUsernameService', function($http) {
+    return {
+        submit: function(data) {
+            return $http({
+                url: '/api/mentors/',
+                method: 'POST',
+                data: data
+            })
+            .then(function(result) {
+                if(result.status === 200) {
                     window.location = '/profile/';
+                } else {
+                    console.log("PROFILE ERROR", result);
                 }
             });
         }
@@ -34,6 +56,9 @@ editProfileApp.factory('profilePictureUploadService', function($http, $upload) {
                 } catch(err) {
                 }
                 console.log(data, status, headers, config);
+                if(status !== 200) {
+
+                }
             });
         }
     };

@@ -6,3 +6,11 @@
 
 .w-nav-link.drop-down-nav-link {
   cursor: pointer; }
+
+.main-column.login-screen.top {
+  padding: 0;
+  padding-top: 120px; }
+
+.main-column.login-screen.bottom {
+  padding: 0;
+  padding-bottom: 120px; }

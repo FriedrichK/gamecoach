@@ -6,6 +6,22 @@ mentorSignupApp.controller('MentorSignupController', function($scope, $element) 
 		allauth.facebook.login('', 'authenticate', 'login');
 		return false;
 	};
+	$scope.steamLogin = function() {
+		var url = "/accounts/openid/login/";
+		var steam_endpoint = "?openid=http://steamcommunity.com/openid";
+		var next = "&next=" + angular.element('input[type=hidden][name=next]').val();
+		var process = "";
+		if(angular.element().val() === "True") {
+			process = "&process=connect";
+		}
+
+		window.location = url + steam_endpoint + next + process;
+		try {
+			calq.action.track("Logging in to become a mentor", {});
+		} catch(err) {
+		}
+		return false;
+	};
 });
 
 mentorSignupApp.controller('TopHeroController', function($scope, $element, heroesService) {

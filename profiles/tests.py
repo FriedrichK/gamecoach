@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from profiles.models import GamecoachProfile
 from profiles.settings import ROLES, REGIONS_LABELS
 from profiles.tools.mentors import get_all_mentors
+from profiles.tools.profile_methods import get_profile_by_username
 
 
 class ToolsMentorsTestCase(TestCase):
@@ -123,6 +124,14 @@ class ToolsMentorsTestCase(TestCase):
         actual = get_all_mentors(filter_data)
 
         self.assertEqual(len(actual), 4)
+
+    def test_recognizes_username_already_exists(self):
+        result = get_profile_by_username('0_username')
+        self.assertEqual(result.user.username, '0')
+
+    def test_recognizes_username_does_not_exist(self):
+        result = get_profile_by_username('xxx')
+        self.assertEqual(result, None)
 
 
 def create_mock_profiles():

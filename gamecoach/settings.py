@@ -38,9 +38,11 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.openid',
     'south',
 
     'shared',
+    'gc_steam',
     'frontend',
     'profiles',
     'conversation',
@@ -154,3 +156,9 @@ SOCIALACCOUNT_PROVIDERS = {
         'METHOD': 'js_sdk'
     }
 }
+
+STEAM_API_ROOT = env('STEAM_API_ROOT')
+STEAM_API_KEY = env('STEAM_API_KEY')
+STEAM_OPENID_ENDPOINT = env('STEAM_OPENID_ENDPOINT')
+STEAM_TEST_UID = env('STEAM_TEST_UID')
+STEAM_TEST_PERSONANAME = env('STEAM_TEST_PERSONANAME')

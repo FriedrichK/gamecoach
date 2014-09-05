@@ -1,11 +1,19 @@
 from django.db.models import Q
 
 from profiles.settings import ROLES, REGIONS_LABELS, AVAILABILITY_LABELS
+from profiles.models import GamecoachProfile
 
 
 def get_profile_by_id(Model, res_id):
     try:
         return Model.objects.get(user__username=res_id)
+    except Model.DoesNotExist:
+        return None
+
+
+def get_profile_by_username(profile_username, Model=GamecoachProfile):
+    try:
+        return Model.objects.get(username=profile_username)
     except Model.DoesNotExist:
         return None
 

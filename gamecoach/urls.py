@@ -13,6 +13,8 @@ urlpatterns = patterns(
 
     (r'^accounts/', include('allauth.urls')),
 
+    url(r'^steam/', include('gc_steam.urls')),
+
     url(r'^api/mentor', include('profiles.urls_api')),
     url(r'^data/mentor', include('profiles.urls_data')),
 
