@@ -107,6 +107,23 @@ def update_gamecoach_profile_from_steam(user, steam_data):
         profile = user.gamecoachprofile
     else:
         profile = GamecoachProfile(user=user)
-    profile.username = user.username
-    profile.save()
+    try:
+        with transaction.atomic():
+            profile.username = user.username
+            profile.save()
+    except IntegrityError:
+        profiles = GamecoachProfile.objects.filter(username__startswith=user.username)
+        usernames = [p.username for p in profiles]
+        viable_username = get_viable_username(user.username, usernames)
+        profile.username = viable_username
+        profile.save()
     return user
+
+
+def get_viable_username(username, taken_usernames):
+    index = 1
+    uname = username
+    while uname in taken_usernames:
+        uname = username + unicode(index)
+        index += 1
+    return uname

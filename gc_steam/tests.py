@@ -79,3 +79,21 @@ class ToolsTestCase(TestCase):
 
         self.assertEquals(user.username, "%s1" % MOCK_STEAM_USERNAME)
         self.assertEquals(user.gamecoachprofile.username, "%s1" % MOCK_STEAM_USERNAME)
+
+    def test_modifies_username_for_main_user_table_if_given_username_is_taken_only_in_profile(self):
+        account1 = create_account(provider='openid', user_values={'username': 'some_user', 'first_name': '', 'last_name': '', 'email': ''})
+        account1['user'].gamecoachprofile.username = 'Robin'
+        account1['user'].gamecoachprofile.save()
+
+        account2 = create_account(provider='openid', user_values={'username': 'user', 'first_name': '', 'last_name': '', 'email': ''})
+        user = account2['user']
+
+        # Delete Gamecoach profile, we do not have it at this point
+        user.gamecoachprofile.delete()
+        user = User.objects.get(id=user.id)
+
+        user = update_user_data_from_steam(user, MOCK_STEAM_PROFILE)
+        user = User.objects.get(id=user.id)
+
+        self.assertEquals(user.username, "Robin")
+        self.assertEquals(user.gamecoachprofile.username, "%s1" % MOCK_STEAM_USERNAME)
