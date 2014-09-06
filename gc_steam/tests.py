@@ -5,8 +5,11 @@ from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import User
 
+from mock import patch, MagicMock
+
 from shared.testing.factories.account import create_account
-from gc_steam.tools import get_steam_id_from_uid, query_steam_api_to_get_player_summary, update_user_data_from_steam
+from gc_steam.tools import get_steam_id_from_uid, query_steam_api_to_get_player_summary, update_user_data_from_steam, SteamApiError, SteamApiInternalError, SteamApiNotFoundError
+from gc_steam.signals import on_steam_user_logged_in
 
 MOCK_ENDPOINT = "http://this.is.not.a.real/openid"
 MOCK_STEAM_ID = "12345"
@@ -97,3 +100,30 @@ class ToolsTestCase(TestCase):
 
         self.assertEquals(user.username, "Robin")
         self.assertEquals(user.gamecoachprofile.username, "%s1" % MOCK_STEAM_USERNAME)
+
+    @patch('gc_steam.signals.query_steam_api_to_get_player_summary')
+    def test_generates_random_username_and_empty_profile_if_connection_to_steam_fails(self, query_steam_api_to_get_player_summary_mock):
+        query_steam_api_to_get_player_summary_mock.side_effect = SteamApiInternalError
+        request_mock = MagicMock()
+
+        account1 = create_account(provider='openid', user_values={'username': 'Robin', 'first_name': '', 'last_name': '', 'email': ''})
+        account1['user'].gamecoachprofile.username = 'Robin'
+        account1['user'].gamecoachprofile.save()
+
+        account2 = create_account(provider='openid', user_values={'username': 'user1', 'first_name': '', 'last_name': '', 'email': ''})
+        account2['user'].gamecoachprofile.username = 'user1'
+        account2['user'].gamecoachprofile.save()
+
+        account3 = create_account(provider='openid', user_values={'username': 'user', 'first_name': '', 'last_name': '', 'email': ''})
+        user = account3['user']
+        request_mock.user = user
+
+        # Delete Gamecoach profile, we do not have it at this point
+        user.gamecoachprofile.delete()
+        user = User.objects.get(id=user.id)
+
+        on_steam_user_logged_in(None, user, request_mock)
+        user = User.objects.get(id=user.id)
+
+        self.assertEquals(user.username, "user11")
+        self.assertEquals(user.gamecoachprofile.username, "user11")
