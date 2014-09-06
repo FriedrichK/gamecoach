@@ -77,7 +77,7 @@ class SteamApiNotFoundError(SteamApiError):
 
 def update_user_data_from_steam(user, steam_data):
     user = update_main_user_entry_from_steam(user, steam_data)
-    user = update_gamecoach_profile_from_steam(user, steam_data)
+    #user = update_gamecoach_profile_from_steam(user, steam_data)
     return user
 
 
