@@ -157,7 +157,7 @@ LOGGING = {
         'django': {
             'handlers': ['console', 'logfile'] if DEBUG else ['logfile'],
             'propagate': True,
-            'level': 'DEBUG' if DEBUG else 'INFO',
+            'level': 'DEBUG' if DEBUG else 'ERROR',
         },
         'django.request': {
             'handlers': ['console', 'logfile'] if DEBUG else ['logfile'],
@@ -167,7 +167,7 @@ LOGGING = {
         'frontend': {
             'handlers': ['console', 'logfile'] if DEBUG else ['logfile'],
             'propagate': False,
-            'level': 'DEBUG' if DEBUG else 'INFO',
+            'level': 'DEBUG' if DEBUG else 'ERROR',
         }
     }
 }
