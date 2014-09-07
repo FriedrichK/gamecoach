@@ -1,10 +1,18 @@
+from django.db import connection
+
 from south.v2 import SchemaMigration
 from south.db import db
+
+DJANGO_FACEBOOK_USER_TABLE = 'django_facebook_facebookcustomuser'
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        cursor = connection.cursor()
+        if not old_user_table_exists(cursor):
+            return
+
         db.alter_column(u'profiles_profilepicture', 'user_id', self.gf('django.db.models.fields.IntegerField')(unique=False, blank=True, null=True))
         db.alter_column(u'profiles_gamecoachprofile', 'user_id', self.gf('django.db.models.fields.IntegerField')(unique=False, blank=True, null=True))
         db.alter_column(u'postman_message', 'sender_id', self.gf('django.db.models.fields.IntegerField')(unique=False, blank=True, null=True))
@@ -146,3 +154,8 @@ class Migration(SchemaMigration):
         pass
 
     complete_apps = ['shared']
+
+
+def old_user_table_exists(cursor):
+    table_names = connection.introspection.get_table_list(cursor)
+    return DJANGO_FACEBOOK_USER_TABLE in table_names
