@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+POSTGRES_USER=postgres
+
+# Drop database
+dropdb --no-password --user $POSTGRES_USER gamecoach
+
+# Create empty database
+createdb --no-password --user $POSTGRES_USER gamecoach
+
+# Restore migrations
+venv/bin/python manage.py syncdb --noinput
+venv/bin/python manage.py migrate allauth.socialaccount
+venv/bin/python manage.py migrate allauth.socialaccount.providers.facebook
+venv/bin/python manage.py migrate allauth.socialaccount.providers.openid
+venv/bin/python manage.py migrate shared
+venv/bin/python manage.py migrate profiles
