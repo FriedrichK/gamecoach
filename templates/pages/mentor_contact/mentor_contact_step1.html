@@ -11,11 +11,10 @@
 		<input type="hidden" value="/mentor/{{user_id}}/contact" name="next" />
 		<div class="w-container main-column login-screen top" ng-controller="UserSignupController">
     		<div class="text title large login">To contact mentor, please login or sign up.</div>
-    		<a class="sign-up-button login" ng-click="facebookLogin()">login with facebook</a>
-    		<a class="sign-up-button signup" ng-click="facebookLogin()">sign up with facebook</a>
+    		<a class="sign-up-button login" ng-click="facebookLogin()">sign in with facebook</a>
   		</div>
 	</form>
-	<div class="w-container main-column login-screen bottom" ng-controller="UserSignupController" ng-click="steamLogin()"><a class="sign-up-button login" href="#">Login with Steam</a></div>
+	<div class="w-container main-column login-screen bottom" ng-controller="UserSignupController" ng-click="steamLogin()"><a class="sign-up-button login" href="#">sign in with Steam</a></div>
 {% endblock %}
 
 {% block scripts_pre %}
@@ -24,6 +23,7 @@
 
 {% block scripts %}
 	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/angular-route.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/mentor_contact.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>

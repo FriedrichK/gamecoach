@@ -556,7 +556,7 @@ gamecoachShared.factory('heroesService', function() {
     }
   };
 });
-/* global angular */
+/* global angular, window */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('timeService', function($filter) {
@@ -584,4 +584,15 @@ gamecoachShared.factory('timeService', function($filter) {
 			return new Date(d.year, d.month - 1, d.day, d.hour, d.minute, d.second, 0);
 		}
 	};
+});
+
+gamecoachShared.factory('redirectLinkService', function($location) {
+  return {
+	getRedirectUrl: function() {
+		return $location.search().next;
+	},
+	redirect: function(link) {
+		window.location = link;
+	}
+  };
 });

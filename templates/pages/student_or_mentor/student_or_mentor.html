@@ -1,0 +1,23 @@
+{% extends "pages/shared/page.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+ <link rel="stylesheet" type="text/css" href="{% static "css/student_or_mentor.css" %}">
+{% endblock %}
+
+{% block body_tag %}ng-app="studentOrMentorApp" ng-controller="studentOrMentorController"{% endblock %}
+
+{% block content %}
+  <div class="w-container main-column login-screen">
+    <div class="text title large login">It appears you DON'T have an account yet. You can:&nbsp;</div>
+    <a id="student-signup" class="sign-up-button signup backup-signup" ng-click="continueAsStudent()" href="#">sign up as a student</a>
+    <a id="mentor-signup" class="sign-up-button signup backup-signup" ng-click="continueAsMentor()" href="#">sign up as a mentor</a>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{% static "js/angular-route.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}"></script> 
+	<script type="text/javascript" src="{% static "js/student_or_mentor.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+{% endblock %}

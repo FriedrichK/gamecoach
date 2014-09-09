@@ -31,6 +31,7 @@ module.exports = function(config) {
 
       'static/dev_js/mentor_contact/_app.js',
       'static/dev_js/mentor_contact/controllers.js',
+      'static/dev_js/mentor_contact/services.js',
 
       'static/dev_js/conversation/_app.js',
       'static/dev_js/conversation/services.js',

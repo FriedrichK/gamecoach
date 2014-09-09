@@ -9,7 +9,8 @@ var loginApp = angular.module('loginApp', ['ngRoute', 'gamecoachShared', 'gameco
 var loginApp = angular.module('loginApp'); 
 loginApp.controller('LoginController', function($scope, $element) {
 	$scope.facebookLogin = function() {
-		allauth.facebook.login('', 'authenticate', 'login');
+		var nextUrl = "/login/redirect/?next=" + encodeURIComponent(angular.element('input[type=hidden][name=next]').val());
+		allauth.facebook.login(nextUrl, 'authenticate', 'login');
 		try {
 			calq.action.track("Logging in", {});
 		} catch(err) {
@@ -19,7 +20,7 @@ loginApp.controller('LoginController', function($scope, $element) {
 	$scope.steamLogin = function() {
 		var url = "/accounts/openid/login/";
 		var steam_endpoint = "?openid=http://steamcommunity.com/openid";
-		var next = "&next=" + angular.element('input[type=hidden][name=next]').val();
+		var next = "&next=" + encodeURIComponent("/login/redirect/?next=" + encodeURIComponent(angular.element('input[type=hidden][name=next]').val()));
 		var process = "";
 		if(angular.element().val() === "True") {
 			process = "&process=connect";
@@ -35,9 +36,9 @@ loginApp.controller('LoginController', function($scope, $element) {
 });
 
 loginApp.controller('RedirectLinkController', function($scope, $element, redirectLinkService) {
-	$scope.redirectLink = "/";
+	$scope.redirectLink = "/login/redirect/?next=/";
 	angular.element($element).ready(function() {
-		$scope.redirectLink = redirectLinkService.getRedirectUrl();
+		$scope.redirectLink = "/login/redirect/?next=" + redirectLinkService.getRedirectUrl();
 	});
 });
 /* global angular */

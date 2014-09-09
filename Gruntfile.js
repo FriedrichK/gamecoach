@@ -20,6 +20,10 @@ module.exports = function(grunt) {
         src: ['static/dev_js/login/**/*.js', '!static/dev_js/login/**/*.test.js'],
         dest: 'static/js/login.js'
       },
+      student_or_mentor: {
+        src: ['static/dev_js/student_or_mentor/**/*.js', '!static/dev_js/student_or_mentor/**/*.test.js'],
+        dest: 'static/js/student_or_mentor.js'
+      },
       settings: {
         src: ['static/dev_js/settings/**/*.js', '!static/dev_js/settings/**/*.test.js', '!static/dev_js/settings/**/*.test.js'],
         dest: 'static/js/settings.js'
@@ -69,6 +73,10 @@ module.exports = function(grunt) {
       login: {
         src: 'static/js/login.js',
         dest: 'static/js/login.min.js'
+      },
+      student_or_mentor: {
+        src: 'static/js/student_or_mentor.js',
+        dest: 'static/js/student_or_mentor.min.js'
       },
       settings: {
         src: 'static/js/settings.js',
@@ -131,6 +139,7 @@ module.exports = function(grunt) {
           'static/dev_css/navigation.css': 'static/dev_scss/navigation/navigation.scss',
           'static/dev_css/generic.css': 'static/dev_scss/generic/generic.scss',
           'static/dev_css/login.css': 'static/dev_scss/login/login.scss',
+          'static/dev_css/student_or_mentor.css': 'static/dev_scss/student_or_mentor/student_or_mentor.scss',
           'static/dev_css/settings.css': 'static/dev_scss/settings/settings.scss',
           'static/dev_css/index.css': 'static/dev_scss/index/index.scss',
           'static/dev_css/mentor_results.css': 'static/dev_scss/mentor_results/mentor_results.scss',
@@ -149,6 +158,7 @@ module.exports = function(grunt) {
           'static/css/navigation.css': 'static/dev_css/navigation.css',
           'static/css/generic.css': 'static/dev_css/generic.css',
           'static/css/login.css': 'static/dev_css/login.css',
+          'static/css/student_or_mentor.css': 'static/dev_css/student_or_mentor.css',
           'static/css/settings.css': 'static/dev_css/settings.css',
           'static/css/index.css': 'static/dev_css/index.css',
           'static/css/mentor_results.css': 'static/dev_css/mentor_results.css',

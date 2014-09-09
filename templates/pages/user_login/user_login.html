@@ -10,9 +10,9 @@
 	<form id="facebook-login-form" action="/facebook/connect/?facebook_login=1" method="post">
 		{% csrf_token %}
 		<input type="hidden" value="{% templatetag openvariable %}redirectLink{% templatetag closevariable %}" name="next" ng-controller="RedirectLinkController" />
-		<div class="w-container main-column login-screen top" ng-controller="LoginController" ng-click="facebookLogin()"><a class="sign-up-button login" href="#">Login with facebook</a></div>
+		<div class="w-container main-column login-screen top" ng-controller="LoginController" ng-click="facebookLogin()"><a class="sign-up-button login" href="#">Sign in with facebook</a></div>
 	</form>
-	<div class="w-container main-column login-screen bottom" ng-controller="LoginController" ng-click="steamLogin()"><a class="sign-up-button login" href="#">Login with Steam</a></div>
+	<div class="w-container main-column login-screen bottom" ng-controller="LoginController" ng-click="steamLogin()"><a class="sign-up-button login" href="#">Sign in with Steam</a></div>
 {% endblock %}
 
 {% block scripts_pre %}

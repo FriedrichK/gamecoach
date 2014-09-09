@@ -1,5 +1,5 @@
 /* global angular */
-var mentorContactApp = angular.module('mentorContactApp', ['angularFileUpload', 'gamecoachShared', 'gamecoachNavigation'])
+var mentorContactApp = angular.module('mentorContactApp', ['ngRoute', 'angularFileUpload', 'gamecoachShared', 'gamecoachNavigation'])
 	.config(['$locationProvider', function($locationProvider) {
         $locationProvider.html5Mode(true);
 	}]);
@@ -48,6 +48,7 @@ mentorContactApp.controller('UserProfileController', function($scope, userProfil
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
+		formIsValid = true;
 		if(formIsValid) {
 			userProfileService.submit($scope.user);
 		}
@@ -64,7 +65,7 @@ mentorContactApp.controller('ProfilePictureController', function($scope, $upload
 /* global angular, window, calq */
 var mentorContactApp = angular.module('mentorContactApp');
 
-mentorContactApp.factory('userProfileService', function($http) {
+mentorContactApp.factory('userProfileService', function($http, redirectLinkService) {
     return {
         submit: function(data, mentor) {
             return $http({
@@ -78,7 +79,12 @@ mentorContactApp.factory('userProfileService', function($http) {
                         calq.action.track("Signed up as student", {});
                     } catch(err) {
                     }
-                    window.location = window.location;
+                    var next = redirectLinkService.getRedirectUrl();
+                    if(next) {
+                        redirectLinkService.redirect(next);
+                    } else {
+                        window.location = window.location;
+                    }
                 }
             });
         }

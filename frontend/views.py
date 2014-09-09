@@ -3,6 +3,7 @@ from operator import itemgetter
 
 from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from profiles.tools.auth import user_is_available
@@ -32,6 +33,18 @@ def login(request):
         'locale': settings.LANGUAGE_CODE
     }
     return render(request, 'pages/user_login/user_login.html', dict(context.items() + data.items()))
+
+
+def login_redirect(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('login'))
+
+    context = get_basic_context(request)
+    if not has_profile(request.user):
+        return render(request, 'pages/student_or_mentor/student_or_mentor.html', context)
+    else:
+        next = request.GET.get('next', '/')
+        return HttpResponseRedirect(next)
 
 
 def edit_settings(request):
@@ -101,6 +114,30 @@ def register_mentor(request):
         return render(request, 'pages/mentor_switch/mentor_switch.html', context)
 
     return HttpResponseRedirect('/')
+
+
+def register_student(request):
+    if not request.user.is_authenticated():
+        login_url = reverse('login')
+        if not next is None:
+            login_url += '?next=%s' % next
+        return HttpResponseRedirect(login_url)
+
+    next = request.GET.get('next', None)
+
+    if has_profile(request.user):
+        next_url = next if not next is None else '/'
+        HttpResponseRedirect(next_url)
+
+    context = get_basic_context(request)
+    data = {
+        'facebook_app_id': settings.FACEBOOK_APP_ID,
+        'locale': settings.LANGUAGE_CODE,
+        'mentor_id': request.user.username
+    }
+
+    context['page_name'] = 'mentor_contact_profile'
+    return render(request, 'pages/mentor_contact/mentor_contact_step2.html', dict(context.items() + data.items()))
 
 
 def mentor_contact(request, user_id):
