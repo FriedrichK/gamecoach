@@ -79,6 +79,8 @@ def clean_win_rate(input):
     if input is None:
         return None
     r = WIN_RATE_REGEX_PATTERN.search(input)
+    if r is None:
+        return None
     groups = r.groups()
     if len(groups) < 1:
         return None
