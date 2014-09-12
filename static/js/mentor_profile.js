@@ -338,10 +338,10 @@ mentorProfileApp.factory('profileLabelService', function() {
       },
       mentoring: {
         'individual': 'individual mentoring',
-        'team': 'team monitoring',
+        'team': 'team mentoring',
         'spectating': 'mentoring while spectating',
         'together': 'mentoring while playing together',
-        'analysing': 'anaylsing replies',
+        'analysing': 'analysing replies',
         'questions': 'general questions & answers',
         'voicechat': 'voice chat',
         'textchat': 'text chat'
