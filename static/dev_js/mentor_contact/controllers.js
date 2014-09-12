@@ -43,7 +43,6 @@ mentorContactApp.controller('UserProfileController', function($scope, userProfil
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
-		formIsValid = true;
 		if(formIsValid) {
 			userProfileService.submit($scope.user);
 		}

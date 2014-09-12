@@ -1,7 +1,7 @@
-/* global angular, window, calq */
+/* global angular, window, calq, alert */
 var mentorSignupApp = angular.module('mentorSignupApp');
 
-mentorSignupApp.factory('mentorProfileService', function($http, redirectLinkService) {
+mentorSignupApp.factory('mentorProfileService', function($http, redirectLinkService, notificationService) {
     return {
         submit: function(data) {
             return $http({
@@ -9,8 +9,8 @@ mentorSignupApp.factory('mentorProfileService', function($http, redirectLinkServ
                 method: 'POST',
                 data: data
             })
-            .then(function(result) {
-                if(result.status === 200) {
+            .success(function(data, status, headers, config) {
+                if(status === 200) {
                     try {
                         calq.action.track("Signed up as mentor", {});
                     } catch(err) {
@@ -22,12 +22,15 @@ mentorSignupApp.factory('mentorProfileService', function($http, redirectLinkServ
                         window.location = window.location;
                     }
                 }
+            })
+            .error(function(result) {
+                notificationService.notifyError("There has been an error submitting your profile");
             });
         }
     };
 });
 
-mentorSignupApp.factory('profilePictureUploadService', function($http, $upload) {
+mentorSignupApp.factory('profilePictureUploadService', function($http, $upload, notificationService) {
     return {
         upload: function(file) {
             $upload.upload({
@@ -35,14 +38,19 @@ mentorSignupApp.factory('profilePictureUploadService', function($http, $upload) 
                 file: file,
             })
             .progress(function(evt) {
-                console.log(evt);
             })
             .success(function(data, status, headers, config) {
                 try {
                     calq.action.track("Uploaded profile picture", {});
                 } catch(err) {
                 }
-                console.log(data, status, headers, config);
+            })
+            .error(function(data, status, headers, config) {
+                try {
+                    calq.action.track("Error uploading profile picture", {});
+                } catch(err) {
+                }
+                notificationService.notifyError("There has been an error submitting your profile picture");
             });
         }
     };

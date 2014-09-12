@@ -11,6 +11,9 @@ from django.conf import settings
 from django.test import LiveServerTestCase, RequestFactory
 from django.shortcuts import render
 from django.contrib.auth.models import AnonymousUser
+from django.http import HttpResponseServerError
+
+from mock import patch
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium import webdriver
@@ -77,6 +80,17 @@ class RegisterAsMentorTestCase(GamecoachLiveServerTestCase):
             expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type=hidden][id=page_name][value=results]"))
         )
 
+    @skip("Fails because the keyup events seems to not be triggered by Selenium's sendkey")
+    def test_should_show_error_notification_when_username_is_taken(self):
+        account = create_account()
+        # Ensure profile username entered later on is already taken
+        account['profiles']['mentor'].username = selenium_test_helper.MOCK_USERNAME
+        account['profiles']['mentor'].save()
+
+        user, profile = create_user()
+        self._go_to_mentor_signup_page(user)
+        fill_in_profile_form(self.selenium)
+
     def _go_to_mentor_or_student_choice_page(self, user):
         get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_STUDENT_MENTOR_CHOICE + "?next=/results"), user=user)
 
@@ -91,7 +105,34 @@ class RegisterAsMentorTestCase(GamecoachLiveServerTestCase):
         home_button.click()
 
 
-class RegisterStudentTestCase(GamecoachLiveServerTestCase):
+class RegisterAsMentorTestCasePatched(GamecoachLiveServerTestCase):
+    @patch('profiles.views.mentor')
+    def test_should_produce_an_error_message_as_submitting_the_form_fails(self, mentor_view_mock):
+        mentor_view_mock.return_value = HttpResponseServerError("mock server error")
+        mentor_view_mock.side_effect = Exception('test')
+
+        user, profile = create_user()
+        self._go_to_mentor_signup_page(user)
+        self._fill_in_and_submit_profile_form()
+
+        css_selector = 'div.errortext'
+        element = WebDriverWait(self.selenium, 3).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+        element = self.selenium.find_element_by_css_selector(css_selector)
+        self.assertEqual(element.text, 'THERE HAS BEEN AN ERROR SUBMITTING YOUR PROFILE')
+
+    def _go_to_mentor_signup_page(self, user):
+        get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_MENTOR_REGISTRATION), user=user)
+
+    def _fill_in_and_submit_profile_form(self):
+        fill_in_profile_form(self.selenium)
+
+        home_button = self.selenium.find_element_by_css_selector('.w-button.sign-up-button')
+        home_button.click()
+
+
+class RegisterAsStudentTestCase(GamecoachLiveServerTestCase):
     def test_should_redirect_to_form_correctly_and_forward_to_expected_page_after_form_completion(self):
         user, profile = create_user()
         self._go_to_mentor_or_student_choice_page(user)
@@ -101,6 +142,38 @@ class RegisterStudentTestCase(GamecoachLiveServerTestCase):
         element = WebDriverWait(self.selenium, 3).until(
             expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type=hidden][id=page_name][value=results]"))
         )
+
+    def _go_to_mentor_or_student_choice_page(self, user):
+        get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_STUDENT_MENTOR_CHOICE + "?next=/results"), user=user)
+
+    def _click_student_button(self):
+        submit_button = self.selenium.find_element_by_css_selector('a[id="student-signup"]')
+        submit_button.click()
+
+    def _fill_in_and_submit_profile_form(self):
+        fill_in_profile_form(self.selenium)
+
+        home_button = self.selenium.find_element_by_css_selector('.w-button.sign-up-button')
+        home_button.click()
+
+
+class RegisterAsStudentTestCasePatched(GamecoachLiveServerTestCase):
+    @patch('profiles.views.mentor')
+    def test_should_produce_an_error_message_as_submitting_the_form_fails(self, mentor_view_mock):
+        mentor_view_mock.return_value = HttpResponseServerError("mock server error")
+        mentor_view_mock.side_effect = Exception('test')
+
+        user, profile = create_user()
+        self._go_to_mentor_or_student_choice_page(user)
+        self._click_student_button()
+        self._fill_in_and_submit_profile_form()
+
+        css_selector = 'div.errortext'
+        element = WebDriverWait(self.selenium, 3).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+        element = self.selenium.find_element_by_css_selector(css_selector)
+        self.assertEqual(element.text, 'THERE HAS BEEN AN ERROR SUBMITTING YOUR PROFILE')
 
     def _go_to_mentor_or_student_choice_page(self, user):
         get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, URL_FOR_STUDENT_MENTOR_CHOICE + "?next=/results"), user=user)
@@ -168,6 +241,40 @@ class ContactMentorTestCase(LiveServerTestCase):
         element = WebDriverWait(self.selenium, 3).until(
             expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type=hidden][id=page_name][value=conversation]"))
         )
+
+    def _go_to_mentor_profile_page(self, mentor_account, user):
+        get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, '/mentor/%s' % mentor_account['user'].username), user=user)
+
+    def _click_contact_mentor(self, mentor_account, user):
+        home_button = self.selenium.find_element_by_css_selector('.contact-mentor-button')
+        home_button.click()
+
+    def _fill_in_and_submit_profile_form(self):
+        fill_in_profile_form(self.selenium)
+
+        home_button = self.selenium.find_element_by_css_selector('.w-button.sign-up-button')
+        home_button.click()
+
+
+class ContactMentorClassTestCasePatched(GamecoachLiveServerTestCase):
+    @patch('profiles.views.mentor')
+    def test_should_produce_an_error_message_as_submitting_the_form_fails(self, mentor_view_mock):
+        mentor_view_mock.return_value = HttpResponseServerError("mock server error")
+        mentor_view_mock.side_effect = Exception('test')
+
+        mentor_account = create_account()
+
+        user, profile = create_user()
+        self._go_to_mentor_profile_page(mentor_account, user)
+        self._click_contact_mentor(mentor_account, user)
+        self._fill_in_and_submit_profile_form()
+
+        css_selector = 'div.errortext'
+        element = WebDriverWait(self.selenium, 3).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+        element = self.selenium.find_element_by_css_selector(css_selector)
+        self.assertEqual(element.text, 'THERE HAS BEEN AN ERROR SUBMITTING YOUR PROFILE')
 
     def _go_to_mentor_profile_page(self, mentor_account, user):
         get_as_user(self.selenium, self.live_server_url, '%s%s' % (self.live_server_url, '/mentor/%s' % mentor_account['user'].username), user=user)

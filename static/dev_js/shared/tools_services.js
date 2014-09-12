@@ -1,4 +1,4 @@
-/* global angular, window */
+/* global angular, window, alert */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('timeService', function($filter) {

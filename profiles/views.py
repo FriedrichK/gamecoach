@@ -87,7 +87,7 @@ def profile_picture(request, user_id):
 
 @csrf_exempt
 def profile_username(request):
-    username = request.GET.get('profile_username', None)
+    username = request.GET.get('value', None)
 
     no_username_message = json.dumps({'success': False, 'message': 'username %s does not exist' % username})
     username_message = json.dumps({'success': True, 'message': 'username %s exists' % username})

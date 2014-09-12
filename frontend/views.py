@@ -254,13 +254,13 @@ def terms(request):
 def page404(request):
     context = get_basic_context(request)
     context['page_name'] = 'error_page_404'
-    return render(request, '404.html', context)
+    return render(request, '404.html', context, status=404)
 
 
 def page500(request):
     context = get_basic_context(request)
     context['page_name'] = 'error_page_500'
-    return render(request, '500.html', context)
+    return render(request, '500.html', context, status=500)
 
 
 def get_basic_context(request):

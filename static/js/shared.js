@@ -5,21 +5,42 @@ var gamecoachShared = angular.module('gamecoachShared', []);
 /*jshint evil:false */
 
 var gamecoachShared = angular.module('gamecoachShared');
-gamecoachShared.directive('gcRemoteValidate', function(usernameValidationService) {
+gamecoachShared.directive('gcRemoteValidate', function(usernameValidationService, notificationService) {
     var directiveId = "gcRemoteValidate";
     return {
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, el, attrs, ngModel) {
-            el.bind("keydown", function (event) {
-                console.log("keydown");
-                var validationPromise = usernameValidationService.validate(attrs['value']);
-                validationPromise.success = function(data, status, headers, config) {
-                    console.log("ALRIGHT!", data, status, headers, config);
-                };
-                validationPromise.error = function(data, status, headers, config) {
-                    console.log("FAIL!", data, status, headers, config);
-                };
+            el.bind("keyup", function (event) {
+                var url = attrs['gcRemoteValidate'];
+                var params = {value: el.val()};
+                var validationPromise = usernameValidationService.validate(url, params);
+                validationPromise.then(
+                    function(response) {
+                        if(response.status === 200) {
+                            notificationService.notifyError(attrs['gcRemoteValidateErrorMessage']);
+                        }
+                    },
+                    function(response) {
+                        if(response.status === 404) {
+                            notificationService.hide();
+                        }
+                    },
+                    function(response) {
+                    }
+                );
+            });
+        }
+    };
+});
+
+gamecoachShared.directive('gcCloseOnClick', function() {
+    var directiveId = "gcCloseOnClick";
+    return {
+        restrict: 'A',
+        link: function(scope, el, attrs) {
+            el.bind("click", function(event) {
+                el.addClass('ng-hide');
             });
         }
     };
@@ -421,8 +442,8 @@ gamecoachShared.factory('profileLabelService', function() {
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('usernameValidationService', function($http) {
     return {
-        validate: function(username) {
-            return $http({method: 'GET', url: '/someUrl', params: {username: username}});
+        validate: function(url, params) {
+            return $http({method: 'GET', url: url, params: params});
         }
     };
 });
@@ -431,6 +452,30 @@ gamecoachShared.factory('gCStringService', function() {
     return {
         decodeHtml: function(stringInput) {
             return $('<div/>').html(stringInput).text(); 
+        }
+    };
+});
+
+gamecoachShared.factory('notificationService', function() {
+    var getErrorNotificationElement = function() {
+        return angular.element('.errornotification');
+    };
+    var getErrorTextElement = function() {
+        return getErrorNotificationElement().find('.errortext');
+    };
+    var changeMessage = function(message) {
+        getErrorTextElement().html(message);
+    };
+    var showNotification = function() {
+        getErrorNotificationElement().removeClass('ng-hide');
+    };
+    return {
+        notifyError: function(message) {
+            changeMessage(message);
+            showNotification();
+        },
+        hide: function() {
+            getErrorNotificationElement().addClass('ng-hide');
         }
     };
 });
@@ -556,7 +601,7 @@ gamecoachShared.factory('heroesService', function() {
     }
   };
 });
-/* global angular, window */
+/* global angular, window, alert */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('timeService', function($filter) {

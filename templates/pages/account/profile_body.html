@@ -11,7 +11,7 @@
               <label class="text title regular" for="name">Display name*</label>
             </div>
             <div class="w-col w-col-8">
-              <input class="w-input text form" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name" required="required" value="{{profile.name}}" ng-model="profile.displayName">
+              <input class="w-input text form" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name" required="required" value="{{profile.name}}" ng-model="profile.displayName" gc-remote-validate="/api/mentor/profileUsername/" gc-remote-validate-error-message="username already taken">
             </div>
           </div>
           <div class="w-row form-question">
@@ -270,7 +270,7 @@
     </div>
   </div>
   <div>
-  <div class="errornotification ng-hide">
+  <div class="errornotification ng-hide" gc-close-on-click>
     <div class="w-container">
       <div class="errortext"></div>
     </div>

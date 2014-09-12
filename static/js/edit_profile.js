@@ -36,7 +36,7 @@ editProfileApp.controller('ProfilePictureController', function($scope, $upload, 
 /* global angular, window, calq */
 var editProfileApp = angular.module('editProfileApp');
 
-editProfileApp.factory('profileService', function($http) {
+editProfileApp.factory('profileService', function($http, notificationService) {
     return {
         submit: function(data) {
             return $http({
@@ -45,18 +45,15 @@ editProfileApp.factory('profileService', function($http) {
                 data: data
             })
             .then(function(result) {
-                if(result.status === 200) {
-                    //window.location = '/profile/';
-                    console.log("PROFILE SUBMITTED");
-                } else {
-                    console.log("PROFILE ERROR", result);
+                if(result.status !== 200) {
+                    notificationService.notifyError("There has been an error submitting your profile");
                 }
             });
         }
     };
 });
 
-editProfileApp.factory('profileUsernameService', function($http) {
+editProfileApp.factory('profileUsernameService', function($http, notificationService) {
     return {
         submit: function(data) {
             return $http({
@@ -68,14 +65,14 @@ editProfileApp.factory('profileUsernameService', function($http) {
                 if(result.status === 200) {
                     window.location = '/profile/';
                 } else {
-                    console.log("PROFILE ERROR", result);
+                    notificationService.notifyError("There has been an error submitting your profile");
                 }
             });
         }
     };
 });
 
-editProfileApp.factory('profilePictureUploadService', function($http, $upload) {
+editProfileApp.factory('profilePictureUploadService', function($http, $upload, notificationService) {
     return {
         upload: function(file) {
             $upload.upload({
@@ -83,17 +80,19 @@ editProfileApp.factory('profilePictureUploadService', function($http, $upload) {
                 file: file,
             })
             .progress(function(evt) {
-                console.log(evt);
             })
             .success(function(data, status, headers, config) {
                 try {
                     calq.action.track("Uploaded profile picture", {});
                 } catch(err) {
                 }
-                console.log(data, status, headers, config);
-                if(status !== 200) {
-
+            })
+            .error(function(data, status, headers, config) {
+                try {
+                    calq.action.track("Error uploading profile picture", {});
+                } catch(err) {
                 }
+                notificationService.notifyError("There has been an error submitting your profile picture");
             });
         }
     };

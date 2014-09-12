@@ -7,6 +7,8 @@ from selenium.webdriver.support.ui import Select
 from shared.testing.factories.account.user import create_user
 
 MOCK_EMAIL_VALUE = 'test@test.com'
+MOCK_USERNAME = 'Some Name'
+MOCK_STEAM_ID = '12345'
 
 
 def fill_textfield(selenium, selector, content):
@@ -50,9 +52,9 @@ def get_as_user(selenium, live_server_url, url, user=None):
 
 
 def fill_in_profile_form(selenium, has_terms_and_conditions=True):
-    fill_textfield(selenium, 'input[name=name]', 'Some Name')
+    fill_textfield(selenium, 'input[name=name]', MOCK_USERNAME)
 
-    fill_textfield(selenium, 'input[name="name-2"]', '12345')
+    fill_textfield(selenium, 'input[name="name-2"]', MOCK_STEAM_ID)
     fill_textfield(selenium, 'input[name="name-3"]', 'http://www.steam.com/12345')
 
     fill_textfield(selenium, 'input[name=email]', MOCK_EMAIL_VALUE)

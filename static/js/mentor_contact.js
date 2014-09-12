@@ -48,7 +48,6 @@ mentorContactApp.controller('UserProfileController', function($scope, userProfil
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
-		formIsValid = true;
 		if(formIsValid) {
 			userProfileService.submit($scope.user);
 		}
@@ -62,10 +61,10 @@ mentorContactApp.controller('ProfilePictureController', function($scope, $upload
 		});
 	};
 });
-/* global angular, window, calq */
+/* global angular, window, calq, alert */
 var mentorContactApp = angular.module('mentorContactApp');
 
-mentorContactApp.factory('userProfileService', function($http, redirectLinkService) {
+mentorContactApp.factory('userProfileService', function($http, redirectLinkService, notificationService) {
     return {
         submit: function(data, mentor) {
             return $http({
@@ -73,8 +72,8 @@ mentorContactApp.factory('userProfileService', function($http, redirectLinkServi
                 method: 'POST',
                 data: data
             })
-            .then(function(result) {
-                if(result.status === 200) {
+            .success(function(data, status, headers, config) {
+                if(status === 200) {
                     try {
                         calq.action.track("Signed up as student", {});
                     } catch(err) {
@@ -86,12 +85,15 @@ mentorContactApp.factory('userProfileService', function($http, redirectLinkServi
                         window.location = window.location;
                     }
                 }
+            })
+            .error(function(data, status, headers, config) {
+                notificationService.notifyError("There has been an error submitting your profile");
             });
         }
     };
 });
 
-mentorContactApp.factory('profilePictureUploadService', function($http, $upload) {
+mentorContactApp.factory('profilePictureUploadService', function($http, $upload, notificationService) {
     return {
         upload: function(file) {
             $upload.upload({
@@ -99,14 +101,19 @@ mentorContactApp.factory('profilePictureUploadService', function($http, $upload)
                 file: file,
             })
             .progress(function(evt) {
-                console.log(evt);
             })
             .success(function(data, status, headers, config) {
                 try {
                     calq.action.track("Uploaded profile picture", {});
                 } catch(err) {
                 }
-                console.log(data, status, headers, config);
+            })
+            .error(function(data, status, headers, config) {
+                try {
+                    calq.action.track("Error uploading profile picture", {});
+                } catch(err) {
+                }
+                notificationService.notifyError("There has been an error submitting your profile picture");
             });
         }
     };

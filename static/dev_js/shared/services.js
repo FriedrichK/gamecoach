@@ -3,8 +3,8 @@
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('usernameValidationService', function($http) {
     return {
-        validate: function(username) {
-            return $http({method: 'GET', url: '/someUrl', params: {username: username}});
+        validate: function(url, params) {
+            return $http({method: 'GET', url: url, params: params});
         }
     };
 });
@@ -13,6 +13,30 @@ gamecoachShared.factory('gCStringService', function() {
     return {
         decodeHtml: function(stringInput) {
             return $('<div/>').html(stringInput).text(); 
+        }
+    };
+});
+
+gamecoachShared.factory('notificationService', function() {
+    var getErrorNotificationElement = function() {
+        return angular.element('.errornotification');
+    };
+    var getErrorTextElement = function() {
+        return getErrorNotificationElement().find('.errortext');
+    };
+    var changeMessage = function(message) {
+        getErrorTextElement().html(message);
+    };
+    var showNotification = function() {
+        getErrorNotificationElement().removeClass('ng-hide');
+    };
+    return {
+        notifyError: function(message) {
+            changeMessage(message);
+            showNotification();
+        },
+        hide: function() {
+            getErrorNotificationElement().addClass('ng-hide');
         }
     };
 });
