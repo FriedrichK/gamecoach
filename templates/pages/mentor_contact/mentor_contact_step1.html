@@ -10,7 +10,7 @@
 		{% csrf_token %}
 		<input type="hidden" value="/mentor/{{user_id}}/contact" name="next" />
 		<div class="w-container main-column login-screen top" ng-controller="UserSignupController">
-    		<div class="text title large login">To contact mentor, please login or sign up.</div>
+    		<div class="text title large login">To contact the mentor, please login or sign up.</div>
     		<a class="sign-up-button login" ng-click="facebookLogin()">sign in with facebook</a>
   		</div>
 	</form>
