@@ -4,7 +4,7 @@ REGIONS_LABELS = ['uswest', 'useast', 'euwest', 'eueast', 'russia', 'southameric
 AVAILABILITY = ['weekends', 'anyday', 'evenings', 'anytime']
 AVAILABILITY_LABELS = ['Weekends only', 'Any day', 'Evenings only', 'Any time']
 MENTORING = ['individual', 'team', 'spectating', 'together', 'analysing', 'questions', 'voicechat', 'textchat']
-MENTORING_LABELS = ['individual mentoring', 'team monitoring', 'mentoring while spectating', 'mentoring while playing together', 'anaylsing replies', 'general questions & answers', 'voice chat', 'text chat']
+MENTORING_LABELS = ['individual mentoring', 'team mentoring', 'mentoring while spectating', 'mentoring while playing together', 'analysing replies', 'general questions & answers', 'voice chat', 'text chat']
 HEROES = [
     "Abaddon",
     "Alchemist",
