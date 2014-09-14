@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block styles %}
- <link rel="stylesheet" type="text/css" href="{% static "css/settings.css" %}/?v={{platform_version}}">
+ <link rel="stylesheet" type="text/css" href="{% static "css/settings.css" %}?v={{platform_version}}">
 {% endblock %}
 
 {% block body_tag %}ng-app="editSettingsApp" ng-controller="EditSettingsController"{% endblock %}
@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block scripts %}
-	<script type="text/javascript" src="{% static "js/shared.js" %}/?v={{platform_version}}"></script>
-	<script type="text/javascript" src="{% static "js/settings.js" %}/?v={{platform_version}}"></script>
-	<script type="text/javascript" src="{% static "js/navigation.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/settings.js" %}?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}?v={{platform_version}}"></script>
 {% endblock %}

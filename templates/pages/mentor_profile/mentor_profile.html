@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block styles %}
- <link rel="stylesheet" type="text/css" href="{% static "css/mentor_profile.css" %}/?v={{platform_version}}">
+ <link rel="stylesheet" type="text/css" href="{% static "css/mentor_profile.css" %}?v={{platform_version}}">
 {% endblock %}
 
 {% block body_tag %}ng-app="mentorProfileApp" ng-controller="ProfileController" ngCloak{% endblock %}
@@ -161,7 +161,7 @@
 
 {% block scripts %}
 	<script src="https://code.angularjs.org/1.2.13/angular-animate.js"></script>
-  <script type="text/javascript" src="{% static "js/shared.js" %}/?v={{platform_version}}"></script>
-  <script type="text/javascript" src="{% static "js/mentor_profile.js" %}/?v={{platform_version}}"></script>
-  <script type="text/javascript" src="{% static "js/navigation.js" %}/?v={{platform_version}}"></script>
+  <script type="text/javascript" src="{% static "js/shared.js" %}?v={{platform_version}}"></script>
+  <script type="text/javascript" src="{% static "js/mentor_profile.js" %}?v={{platform_version}}"></script>
+  <script type="text/javascript" src="{% static "js/navigation.js" %}?v={{platform_version}}"></script>
 {% endblock %}
