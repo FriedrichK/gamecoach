@@ -13,12 +13,13 @@ editProfileApp.factory('profileService', function($http, notificationService) {
                 if(result.status !== 200) {
                     notificationService.notifyError("There has been an error submitting your profile");
                 }
+                window.location = '/profile/';
             });
         }
     };
 });
 
-editProfileApp.factory('profileUsernameService', function($http, notificationService) {
+/*editProfileApp.factory('profileUsernameService', function($http, notificationService) {
     return {
         submit: function(data) {
             return $http({
@@ -35,7 +36,7 @@ editProfileApp.factory('profileUsernameService', function($http, notificationSer
             });
         }
     };
-});
+});*/
 
 editProfileApp.factory('profilePictureUploadService', function($http, $upload, notificationService) {
     return {

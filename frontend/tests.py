@@ -7,6 +7,7 @@ HEADLESS = False
 
 from unittest import skip
 
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import LiveServerTestCase, RequestFactory
 from django.shortcuts import render
@@ -321,6 +322,24 @@ class ConversationTestCase(LiveServerTestCase):
         self.assertEqual(len(conversation_items), 6)
 
 
+class EditProfileTestCase(GamecoachLiveServerTestCase):
+
+    def test_should_forward_to_user_profile_after_successfully_editing_the_profile(self):
+        account = create_account()
+
+        url = self.live_server_url + reverse('edit_profile')
+        get_as_user(self.selenium, self.live_server_url, url, user=account['user'])
+
+        fill_in_profile_form(self.selenium, has_email=False, has_terms_and_conditions=False)
+
+        home_button = self.selenium.find_element_by_css_selector('.w-button.save-settings-button')
+        home_button.click()
+
+        element = WebDriverWait(self.selenium, 5).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "input[type=hidden][id=page_name][value=mentor_profile]"))
+        )
+
+
 def get_web_driver():
     if HEADLESS:
         return webdriver.PhantomJS('phantomjs')
@@ -346,6 +365,7 @@ def build_request_mock(user=None, url=URL_FOR_MENTOR_CONTACT):
     return request
 
 
+"""
 def fill_in_profile_form(selenium):
     fill_textfield(selenium, 'input[name=name]', 'Some Name')
 
@@ -377,3 +397,4 @@ def fill_in_profile_form(selenium):
     change_checkbox(selenium, 'input[name="role-22"]', True)
 
     change_checkbox(selenium, 'input[name="i-agree-with-term-conditions"]', True)
+"""

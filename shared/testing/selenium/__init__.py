@@ -51,14 +51,15 @@ def get_as_user(selenium, live_server_url, url, user=None):
     selenium.get(url)
 
 
-def fill_in_profile_form(selenium, has_terms_and_conditions=True):
+def fill_in_profile_form(selenium, has_terms_and_conditions=True, has_email=True):
     fill_textfield(selenium, 'input[name=name]', MOCK_USERNAME)
 
     fill_textfield(selenium, 'input[name="name-2"]', MOCK_STEAM_ID)
     fill_textfield(selenium, 'input[name="name-3"]', 'http://www.steam.com/12345')
 
-    fill_textfield(selenium, 'input[name=email]', MOCK_EMAIL_VALUE)
-    fill_textfield(selenium, 'input[name="email-2"]', MOCK_EMAIL_VALUE)
+    if has_email:
+        fill_textfield(selenium, 'input[name=email]', MOCK_EMAIL_VALUE)
+        fill_textfield(selenium, 'input[name="email-2"]', MOCK_EMAIL_VALUE)
 
     fill_textfield(selenium, 'textarea[name="about-me"]', 'Blablabla')
 

@@ -206,6 +206,8 @@ def edit_profile(request):
             profile['data']['statistics'] = statistics
         except ValueError:
             pass
+        except TypeError:
+            pass
 
     context = get_basic_context(request)
     context['profile'] = profile
