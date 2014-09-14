@@ -299,7 +299,7 @@ p {
 .hero-image {
   padding-top: 150px;
   padding-bottom: 20px;
-  background-image: url('../images/background 04.jpg');
+  background-image: url('../../images/background 04.jpg');
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -357,7 +357,7 @@ p {
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  background-image: url('../images/background 06.jpg');
+  background-image: url('../../images/background 06.jpg');
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;

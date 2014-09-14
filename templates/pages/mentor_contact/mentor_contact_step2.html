@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static "css/mentor_contact.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "css/mentor_contact.css" %}/?v={{platform_version}}">
 {% endblock %}
 
 {% block body_tag %}ng-app="mentorContactApp"{% endblock %}
@@ -328,7 +328,7 @@
 {% block scripts %}
   <script src="{% static "js/angular-file-upload.min.js" %}"></script>
   <script type="text/javascript" src="{% static "js/angular-route.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/shared.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/mentor_contact.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/shared.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/mentor_contact.js" %}/?v={{platform_version}}"></script>
+  <script type="text/javascript" src="{% static "js/navigation.js" %}/?v={{platform_version}}"></script>
 {% endblock %}

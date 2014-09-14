@@ -267,6 +267,7 @@ def page500(request):
 
 def get_basic_context(request):
     return {
+        'platform_version': settings.PLATFORM_VERSION,
         'has_profile': has_profile(request.user),
         'is_mentor': is_mentor(request.user),
         'is_authenticated': request.user.is_authenticated(),

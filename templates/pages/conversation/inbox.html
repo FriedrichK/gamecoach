@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block styles %}
- <link rel="stylesheet" type="text/css" href="{% static "css/conversation.css" %}">
+ <link rel="stylesheet" type="text/css" href="{% static "css/conversation.css" %}/?v={{platform_version}}">
 {% endblock %}
 
 {% block body_tag %}ng-app="conversationApp"{% endblock %}
@@ -92,7 +92,7 @@
 
 {% block scripts %}
   <script src="https://code.angularjs.org/1.2.13/angular-animate.js"></script>
-	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/conversation.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/conversation.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}/?v={{platform_version}}"></script>
 {% endblock %}

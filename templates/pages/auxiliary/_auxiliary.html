@@ -2,13 +2,13 @@
 {% load staticfiles %}
 
 {% block styles %}
- <link rel="stylesheet" type="text/css" href="{% static "css/generic.css" %}">
+ <link rel="stylesheet" type="text/css" href="{% static "css/generic.css" %}/?v={{platform_version}}">
 {% endblock %}
 
 {% block body_tag %}ng-app="genericApp"{% endblock %}
 
 {% block scripts %}
-	<script type="text/javascript" src="{% static "js/shared.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/generic.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/generic.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}/?v={{platform_version}}"></script>
 {% endblock %}

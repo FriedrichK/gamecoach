@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block scripts %}
-	<script type="text/javascript" src="{% static "js/shared.js" %}"></script> 
-	<script type="text/javascript" src="{% static "js/conversation.js" %}"></script>
-	<script type="text/javascript" src="{% static "js/navigation.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/shared.js" %}/?v={{platform_version}}"></script> 
+	<script type="text/javascript" src="{% static "js/conversation.js" %}/?v={{platform_version}}"></script>
+	<script type="text/javascript" src="{% static "js/navigation.js" %}/?v={{platform_version}}"></script>
 {% endblock %}
