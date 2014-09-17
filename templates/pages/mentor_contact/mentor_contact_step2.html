@@ -128,15 +128,15 @@
             </div>
             <div class="w-col w-col-8" ng-controller="TopHeroController">
               <select class="w-select text form" id="field-4" name="field-4" required="required" ng-model="user.topheroes.first">
-                <!--option value="">1st place</option-->
+                <option value="" disabled selected>1st place</option>
                 <option value="{% templatetag openvariable %}tophero.identifier{% templatetag closevariable %}" class="ng-hide" ng-repeat="tophero in topheroes" ng-show="topheroes">{% templatetag openvariable %}tophero.label{% templatetag closevariable %}</option>
               </select>
               <select class="w-select text form" id="field-5" name="field-5" ng-model="user.topheroes.second">
-                <!--option value="">2nd place</option-->
+                <option value="" disabled selected>2nd place</option>
                 <option value="{% templatetag openvariable %}tophero.identifier{% templatetag closevariable %}" class="ng-hide" ng-repeat="tophero in topheroes" ng-show="topheroes">{% templatetag openvariable %}tophero.label{% templatetag closevariable %}</option>
               </select>
               <select class="w-select text form" id="field-6" name="field-6" ng-model="user.topheroes.third">
-                <!--option value="">3rd place</option-->
+                <option value="" disabled selected>3rd place</option>
                 <option value="{% templatetag openvariable %}tophero.identifier{% templatetag closevariable %}" class="ng-hide" ng-repeat="tophero in topheroes" ng-show="topheroes">{% templatetag openvariable %}tophero.label{% templatetag closevariable %}</option>
               </select>
             </div>
