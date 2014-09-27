@@ -54,9 +54,7 @@ def get_inbox_slice(request_user, time_anchor, older=True, items=100, archived=F
         filters &= Q(recipient_deleted_at__isnull=False)
 
     conversations_with_incoming_messages_from_other_users = Message.objects.filter(filters & Q(recipient=request_user)).distinct('sender').order_by('sender', '-sent_at')[:items]
-    print "incoming", len(conversations_with_incoming_messages_from_other_users)
     conversations_with_only_our_messages = Message.objects.filter(filters & Q(sender=request_user)).distinct('recipient').order_by('recipient', '-sent_at')[:items]
-    print "our message", len(conversations_with_only_our_messages)
 
     conversations = []
     other_users = []
