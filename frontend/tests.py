@@ -324,6 +324,15 @@ class ConversationTestCase(LiveServerTestCase):
 
 class EditProfileTestCase(GamecoachLiveServerTestCase):
 
+    def test_should_redirect_to_login_if_user_is_not_authenticated(self):
+        url = self.live_server_url + reverse('edit_profile')
+        self.selenium.get(url)
+
+        css_selector = 'input[type=hidden][name=page_name][value=login]'
+        element = WebDriverWait(self.selenium, 3).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, css_selector))
+        )
+
     def test_should_forward_to_user_profile_after_successfully_editing_the_profile(self):
         account = create_account()
 

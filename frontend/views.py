@@ -191,8 +191,8 @@ def conversation(request, user_id):
 
 
 def edit_profile(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('/login')
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login?next=/profile/edit')
 
     profile = {}
     if has_profile(request.user):
