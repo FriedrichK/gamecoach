@@ -1,14 +1,21 @@
 #import os
 import json
 import urllib
+import cStringIO
+from io import BytesIO
+import base64
+
+from PIL import Image
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
+from django.core.files.base import ContentFile
 
 from profiles.tools.mentors import get_all_mentors, get_mentor_by_id, get_mentor_by_username
 from profiles.tools.profile_methods import get_profile_by_username
 from profiles.tools.signup_form import add_profile_for_user, update_profile_for_user, get_mentor_signup_form_from_request
+from profiles.tools.data_uris import DataURI
 from profiles.models import ProfilePicture
 
 
@@ -114,8 +121,13 @@ def profile_picture_display(request, username):
 
 
 def profile_picture_upload(request):
-    for f in request.FILES.getlist('file'):
-        profile_picture, created = ProfilePicture.objects.get_or_create(user=request.user)
-        profile_picture.image = f
-        profile_picture.save()
+    body = json.loads(request.body)
+
+    uri = DataURI(body['data'])
+    img = ContentFile(uri.data, body['meta']['name'])
+
+    profile_picture, created = ProfilePicture.objects.get_or_create(user=request.user)
+    profile_picture.image = img
+    profile_picture.save()
+
     return HttpResponse(json.dumps({}))

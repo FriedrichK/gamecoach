@@ -163,6 +163,15 @@ gamecoachShared.directive('gcCloseOnClick', function() {
 });*/
 /* global document, angular */
 
+var gamecoachShared = angular.module('gamecoachShared');
+gamecoachShared.directive('gcImageUpload', function() {
+	return {
+		restrict: 'AEC',
+		templateUrl: 'imageUploadDialog.html'
+	};
+});
+/* global document, angular */
+
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.filter('capitalize', function() {
 	return function(input, scope) {
@@ -201,7 +210,7 @@ function BaseProfileController($scope, $element, profileDataService, profileRegi
     });
 }
 
-/* global angular */
+/* global angular, FileReader */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
 gamecoachShared.factory('profileDataService', function($http) {
@@ -384,6 +393,58 @@ gamecoachShared.factory('profileStatisticsService', function($filter, profileLab
         }
     };
 });
+
+gamecoachShared.factory('profilePictureUploadServiceNew', function($q, $http, profileStringService, fileTypeService) {
+    return {
+        upload: function(srcScope, files, acceptedFileTypes, maximumFileSizeInBytes) {
+            if(!acceptedFileTypes) {
+                acceptedFileTypes = {
+                    JPG: ['image/jpeg', 'image/jpg'], 
+                    PNG: ['image/png'],
+                    SFX: ['image/sfx', 'image/sfxx']
+                };
+            }
+
+            if(!maximumFileSizeInBytes) {
+                maximumFileSizeInBytes = 512000;
+            }
+
+            var result = $q.defer();
+
+            if(files.length < 1) {
+                result.reject(profileStringService.errors.profilePicture.NO_FILE);
+            }
+
+            if(files[0].size > maximumFileSizeInBytes) {
+                var fileTooBigMessage = profileStringService.errors.profilePicture.TOO_BIG + ". Maximum file size: " + (maximumFileSizeInBytes / 1000) + " kb";
+                result.reject(fileTooBigMessage);
+            }
+
+            if(!fileTypeService.isFileTypeFromOptions(files[0].type, acceptedFileTypes)) {
+                var wrongFileTypeMessage = profileStringService.errors.profilePicture.WRONG_FILE_FORMAT + ". Allowed file types: " + fileTypeService.getAcceptedFileTypeString(acceptedFileTypes);
+                result.reject(wrongFileTypeMessage);
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;
+                $http.post('/api/mentor/profilePicture/IGNORED', {data: data, meta: files[0]})
+                    .success(function(data, status, headers, config) {
+                        result.resolve();
+                    })
+                    .error(function(data, status, headers, config) {
+                        result.reject(profileStringService.errors.profilePicture.UPLOAD_ERROR);
+                    });
+            };
+            reader.onerror = function(e) {
+                result.reject(profileStringService.errors.profilePicture.PROCESSING_ERROR);
+            };
+            reader.readAsDataURL(files[0]);
+
+            return result.promise;
+        }
+    };
+});
 /* global angular */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
@@ -437,6 +498,20 @@ gamecoachShared.factory('profileLabelService', function() {
     }
   };
 });
+
+gamecoachShared.factory('profileStringService', function() {
+  return {
+    errors: {
+      profilePicture: {
+        NO_FILE: 'no file provided for upload',
+        WRONG_FILE_FORMAT: 'the file does not have the correct format',
+        TOO_BIG: 'the file is too big',
+        PROCESSING_ERROR: 'an error occurred trying to process this file',
+        UPLOAD_ERROR: 'uploading the file failed'
+      }
+    }
+  };
+});
 /* global document, angular, $ */
 
 var gamecoachShared = angular.module('gamecoachShared'); 
@@ -476,6 +551,27 @@ gamecoachShared.factory('notificationService', function() {
         },
         hide: function() {
             getErrorNotificationElement().addClass('ng-hide');
+        }
+    };
+});
+
+gamecoachShared.factory('fileTypeService', function() {
+    return {
+        isFileTypeFromOptions: function(fileType, fileTypes) {
+            var valid = false;
+            angular.forEach(fileTypes, function(mimeArray, label) {
+                if(mimeArray.indexOf(fileType) > -1) {
+                    valid = true;
+                }
+            });
+            return valid;
+        },
+        getAcceptedFileTypeString: function(fileTypes) {
+            var labels = [];
+            angular.forEach(fileTypes, function(mimeArray, label) {
+                labels.push(label);
+            });
+            return labels.join(', ');
         }
     };
 });

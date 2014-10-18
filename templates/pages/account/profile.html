@@ -55,6 +55,7 @@
 			time: '{% if profile.availability.evenings and not profile.availability.anytime %}1{% elif not  profile.availability.evenings and profile.availability.anytime %}2{% else %}undefined{% endif %}'
 		}
 	</script>
+	{% include "pages/shared/templates/profile.html" %}
 	{% include "pages/account/profile_body.html" %}
 {% endblock %}
 
@@ -64,6 +65,7 @@
 
 {% block scripts %}
 	<script src="{% static "js/angular-file-upload.min.js" %}"></script>
+	<script src="{% static "js/angular-upload.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "js/shared.js" %}?v={{platform_version}}"></script>
 	<script type="text/javascript" src="{% static "js/edit_profile.js" %}?v={{platform_version}}"></script>
 	<script type="text/javascript" src="{% static "js/navigation.js" %}?v={{platform_version}}"></script>

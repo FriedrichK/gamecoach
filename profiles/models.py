@@ -5,6 +5,7 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
 
 from django.contrib.auth.models import User
 from django.contrib.auth.signals import user_logged_in

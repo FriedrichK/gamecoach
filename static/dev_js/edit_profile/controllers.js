@@ -1,7 +1,13 @@
 /* global angular, document, window, F, BaseProfileController, $, prefilledValues, htmlDecode, calq */
 
-var editProfileApp = angular.module('editProfileApp'); 
-editProfileApp.controller('EditProfileController', function($scope, $filter, profileService, gCStringService) {
+var editProfileApp = angular.module('editProfileApp');
+editProfileApp.controller('EditProfileController', function($scope, $filter, profileService, profilePictureUploadServiceNew, gCStringService, notificationService) {
+	var generateProfilePictureUri = function() {
+		var d = new Date();
+		return '/data/mentor/' + mentorId + "/profilePicture" + "?cache=" + d.getMilliseconds();
+	};
+	var mentorId = angular.element('input[type=hidden][name=system_username]').val();
+	$scope.profilePictureUri = generateProfilePictureUri();
 	var postProcess = function(prefilledValues) {
 		var postProcessedValues = $.extend({}, prefilledValues);
 		postProcessedValues.about = gCStringService.decodeHtml(prefilledValues.about);
@@ -19,6 +25,18 @@ editProfileApp.controller('EditProfileController', function($scope, $filter, pro
 			profileService.submit($scope.profile);
 		}
 	};
+	$scope.uploadFile = function(files) {
+		notificationService.hide();
+		var uploadPromise = profilePictureUploadServiceNew.upload($scope, files);
+		uploadPromise.then(
+			function(data) {
+				$scope.profilePictureUri = generateProfilePictureUri();
+			},
+			function(data) {
+				notificationService.notifyError(data);
+			}
+		);
+    };
 });
 
 editProfileApp.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {

@@ -18,9 +18,10 @@
             <div class="w-col w-col-4">
               <label class="text ttile regular" for="name">Upload profile picture*</label>
             </div>
-            <div class="w-col w-col-8 w-clearfix"><!--a class="nav-link upload" href="#">SELECT picture</a-->
-              <input type="file" class="nav-link upload" name="profilePicture" ng-controller="ProfilePictureController" ng-model="picture.profilePicture" ng-file-select="onFileSelect($files)" />
-              <div class="text paragraph upload">Maximum picture size: 140x140 pixels&nbsp;</div>
+            <div class="w-col w-col-8 w-clearfix">
+              <div gc-image-upload="test"></div>
+              <div class="text paragraph upload">Maximum picture size: 512kb</div>
+              <div class="full-profile-image ng-cloak" ng-show="profilePictureUri" style="background-image: url({% templatetag openvariable %}profilePictureUri{% templatetag closevariable %}); width: 125px; background-size: cover; margin-top: 32px;"></div>
             </div>
           </div>
           <div class="w-row form-question">

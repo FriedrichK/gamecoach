@@ -51,3 +51,17 @@ gamecoachShared.factory('profileLabelService', function() {
     }
   };
 });
+
+gamecoachShared.factory('profileStringService', function() {
+  return {
+    errors: {
+      profilePicture: {
+        NO_FILE: 'no file provided for upload',
+        WRONG_FILE_FORMAT: 'the file does not have the correct format',
+        TOO_BIG: 'the file is too big',
+        PROCESSING_ERROR: 'an error occurred trying to process this file',
+        UPLOAD_ERROR: 'uploading the file failed'
+      }
+    }
+  };
+});

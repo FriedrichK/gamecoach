@@ -41,6 +41,27 @@ gamecoachShared.factory('notificationService', function() {
     };
 });
 
+gamecoachShared.factory('fileTypeService', function() {
+    return {
+        isFileTypeFromOptions: function(fileType, fileTypes) {
+            var valid = false;
+            angular.forEach(fileTypes, function(mimeArray, label) {
+                if(mimeArray.indexOf(fileType) > -1) {
+                    valid = true;
+                }
+            });
+            return valid;
+        },
+        getAcceptedFileTypeString: function(fileTypes) {
+            var labels = [];
+            angular.forEach(fileTypes, function(mimeArray, label) {
+                labels.push(label);
+            });
+            return labels.join(', ');
+        }
+    };
+});
+
 gamecoachShared.factory('heroesService', function() {
   return {
     getHeroHash: function() {
