@@ -341,7 +341,7 @@ mentorProfileApp.factory('profileLabelService', function() {
         'team': 'team mentoring',
         'spectating': 'mentoring while spectating',
         'together': 'mentoring while playing together',
-        'analysing': 'analysing replies',
+        'analysing': 'analysing replays',
         'questions': 'general questions & answers',
         'voicechat': 'voice chat',
         'textchat': 'text chat'
