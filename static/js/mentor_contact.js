@@ -44,7 +44,13 @@ mentorContactApp.controller('TopHeroController', function($scope, $element, hero
 	$scope.topheroes = heroArray;
 });
 
-mentorContactApp.controller('UserProfileController', function($scope, userProfileService) {
+mentorContactApp.controller('UserProfileController', function($scope, userProfileService, profilePictureUploadServiceNew, notificationService) {
+	var mentorId = angular.element('input[type=hidden][name=system_username]').val();
+	var generateProfilePictureUri = function() {
+		var d = new Date();
+		return '/data/mentor/' + mentorId + "/profilePicture" + "?cache=" + d.getMilliseconds();
+	};
+	$scope.profilePictureUri = generateProfilePictureUri();
 	$scope.mentor = {};
 	$scope.save = function(emailForm) {
 		var formIsValid = emailForm.$valid;
@@ -52,6 +58,18 @@ mentorContactApp.controller('UserProfileController', function($scope, userProfil
 			userProfileService.submit($scope.user);
 		}
 	};
+	$scope.uploadFile = function(files) {
+		notificationService.hide();
+		var uploadPromise = profilePictureUploadServiceNew.upload($scope, files);
+		uploadPromise.then(
+			function(data) {
+				$scope.profilePictureUri = generateProfilePictureUri();
+			},
+			function(data) {
+				notificationService.notifyError(data);
+			}
+		);
+    };
 });
 
 mentorContactApp.controller('ProfilePictureController', function($scope, $upload, profilePictureUploadService) {

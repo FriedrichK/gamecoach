@@ -7,11 +7,11 @@ var editProfileApp = angular.module('editProfileApp', ['angularFileUpload', 'lr.
 
 var editProfileApp = angular.module('editProfileApp');
 editProfileApp.controller('EditProfileController', function($scope, $filter, profileService, profilePictureUploadServiceNew, gCStringService, notificationService) {
+	var mentorId = angular.element('input[type=hidden][name=system_username]').val();
 	var generateProfilePictureUri = function() {
 		var d = new Date();
 		return '/data/mentor/' + mentorId + "/profilePicture" + "?cache=" + d.getMilliseconds();
 	};
-	var mentorId = angular.element('input[type=hidden][name=system_username]').val();
 	$scope.profilePictureUri = generateProfilePictureUri();
 	var postProcess = function(prefilledValues) {
 		var postProcessedValues = $.extend({}, prefilledValues);

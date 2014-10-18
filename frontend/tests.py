@@ -134,6 +134,11 @@ class RegisterAsMentorTestCasePatched(GamecoachLiveServerTestCase):
 
 
 class RegisterAsStudentTestCase(GamecoachLiveServerTestCase):
+    def test_should_upload_picture_as_expected(self):
+        user, profile = create_user()
+        self._go_to_mentor_or_student_choice_page(user)
+        self._click_student_button()
+
     def test_should_redirect_to_form_correctly_and_forward_to_expected_page_after_form_completion(self):
         user, profile = create_user()
         self._go_to_mentor_or_student_choice_page(user)

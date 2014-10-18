@@ -400,8 +400,7 @@ gamecoachShared.factory('profilePictureUploadServiceNew', function($q, $http, pr
             if(!acceptedFileTypes) {
                 acceptedFileTypes = {
                     JPG: ['image/jpeg', 'image/jpg'], 
-                    PNG: ['image/png'],
-                    SFX: ['image/sfx', 'image/sfxx']
+                    PNG: ['image/png']
                 };
             }
 
