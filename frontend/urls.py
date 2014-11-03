@@ -10,7 +10,7 @@ urlpatterns = patterns(
     url(r'^suggestions/?$', 'frontend.views.suggestions', name='suggestions'),
     url(r'^terms/?$', 'frontend.views.terms', name='terms'),
 
-    url(r'^channel/?$', 'frontend.views.channel', name='channel'),
+    url(r'^channels/?$', 'frontend.views.channel', name='channel'),
 
     url(r'^login/redirect/', 'frontend.views.login_redirect', name='login_redirect'),
     url(r'^login', 'frontend.views.login', name='login'),
