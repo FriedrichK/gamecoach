@@ -18,6 +18,10 @@ def index(request):
     return render(request, 'pages/index/index.html', context)
 
 
+def channel(request):
+    return render(request, 'pages/channel/index.html', {})
+
+
 def message_hub(request):
     context = get_basic_context(request)
     context['mentor_id'] = request.user.username
